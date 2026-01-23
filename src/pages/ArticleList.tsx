@@ -52,17 +52,24 @@ const ArticleList = () => {
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto pt-10 pb-20">
-        <div className="grid gap-8">
+    <div className="max-w-6xl mx-auto pt-10 pb-20 px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {posts.map((post) => (
                 <Link to={`/article/${post.slug}`} key={post.slug} className="group block">
                     <div className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]">
-                        {/* 如果有封面，显示封面区域 (这里用颜色块暂代，也可以放图) */}
-                        <div className="h-48 w-full bg-gradient-to-r from-slate-800 to-slate-900 relative overflow-hidden">
-                             {/* 如果有真实图片链接，可以在这里放 img 标签 */}
-                             <div className="absolute inset-0 flex items-center justify-center text-white/10 text-6xl font-black select-none group-hover:scale-110 transition duration-700">
-                                POST
-                             </div>
+                        {/* 1:1 封面图区域 */}
+                        <div className="aspect-square w-full relative overflow-hidden bg-slate-800">
+                             {post.cover ? (
+                                <img 
+                                    src={post.cover} 
+                                    alt={post.title} 
+                                    className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                                />
+                             ) : (
+                                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800">
+                                    <span className="text-4xl">📄</span>
+                                </div>
+                             )}
                         </div>
                         
                         <div className="p-6">
