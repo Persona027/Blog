@@ -1,6 +1,7 @@
 // filepath: D:/myWebsite/personal-site/src/pages/ArticleList.tsx
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { CoverImage } from '../components/CoverImage';
 
 interface Post {
   slug: string;
@@ -58,19 +59,17 @@ const ArticleList = () => {
                 <Link to={`/article/${post.slug}`} key={post.slug} className="group block">
                     <div className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]">
                         {/* 1:1 封面图区域 */}
-                        <div className="aspect-square w-full relative overflow-hidden bg-slate-800">
-                             {post.cover ? (
-                                <img 
-                                    src={post.cover} 
-                                    alt={post.title} 
-                                    className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
-                                />
-                             ) : (
-                                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800">
-                                    <span className="text-4xl">📄</span>
-                                </div>
-                             )}
-                        </div>
+                        {post.cover ? (
+                            <CoverImage 
+                                src={post.cover} 
+                                alt={post.title} 
+                                className="w-full aspect-square"
+                            />
+                        ) : (
+                            <div className="aspect-square w-full flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800">
+                                <span className="text-4xl text-gray-500">📄</span>
+                            </div>
+                        )}
                         
                         <div className="p-6">
                             <div className="flex items-center text-cyan-400 text-sm mb-3">

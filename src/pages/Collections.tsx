@@ -2,6 +2,8 @@
 import { useParams } from 'react-router-dom';
 import { Gamepad2, BookOpen, Film, MonitorPlay, Music, MoreHorizontal, Link2, ExternalLink } from 'lucide-react';
 import { games } from '../data/games';
+import { books } from '../data/books';
+import { CoverImage } from '../components/CoverImage';
 
 const Collections = () => {
     const { category } = useParams<{ category: string }>();
@@ -71,21 +73,14 @@ const Collections = () => {
             {category === 'games' ? (
                 <div className="space-y-6">
                     {games.map(game => (
-                        <div key={game.id} className="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-purple-500/50 transition-colors duration-300">
+                        <div key={game.id} className="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-purple-500/50 transition-colors duration-300 group">
                            <div className="flex flex-col md:flex-row h-full">
-                                {/* 左侧：封面 */} 
-                                <div className="w-full md:w-48 h-48 md:h-auto bg-gray-800 shrink-0 relative group">
-                                    <img 
-                                        src={game.cover} 
-                                        alt={game.title} 
-                                        className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
-                                        onError={(e) => {
-                                            (e.target as HTMLImageElement).src = 'https://placehold.co/400x600?text=No+Cover'; // 简单的占位图回退
-                                            (e.target as HTMLImageElement).style.objectFit = 'contain';
-                                            (e.target as HTMLImageElement).style.padding = '1rem';
-                                        }}
-                                    />
-                                </div>
+                                {/* 左侧：封面 - 移动端保持高度，桌面端强制 1:1 */} 
+                                <CoverImage 
+                                    src={game.cover} 
+                                    alt={game.title}
+                                    className="w-full h-48 md:w-48 md:h-auto md:aspect-square"
+                                />
 
                                 {/* 中间：信息 */}
                                 <div className="flex-1 p-6 flex flex-col justify-between">
@@ -130,6 +125,51 @@ const Collections = () => {
                                         <ExternalLink size={16} />
                                         <span>访问详情</span>
                                     </a>
+                                </div>
+                           </div>
+                        </div>
+                    ))}
+                </div>
+            ) : category === 'books' ? (
+                <div className="space-y-6">
+                    {books.map(book => (
+                        <div key={book.id} className="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-yellow-500/50 transition-colors duration-300 group">
+                           <div className="flex flex-col md:flex-row h-full">
+                                {/* 左侧：封面 */} 
+                                <CoverImage 
+                                    src={book.cover} 
+                                    alt={book.title}
+                                    className="w-full h-48 md:w-48 md:h-auto md:aspect-square"
+                                />
+
+                                {/* 中间：信息 */}
+                                <div className="flex-1 p-6 flex flex-col justify-between">
+                                    <div>
+                                        <div className="flex flex-wrap items-center gap-3 mb-2">
+                                            <h3 className="text-xl font-bold text-white">
+                                                {book.title}
+                                            </h3>
+                                            <div className="flex items-center gap-2 text-sm text-yellow-500/80">
+                                                <span className="font-medium">{book.author}</span>
+                                                <span className="text-gray-500">•</span>
+                                                <span className="text-gray-400 text-xs px-2 py-0.5 bg-white/5 rounded border border-white/10">
+                                                    {book.info}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <p className="text-gray-300 leading-relaxed text-sm md:text-base italic">
+                                            "{book.review}"
+                                        </p>
+                                    </div>
+                                    
+                                    <div className="mt-4 pt-4 border-t border-white/5 md:hidden">
+                                        <span className="text-xl font-bold text-yellow-400">{book.rating}</span>
+                                    </div>
+                                </div>
+
+                                {/* 右侧：评分 (桌面端) */}
+                                <div className="hidden md:flex flex-col items-center justify-center p-6 w-32 border-l border-white/10 bg-black/20">
+                                    <span className="text-2xl font-bold text-yellow-400">{book.rating}</span>
                                 </div>
                            </div>
                         </div>
