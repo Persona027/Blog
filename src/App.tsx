@@ -33,7 +33,7 @@ function App() {
                 <Route path="/" element={<ArticleList />} />
                 <Route path="/article/:slug" element={<ArticleDetail />} />
                 <Route path="/about" element={<About />} />
-                <Route path="/collections" element={<Collections />} />
+                <Route path="/collections/:category?" element={<Collections />} />
             </Routes>
         </main>
       </div>
