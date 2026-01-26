@@ -153,7 +153,7 @@ const Collections = () => {
                                                 <span className="font-medium">{book.author}</span>
                                                 <span className="text-gray-500">•</span>
                                                 <span className="text-gray-400 text-xs px-2 py-0.5 bg-white/5 rounded border border-white/10">
-                                                    {book.info}
+                                                    {book.publisher}
                                                 </span>
                                             </div>
                                         </div>
