@@ -1,8 +1,9 @@
 // filepath: D:/myWebsite/personal-site/src/pages/Collections.tsx
 import { useParams } from 'react-router-dom';
-import { Gamepad2, BookOpen, Film, MonitorPlay, Music, MoreHorizontal, Link2, ExternalLink } from 'lucide-react';
+import { Gamepad2, BookOpen, Film, MonitorPlay, Music, MoreHorizontal, Link2, ExternalLink, Calendar, Eye } from 'lucide-react';
 import { games } from '../data/games';
 import { books } from '../data/books';
+import { movies } from '../data/movies';
 import { CoverImage } from '../components/CoverImage';
 
 const Collections = () => {
@@ -170,6 +171,77 @@ const Collections = () => {
                                 {/* 右侧：评分 (桌面端) */}
                                 <div className="hidden md:flex flex-col items-center justify-center p-6 w-32 border-l border-white/10 bg-black/20">
                                     <span className="text-2xl font-bold text-yellow-400">{book.rating}</span>
+                                </div>
+                           </div>
+                        </div>
+                    ))}
+                </div>
+            ) : category === 'movies' ? (
+                <div className="space-y-6">
+                    {movies.map(movie => (
+                        <div key={movie.id} className="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-red-500/50 transition-colors duration-300 group">
+                           <div className="flex flex-col md:flex-row h-full">
+                                {/* 左侧：封面 - 2:3 比例 */} 
+                                <CoverImage 
+                                    src={movie.cover} 
+                                    alt={movie.title}
+                                    className="w-full aspect-[2/3] md:w-40 md:h-auto object-cover"
+                                />
+
+                                {/* 中间：信息 */}
+                                <div className="flex-1 p-6 flex flex-col justify-between">
+                                    <div>
+                                        <div className="flex flex-col gap-1 mb-3">
+                                            <div className="flex flex-wrap items-baseline gap-2">
+                                                <h3 className="text-xl font-bold text-white group-hover:text-red-400 transition-colors">
+                                                    {movie.title}
+                                                </h3>
+                                                <span className="text-sm text-gray-500 font-medium">
+                                                    {movie.originalTitle}
+                                                </span>
+                                            </div>
+                                            
+                                            <div className="flex flex-wrap gap-2 mt-1">
+                                                {movie.tags.map(tag => (
+                                                    <span key={tag} className="px-2 py-0.5 rounded text-xs bg-red-500/10 text-red-300 border border-red-500/10">
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <div className="flex flex-wrap gap-4 text-xs text-gray-400 mb-4">
+                                            <div className="flex items-center gap-1.5" title="上映日期">
+                                                <Calendar size={14} className="text-red-400/70" />
+                                                <span>上映: {movie.releaseDate}</span>
+                                            </div>
+                                            <div className="flex items-center gap-1.5" title="观看日期">
+                                                <Eye size={14} className="text-red-400/70" />
+                                                <span>观看: {movie.watchDate}</span>
+                                            </div>
+                                        </div>
+
+                                        {movie.review && (
+                                            <p className="text-gray-300 leading-relaxed text-sm md:text-base border-l-2 border-red-500/20 pl-3 italic">
+                                                {movie.review}
+                                            </p>
+                                        )}
+                                    </div>
+                                    
+                                    <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between md:hidden">
+                                        <span className="text-xs text-gray-500">
+                                            导演: {movie.director}
+                                        </span>
+                                        <span className="text-xl font-bold text-red-400">{movie.rating}</span>
+                                    </div>
+                                </div>
+
+                                {/* 右侧：评分 (桌面端) */}
+                                <div className="hidden md:flex flex-col items-center justify-center p-6 w-32 border-l border-white/10 bg-black/20">
+                                    <span className="text-2xl font-bold text-red-400 mb-2">{movie.rating}</span>
+                                     <span className="text-xs text-gray-500 text-center">
+                                        导演<br/>{movie.director}
+                                    </span>
                                 </div>
                            </div>
                         </div>
