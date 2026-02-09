@@ -4,6 +4,7 @@ import { Gamepad2, BookOpen, Film, MonitorPlay, Music, MoreHorizontal, Link2, Ex
 import { games } from '../data/games';
 import { books } from '../data/books';
 import { movies } from '../data/movies';
+import { animes } from '../data/animes';
 import { CoverImage } from '../components/CoverImage';
 
 const Collections = () => {
@@ -241,6 +242,77 @@ const Collections = () => {
                                     <span className="text-2xl font-bold text-red-400 mb-2">{movie.rating}</span>
                                      <span className="text-xs text-gray-500 text-center">
                                         导演<br/>{movie.director}
+                                    </span>
+                                </div>
+                           </div>
+                        </div>
+                    ))}
+                </div>
+            ) : category === 'anime' ? (
+                <div className="space-y-6">
+                    {animes.map(anime => (
+                        <div key={anime.id} className="bg-white/5 border border-white/10 rounded-xl overflow-hidden hover:border-pink-500/50 transition-colors duration-300 group">
+                           <div className="flex flex-col md:flex-row h-full">
+                                {/* 左侧：封面 - 2:3 比例 */} 
+                                <CoverImage 
+                                    src={anime.cover} 
+                                    alt={anime.title}
+                                    className="w-full aspect-[2/3] md:w-40 md:h-auto object-cover"
+                                />
+
+                                {/* 中间：信息 */}
+                                <div className="flex-1 p-6 flex flex-col justify-between">
+                                    <div>
+                                        <div className="flex flex-col gap-1 mb-3">
+                                            <div className="flex flex-wrap items-baseline gap-2">
+                                                <h3 className="text-xl font-bold text-white group-hover:text-pink-400 transition-colors">
+                                                    {anime.title}
+                                                </h3>
+                                                <span className="text-sm text-gray-500 font-medium">
+                                                    {anime.originalTitle}
+                                                </span>
+                                            </div>
+                                            
+                                            <div className="flex flex-wrap gap-2 mt-1">
+                                                {anime.tags.map(tag => (
+                                                    <span key={tag} className="px-2 py-0.5 rounded text-xs bg-pink-500/10 text-pink-300 border border-pink-500/10">
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <div className="flex flex-wrap gap-4 text-xs text-gray-400 mb-4">
+                                            <div className="flex items-center gap-1.5" title="放送日期">
+                                                <Calendar size={14} className="text-pink-400/70" />
+                                                <span>放送: {anime.releaseDate}</span>
+                                            </div>
+                                            <div className="flex items-center gap-1.5" title="观看日期">
+                                                <Eye size={14} className="text-pink-400/70" />
+                                                <span>观看: {anime.watchDate}</span>
+                                            </div>
+                                        </div>
+
+                                        {anime.review && (
+                                            <p className="text-gray-300 leading-relaxed text-sm md:text-base border-l-2 border-pink-500/20 pl-3 italic">
+                                                {anime.review}
+                                            </p>
+                                        )}
+                                    </div>
+                                    
+                                    <div className="mt-4 pt-4 border-t border-white/5 flex items-center justify-between md:hidden">
+                                        <span className="text-xs text-gray-500">
+                                            制作: {anime.studio}
+                                        </span>
+                                        <span className="text-xl font-bold text-pink-400">{anime.rating}</span>
+                                    </div>
+                                </div>
+
+                                {/* 右侧：评分 (桌面端) */}
+                                <div className="hidden md:flex flex-col items-center justify-center p-6 w-32 border-l border-white/10 bg-black/20">
+                                    <span className="text-2xl font-bold text-pink-400 mb-2">{anime.rating}</span>
+                                     <span className="text-xs text-gray-500 text-center">
+                                        制作<br/>{anime.studio}
                                     </span>
                                 </div>
                            </div>
