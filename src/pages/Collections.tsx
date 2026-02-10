@@ -1,14 +1,26 @@
 // filepath: D:/myWebsite/personal-site/src/pages/Collections.tsx
 import { useParams } from 'react-router-dom';
-import { Gamepad2, BookOpen, Film, MonitorPlay, Music, MoreHorizontal, Link2, ExternalLink, Calendar, Eye } from 'lucide-react';
+import { useState } from 'react';
+import { 
+    Gamepad2, BookOpen, Film, MonitorPlay, Music, MoreHorizontal, 
+    Link2, ExternalLink, Calendar, Eye, Check, Copy 
+} from 'lucide-react';
 import { games } from '../data/games';
 import { books } from '../data/books';
 import { movies } from '../data/movies';
 import { animes } from '../data/animes';
+import { socials } from '../data/socials';
 import { CoverImage } from '../components/CoverImage';
 
 const Collections = () => {
     const { category } = useParams<{ category: string }>();
+    const [copiedId, setCopiedId] = useState<string | null>(null);
+
+    const handleCopy = (text: string, id: string) => {
+        navigator.clipboard.writeText(text);
+        setCopiedId(id);
+        setTimeout(() => setCopiedId(null), 2000);
+    };
 
     // 每一个分类的配置
     const CATEGORIES: Record<string, { title: string; icon: React.ReactNode; color: string }> = {
@@ -318,6 +330,86 @@ const Collections = () => {
                            </div>
                         </div>
                     ))}
+                </div>
+            ) : category === 'others' ? (
+                <div className="space-y-12">
+                    {/* Section 1: 占位符标题一 */}
+                    <section>
+                        <h3 className="text-xl font-bold text-gray-400 mb-6 flex items-center gap-2">
+                            <span className="w-1.5 h-6 bg-cyan-400 rounded-full"></span>
+                            Section Title One
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {socials.filter(s => s.group === 1).map(item => (
+                                <a 
+                                    key={item.id}
+                                    href={item.value} 
+                                    target="_blank" 
+                                    rel="noreferrer"
+                                    className="group bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 flex items-center gap-4"
+                                >
+                                    <div 
+                                        className={`w-10 h-10 ${item.color} group-hover:scale-110 transition-transform duration-300`}
+                                        style={{
+                                            backgroundColor: 'currentColor',
+                                            WebkitMaskImage: `url(/other/${item.icon})`,
+                                            maskImage: `url(/other/${item.icon})`,
+                                            WebkitMaskRepeat: 'no-repeat',
+                                            maskRepeat: 'no-repeat',
+                                            WebkitMaskPosition: 'center',
+                                            maskPosition: 'center',
+                                            WebkitMaskSize: 'contain',
+                                            maskSize: 'contain'
+                                        }}
+                                    />
+                                    <div>
+                                        <h4 className="text-white font-bold group-hover:text-cyan-300 transition-colors">{item.platform}</h4>
+                                        <p className="text-gray-500 text-sm">{item.name}</p>
+                                    </div>
+                                    <ExternalLink size={14} className="ml-auto text-gray-600 group-hover:text-cyan-400" />
+                                </a>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* Section 2: 占位符标题二 */}
+                    <section>
+                        <h3 className="text-xl font-bold text-gray-400 mb-6 flex items-center gap-2">
+                            <span className="w-1.5 h-6 bg-purple-400 rounded-full"></span>
+                            Section Title Two
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {socials.filter(s => s.group === 2).map(item => (
+                                <button 
+                                    key={item.id}
+                                    onClick={() => handleCopy(item.value, item.id)}
+                                    className="group bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 flex items-center gap-4 text-left w-full"
+                                >
+                                    <div 
+                                        className={`w-10 h-10 ${item.color} group-hover:scale-110 transition-transform duration-300`}
+                                        style={{
+                                            backgroundColor: 'currentColor',
+                                            WebkitMaskImage: `url(/other/${item.icon})`,
+                                            maskImage: `url(/other/${item.icon})`,
+                                            WebkitMaskRepeat: 'no-repeat',
+                                            maskRepeat: 'no-repeat',
+                                            WebkitMaskPosition: 'center',
+                                            maskPosition: 'center',
+                                            WebkitMaskSize: 'contain',
+                                            maskSize: 'contain'
+                                        }}
+                                    />
+                                    <div className="flex-1">
+                                        <h4 className="text-white font-bold group-hover:text-purple-300 transition-colors">{item.platform}</h4>
+                                        <p className="text-gray-500 text-sm">ID: {item.name}</p>
+                                    </div>
+                                    <div className="text-gray-600 group-hover:text-purple-400 transition-colors">
+                                        {copiedId === item.id ? <Check size={18} className="text-green-400" /> : <Copy size={18} />}
+                                    </div>
+                                </button>
+                            ))}
+                        </div>
+                    </section>
                 </div>
             ) : (
                 <div className="text-center py-20 bg-white/5 rounded-2xl border border-white/10 border-dashed">

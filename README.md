@@ -87,3 +87,9 @@ export default defineConfig([
 - **文档新增**: 收录了 Unity 协程 (Coroutine) 与事件系统 (Action/Func) 的进阶教程文章。
 - **排版优化**: 将原始笔记转化为结构清晰的 Markdown 技术文档，并增加了导师视角的补充问答。
 
+## 更新日志 (2026-02-10)
+- **功能新增**: 在“其他”板块实现了社交媒体与游戏账号的展示系统。
+- **技术实现**: 引入 CSS Mask 技术实现外部 SVG 的动态着色，支持品牌色悬停高亮。
+- **交互逻辑**: 实现社交账号点击跳转、游戏 ID 点击复制的差异化交互。
+- **数据管理**: 新增 `src/data/socials.ts` 和 `public/other/` 图标库，包含 GitHub、Bilibili、Steam、Discord、豆瓣及网易云等。
+
