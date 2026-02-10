@@ -1,6 +1,6 @@
 // filepath: D:/myWebsite/personal-site/src/pages/ArticleDetail.tsx
 import { useState, useEffect, useRef } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { List, Menu, X, ChevronRight, Hash } from 'lucide-react';
 
@@ -41,7 +41,6 @@ const flattenChildren = (children: any): string => {
 
 const ArticleDetail = () => {
     const { slug } = useParams();
-    const navigate = useNavigate();
     const [content, setContent] = useState('');
     const [metadata, setMetadata] = useState<any>({});
     const [toc, setToc] = useState<TocItem[]>([]);
@@ -100,7 +99,7 @@ const ArticleDetail = () => {
                 // 3. 提取目录 (TOC)
                 const tocItems: TocItem[] = [];
                 const lines = mdContent.split('\n');
-                lines.forEach((line) => {
+                lines.forEach((line: string) => {
                     const match = line.match(/^(##|###)\s+(.*)/);
                     if (match) {
                         const level = match[1].length;
