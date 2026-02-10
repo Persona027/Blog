@@ -17,6 +17,17 @@ interface ArticleMeta {
     category: string;
 }
 
+// 辅助函数：统一 ID 生成逻辑，支持中英文、空格转横杠
+const slugify = (text: string) => {
+    return text
+        .toString()
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '-')     // 空格转横杠
+        .replace(/[^\w\u4e00-\u9fa5-]+/g, '') // 只保留字母、数字、中文和横杠
+        .replace(/--+/g, '-');    // 连续横杠转单个
+};
+
 const ArticleDetail = () => {
     const { slug } = useParams();
     const navigate = useNavigate();
@@ -82,7 +93,7 @@ const ArticleDetail = () => {
                     if (match) {
                         const level = match[1].length;
                         const text = match[2].trim();
-                        const id = text.toLowerCase().replace(/[^\w\u4e00-\u9fa5]+/g, '-');
+                        const id = slugify(text); // 使用统一函数
                         tocItems.push({ id, text, level });
                     }
                 });
@@ -100,21 +111,34 @@ const ArticleDetail = () => {
 
     // 4. 实现滚动监听高亮目录
     useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setActiveId(entry.target.id);
+        if (!content) return;
+
+        // 稍微延迟一下，等待 DOM 渲染完成
+        const timer = setTimeout(() => {
+            const headings = contentRef.current?.querySelectorAll('h2, h3');
+            if (!headings?.length) return;
+
+            const observer = new IntersectionObserver(
+                (entries) => {
+                    // 找到当前在视口中最靠上的那个标题
+                    const visibleEntry = entries.find(entry => entry.isIntersecting);
+                    if (visibleEntry) {
+                        setActiveId(visibleEntry.target.id);
                     }
-                });
-            },
-            { rootMargin: '-80px 0% -80% 0%' }
-        );
+                },
+                { 
+                    // rootMargin 设置为：距离顶部 100px 到 距离底部 60% 的范围
+                    // 这样标题一进入屏幕上半截就会触发，且退出太远后不会误触发
+                    rootMargin: '-100px 0% -60% 0%', 
+                    threshold: 0.1 
+                }
+            );
 
-        const headings = contentRef.current?.querySelectorAll('h2, h3');
-        headings?.forEach((h) => observer.observe(h));
+            headings.forEach((h) => observer.observe(h));
+            return () => observer.disconnect();
+        }, 100);
 
-        return () => observer.disconnect();
+        return () => clearTimeout(timer);
     }, [content]);
 
     const scrollToAnchor = (id: string) => {
@@ -123,6 +147,8 @@ const ArticleDetail = () => {
             const yOffset = -100; // 留出顶部导航空间
             const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
             window.scrollTo({ top: y, behavior: 'smooth' });
+            // 点击后手动设置 active 状态，防止滚动延迟导致的感知滞后
+            setActiveId(id);
             setIsRightOpen(false);
         }
     };
@@ -130,19 +156,19 @@ const ArticleDetail = () => {
     // 自定义 Markdown 渲染组件以注入 ID
     const MarkdownComponents = {
         h2: ({ ...props }: any) => {
-            const id = props.children?.toString().toLowerCase().replace(/[^\w\u4e00-\u9fa5]+/g, '-');
+            const id = slugify(props.children?.toString() || '');
             return <h2 id={id} {...props} className="scroll-mt-24" />;
         },
         h3: ({ ...props }: any) => {
-            const id = props.children?.toString().toLowerCase().replace(/[^\w\u4e00-\u9fa5]+/g, '-');
+            const id = slugify(props.children?.toString() || '');
             return <h3 id={id} {...props} className="scroll-mt-24" />;
         }
     };
 
     return (
-        <div className="min-h-screen bg-[#0a0a0a] text-gray-200">
+        <div className="min-h-screen bg-transparent text-gray-200">
             {/* 顶栏占位/返回 */}
-            <div className="max-w-[1600px] mx-auto px-6 py-4 flex items-center justify-between sticky top-0 z-30 bg-[#0a0a0a]/80 backdrop-blur-md border-b border-white/5 lg:hidden">
+            <div className="max-w-[1600px] mx-auto px-6 py-4 flex items-center justify-between sticky top-0 z-30 bg-black/20 backdrop-blur-md border-b border-white/5 lg:hidden">
                 <button onClick={() => setIsLeftOpen(true)} className="p-2 text-gray-400 hover:text-cyan-400" title="打开侧边栏" aria-label="打开侧边栏"><List size={24} /></button>
                 <Link to="/collections/music" className="font-bold text-cyan-400">文章详情</Link>
                 <button onClick={() => setIsRightOpen(true)} className="p-2 text-gray-400 hover:text-cyan-400" title="打开目录" aria-label="打开目录"><Menu size={24} /></button>
@@ -152,7 +178,7 @@ const ArticleDetail = () => {
                 
                 {/* --- 左侧侧边栏：同分类文章 --- */}
                 <aside className={`
-                    fixed inset-y-0 left-0 z-50 w-72 bg-[#111] border-r border-white/5 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:z-0 lg:bg-transparent lg:border-none
+                    fixed inset-y-0 left-0 z-50 w-72 bg-zinc-900 lg:bg-transparent border-r border-white/5 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:z-0 lg:border-none
                     ${isLeftOpen ? 'translate-x-0' : '-translate-x-full'}
                 `}>
                     <div className="h-full flex flex-col p-6 overflow-y-auto lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]">
@@ -198,7 +224,7 @@ const ArticleDetail = () => {
                             <div className="h-1 w-20 bg-cyan-500/50 rounded-full"></div>
                         </div>
 
-                        <article ref={contentRef} className="bg-white/5 rounded-3xl p-8 lg:p-12 border border-white/5 backdrop-blur-sm shadow-2xl">
+                        <article ref={contentRef} className="bg-black/40 rounded-3xl p-8 lg:p-12 border border-white/5 backdrop-blur-md shadow-2xl">
                             <div className="prose prose-invert prose-lg max-w-none 
                                 prose-headings:font-bold prose-headings:tracking-tight
                                 prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-4 prose-h2:mt-12
@@ -223,7 +249,7 @@ const ArticleDetail = () => {
 
                 {/* --- 右侧侧边栏：目录 (TOC) --- */}
                 <aside className={`
-                    fixed inset-y-0 right-0 z-50 w-72 bg-[#111] border-l border-white/5 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:z-0 lg:bg-transparent lg:border-none
+                    fixed inset-y-0 right-0 z-50 w-72 bg-zinc-900 lg:bg-transparent border-l border-white/5 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:z-0 lg:border-none
                     ${isRightOpen ? 'translate-x-0' : 'translate-x-full'}
                 `}>
                     <div className="h-full flex flex-col p-6 overflow-y-auto lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]">
