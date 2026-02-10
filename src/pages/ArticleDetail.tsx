@@ -28,6 +28,17 @@ const slugify = (text: string) => {
         .replace(/--+/g, '-');    // 连续横杠转单个
 };
 
+// 辅助函数：从 React 子组件中提取纯文本（处理 ## Title **bold** 等情况）
+const flattenChildren = (children: any): string => {
+    if (!children) return '';
+    if (typeof children === 'string') return children;
+    if (Array.isArray(children)) return children.map(flattenChildren).join('');
+    if (typeof children === 'object' && children.props && children.props.children) {
+        return flattenChildren(children.props.children);
+    }
+    return '';
+};
+
 const ArticleDetail = () => {
     const { slug } = useParams();
     const navigate = useNavigate();
@@ -35,6 +46,7 @@ const ArticleDetail = () => {
     const [metadata, setMetadata] = useState<any>({});
     const [toc, setToc] = useState<TocItem[]>([]);
     const [activeId, setActiveId] = useState('');
+    const activeIdRef = useRef(''); // 使用 Ref 实时跟踪，避免滚动监听中的闭包问题
     const [relatedArticles, setRelatedArticles] = useState<ArticleMeta[]>([]);
     const [isLeftOpen, setIsLeftOpen] = useState(false);
     const [isRightOpen, setIsRightOpen] = useState(false);
@@ -113,32 +125,42 @@ const ArticleDetail = () => {
     useEffect(() => {
         if (!content) return;
 
-        // 稍微延迟一下，等待 DOM 渲染完成
-        const timer = setTimeout(() => {
+        // 使用手写的滚动监听代替 IntersectionObserver，以获得更精确的实时反馈
+        const handleScroll = () => {
             const headings = contentRef.current?.querySelectorAll('h2, h3');
             if (!headings?.length) return;
 
-            const observer = new IntersectionObserver(
-                (entries) => {
-                    // 找到当前在视口中最靠上的那个标题
-                    const visibleEntry = entries.find(entry => entry.isIntersecting);
-                    if (visibleEntry) {
-                        setActiveId(visibleEntry.target.id);
-                    }
-                },
-                { 
-                    // rootMargin 设置为：距离顶部 100px 到 距离底部 60% 的范围
-                    // 这样标题一进入屏幕上半截就会触发，且退出太远后不会误触发
-                    rootMargin: '-100px 0% -60% 0%', 
-                    threshold: 0.1 
+            // 触发位置：视口顶部下方约 160px 处（留出导航栏空间）
+            const triggerLine = window.scrollY + 160;
+            
+            let currentId = '';
+            for (const heading of Array.from(headings) as HTMLElement[]) {
+                // 使用 getBoundingClientRect 计算距离文档顶部的绝对高度
+                const top = heading.getBoundingClientRect().top + window.scrollY;
+                
+                if (top <= triggerLine) {
+                    currentId = heading.id;
+                } else {
+                    break;
                 }
-            );
+            }
 
-            headings.forEach((h) => observer.observe(h));
-            return () => observer.disconnect();
-        }, 100);
+            if (currentId && currentId !== activeIdRef.current) {
+                activeIdRef.current = currentId;
+                setActiveId(currentId);
+            }
+        };
 
-        return () => clearTimeout(timer);
+        // 绑定原生滚动事件
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        
+        // 初始执行一次
+        const initTimer = setTimeout(handleScroll, 300);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            clearTimeout(initTimer);
+        };
     }, [content]);
 
     const scrollToAnchor = (id: string) => {
@@ -148,6 +170,7 @@ const ArticleDetail = () => {
             const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
             window.scrollTo({ top: y, behavior: 'smooth' });
             // 点击后手动设置 active 状态，防止滚动延迟导致的感知滞后
+            activeIdRef.current = id;
             setActiveId(id);
             setIsRightOpen(false);
         }
@@ -156,11 +179,11 @@ const ArticleDetail = () => {
     // 自定义 Markdown 渲染组件以注入 ID
     const MarkdownComponents = {
         h2: ({ ...props }: any) => {
-            const id = slugify(props.children?.toString() || '');
+            const id = slugify(flattenChildren(props.children));
             return <h2 id={id} {...props} className="scroll-mt-24" />;
         },
         h3: ({ ...props }: any) => {
-            const id = slugify(props.children?.toString() || '');
+            const id = slugify(flattenChildren(props.children));
             return <h3 id={id} {...props} className="scroll-mt-24" />;
         }
     };
