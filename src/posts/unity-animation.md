@@ -3,6 +3,7 @@ title: Unity 进阶笔记：2D 渲染与动画系统
 date: 2026-01-25
 summary: 详解 Unity 字段修饰符、SpriteRenderer 核心概念、Sprite Mask 遮罩技术以及动画系统（Animation/Animator）的完整工作流。
 cover: /logo.png
+category: Unity
 ---
 
 ## 字段修饰符

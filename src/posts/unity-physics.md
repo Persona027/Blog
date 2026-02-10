@@ -3,6 +3,7 @@ title: Unity 进阶笔记：物理系统与射线检测
 date: 2026-01-24
 summary: 详细讲解 Unity 中的 Tag、Layer 概念，以及 2D 物理系统核心组件（Collider2D, Rigidbody2D）和射线检测的使用方法。
 cover: /logo.png
+category: Unity
 ---
 
 ## Tag (标签)

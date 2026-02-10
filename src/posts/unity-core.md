@@ -3,6 +3,7 @@ title: Unity 核心概念与基础 API 拓展笔记
 date: 2026-01-23
 summary: 面向 Unity 初学者的核心概念系统性扩展，涵盖 GameObject、Component 生命周期及常用 API 详解。
 cover: /logo.png
+category: Unity
 ---
 
 > 面向对象：Unity 初学到中级开发者\
