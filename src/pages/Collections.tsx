@@ -333,11 +333,11 @@ const Collections = () => {
                 </div>
             ) : category === 'others' ? (
                 <div className="space-y-12">
-                    {/* Section 1: 占位符标题一 */}
+                    {/* Section 1: 链接 */}
                     <section>
                         <h3 className="text-xl font-bold text-gray-400 mb-6 flex items-center gap-2">
                             <span className="w-1.5 h-6 bg-cyan-400 rounded-full"></span>
-                            Section Title One
+                            链接
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {socials.filter(s => s.group === 1).map(item => (
@@ -372,11 +372,11 @@ const Collections = () => {
                         </div>
                     </section>
 
-                    {/* Section 2: 占位符标题二 */}
+                    {/* Section 2: ID */}
                     <section>
                         <h3 className="text-xl font-bold text-gray-400 mb-6 flex items-center gap-2">
                             <span className="w-1.5 h-6 bg-purple-400 rounded-full"></span>
-                            Section Title Two
+                            ID
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {socials.filter(s => s.group === 2).map(item => (

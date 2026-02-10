@@ -92,4 +92,8 @@ export default defineConfig([
 - **技术实现**: 引入 CSS Mask 技术实现外部 SVG 的动态着色，支持品牌色悬停高亮。
 - **交互逻辑**: 实现社交账号点击跳转、游戏 ID 点击复制的差异化交互。
 - **数据管理**: 新增 `src/data/socials.ts` 和 `public/other/` 图标库，包含 GitHub、Bilibili、Steam、Discord、豆瓣及网易云等。
+- **UI 优化**: 将“其他”板块的分类标题由占位符更新为“链接”与“ID”。
+- **内容调整**: 在“链接”分区新增 Steam 个人主页与知乎，并将 Steam 从“ID”分区移除以便统一展示为跳转链接。
+- **ID 细化**: 移除了 Discord 账号，并在“ID”分区新增了暴雪战网 (Battle.net)、明日方舟 (Arknights) 以及瓦罗兰特 (Valorant) 三个游戏的 ID 复制卡片。
+- **图标重绘**: 对 Steam、知乎、战网、明日方舟及瓦罗兰特的 SVG 图标进行了重绘，提升了图准度与视觉美感。
 

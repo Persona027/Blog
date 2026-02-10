@@ -10,13 +10,13 @@ export interface SocialAccount {
 }
 
 export const socials: SocialAccount[] = [
-    // Section A (占位符标题)
+    // Section A (链接)
     {
         id: 'github',
-        name: '@Persona-Dev',
+        name: '@Persona',
         platform: 'GitHub',
         icon: 'github.svg',
-        value: 'https://github.com',
+        value: 'https://github.com/Persona027',
         type: 'link',
         color: 'text-gray-100',
         group: 1
@@ -51,26 +51,56 @@ export const socials: SocialAccount[] = [
         color: 'text-red-500',
         group: 1
     },
-    
-    // Section B (占位符标题)
     {
-        id: 'steam',
-        name: 'Persona_Gamer',
+        id: 'steam-link',
+        name: 'Holy Moly',
         platform: 'Steam',
         icon: 'steam.svg',
-        value: '123456789', // 模拟好友代码
-        type: 'copy',
+        value: 'https://steamcommunity.com/profiles/76561198849238130/',
+        type: 'link',
         color: 'text-blue-400',
+        group: 1
+    },
+    {
+        id: 'zhihu',
+        name: '知乎主页',
+        platform: 'Zhihu',
+        icon: 'zhihu.svg',
+        value: 'https://www.zhihu.com/people/qing-ge-liu-huan-64-90',
+        type: 'link',
+        color: 'text-blue-600',
+        group: 1
+    },
+    
+    // Section B (ID)
+    {
+        id: 'battlenet',
+        name: 'sneaker#51195',
+        platform: 'Battle.net',
+        icon: 'battlenet.svg',
+        value: 'sneaker#51195',
+        type: 'copy',
+        color: 'text-blue-300',
         group: 2
     },
     {
-        id: 'discord',
-        name: 'persona#0001',
-        platform: 'Discord',
-        icon: 'discord.svg',
-        value: 'persona#0001',
+        id: 'arknights',
+        name: 'Persona#1234',
+        platform: 'Arknights',
+        icon: 'arknights.svg',
+        value: 'Persona#1234',
         type: 'copy',
-        color: 'text-indigo-400',
+        color: 'text-yellow-500',
+        group: 2
+    },
+    {
+        id: 'valorant',
+        name: '金玟池#12866',
+        platform: 'Valorant',
+        icon: 'valorant.svg',
+        value: '金玟池#12866',
+        type: 'copy',
+        color: 'text-red-500',
         group: 2
     }
 ];
