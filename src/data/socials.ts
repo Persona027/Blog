@@ -26,7 +26,7 @@ export const socials: SocialAccount[] = [
         name: 'Persona的动态',
         platform: 'Bilibili',
         icon: 'bilibili.svg',
-        value: 'https://bilibili.com',
+        value: 'https://space.bilibili.com/279658155',
         type: 'link',
         color: 'text-pink-400',
         group: 1
@@ -36,7 +36,7 @@ export const socials: SocialAccount[] = [
         name: '影评集',
         platform: 'Douban',
         icon: 'douban.svg',
-        value: 'https://douban.com',
+        value: 'https://www.douban.com/people/221447107',
         type: 'link',
         color: 'text-green-500',
         group: 1
@@ -46,7 +46,7 @@ export const socials: SocialAccount[] = [
         name: '我的歌单',
         platform: 'NetEase Music',
         icon: 'cloudmusic.svg',
-        value: 'https://music.163.com',
+        value: 'https://music.163.com/#/user/home?id=622659989',
         type: 'link',
         color: 'text-red-500',
         group: 1
