@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CoverImage } from '../components/CoverImage';
-import { Archive, LayoutGrid, Layers, FileText } from 'lucide-react';
+import { Archive, Layers, FileText } from 'lucide-react';
 
 interface Post {
   slug: string;
