@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CoverImage } from '../components/CoverImage';
-import { Archive, Layers, FileText } from 'lucide-react';
+import { Archive, Layers, FileText, ChevronRight, ChevronDown } from 'lucide-react';
 
 interface Post {
   slug: string;
@@ -16,6 +16,7 @@ interface Post {
 const ArticleList = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [searchParams] = useSearchParams();
+  const [expandedCats, setExpandedCats] = useState<string[]>([]);
   const view = searchParams.get('view') || 'grid';
 
   useEffect(() => {
@@ -112,24 +113,59 @@ const ArticleList = () => {
 
   // 渲染分类视图
   const renderCategoryView = () => {
-    const categories = Array.from(new Set(posts.map(p => p.category)));
+    const categories = Array.from(new Set(posts.map(p => p.category))).sort();
+    
+    const toggleCategory = (cat: string) => {
+        setExpandedCats(prev => 
+            prev.includes(cat) ? prev.filter(c => c !== cat) : [...prev, cat]
+        );
+    };
+
     return (
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="max-w-3xl mx-auto space-y-4">
         {categories.map(cat => {
             const catPosts = posts.filter(p => p.category === cat);
+            const isExpanded = expandedCats.includes(cat);
+            
             return (
-                <div key={cat} className="bg-white/5 border border-white/10 rounded-2xl p-8 backdrop-blur-sm">
-                    <h3 className="text-2xl font-bold text-white mb-6 flex items-center justify-between">
-                        <span className="flex items-center gap-2"><Layers className="text-cyan-400" /> {cat}</span>
-                        <span className="text-sm font-mono text-gray-500 flex items-center gap-1"><FileText size={14}/> {catPosts.length}</span>
-                    </h3>
-                    <div className="space-y-3">
-                        {catPosts.map(post => (
-                            <Link to={`/article/${post.slug}`} key={post.slug} className="block text-gray-400 hover:text-cyan-300 transition-colors py-1 pl-4 border-l border-white/5 hover:border-cyan-400/50">
-                                {post.title}
-                            </Link>
-                        ))}
-                    </div>
+                <div key={cat} className="relative z-10">
+                    {/* 分类标题行 */}
+                    <button 
+                        onClick={() => toggleCategory(cat)}
+                        className="w-full flex items-center justify-between py-4 px-2 hover:bg-white/5 active:bg-white/10 transition-all group cursor-pointer select-none"
+                    >
+                        <div className="flex items-center gap-3">
+                            {isExpanded ? (
+                                <ChevronDown size={20} className="text-cyan-400" />
+                            ) : (
+                                <ChevronRight size={20} className="text-gray-500 group-hover:text-cyan-400" />
+                            )}
+                            <span className={`text-xl font-bold transition-colors ${isExpanded ? 'text-white' : 'text-gray-300 group-hover:text-white'}`}>
+                                {cat}
+                            </span>
+                        </div>
+                        <div className="flex items-center gap-2 text-gray-500 font-mono text-sm">
+                            <FileText size={16} />
+                            <span>{catPosts.length}</span>
+                        </div>
+                    </button>
+
+                    {/* 文章标题列表 */}
+                    {isExpanded && (
+                        <div className="mt-1 ml-9 space-y-1 animate-in fade-in slide-in-from-top-2 duration-300">
+                            {catPosts.length > 0 ? catPosts.map(post => (
+                                <Link 
+                                    to={`/article/${post.slug}`} 
+                                    key={post.slug} 
+                                    className="block py-3 px-4 text-gray-400 hover:text-cyan-300 hover:bg-cyan-500/10 rounded-lg transition-all"
+                                >
+                                    {post.title}
+                                </Link>
+                            )) : (
+                                <div className="py-3 px-4 text-gray-600 italic text-sm">暂无文章</div>
+                            )}
+                        </div>
+                    )}
                 </div>
             );
         })}
