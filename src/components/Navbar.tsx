@@ -1,9 +1,22 @@
 // filepath: D:/myWebsite/personal-site/src/components/Navbar.tsx
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown, LayoutGrid, Archive, Layers } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 const Navbar = () => {
     const location = useLocation();
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    // 点击外部关闭下拉菜单
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (!(event.target as Element).closest('.dropdown-container')) {
+                setIsDropdownOpen(false);
+            }
+        };
+        document.addEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
+    }, []);
 
     // 根据当前路径判断激活状态
     const isActive = (path: string) => {
@@ -30,13 +43,16 @@ const Navbar = () => {
                 <Link to="/" className={linkStyle('/')}>首页</Link>
                 
                 {/* 文章下拉菜单 */}
-                <div className="relative group">
-                    <button className={`flex items-center gap-1 py-4 ${location.pathname.startsWith('/articles') ? 'text-white font-bold' : 'text-gray-300 hover:text-white transition'}`}>
-                        文章 <ChevronDown size={14} className="group-hover:rotate-180 transition-transform duration-300" />
+                <div className="relative dropdown-container">
+                    <button 
+                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                        className={`flex items-center gap-1 py-4 ${location.pathname.startsWith('/articles') ? 'text-white font-bold' : 'text-gray-300 hover:text-white transition'}`}
+                    >
+                        文章 <ChevronDown size={14} className={`transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                     </button>
                     
                     {/* 下拉列表容器 */}
-                    <div className="absolute top-full right-0 mt-0 w-40 bg-black/80 backdrop-blur-xl border border-white/10 rounded-xl py-2 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 shadow-2xl">
+                    <div className={`absolute top-full right-0 mt-0 w-40 bg-black/80 backdrop-blur-xl border border-white/10 rounded-xl py-2 transition-all duration-300 shadow-2xl ${isDropdownOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-2 pointer-events-none'}`}>
                         <Link 
                             to="/articles" 
                             className={`flex items-center gap-2 px-4 py-2 text-sm hover:bg-white/10 transition-colors ${isActive('/articles') ? 'text-cyan-400' : 'text-gray-300'}`}
