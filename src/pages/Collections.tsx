@@ -191,8 +191,8 @@ const AnimeList = () => (
                         <div>
                             <div className="flex flex-col gap-1 mb-3">
                                 <div className="flex flex-wrap items-baseline gap-2">
-                                    <h3 className="text-xl font-bold text-white group-hover:text-pink-400 transition-colors">{anime.title}</h3>
-                                    <span className="text-sm text-gray-500 font-medium">{anime.originalTitle}</span>
+                                    <h3 className="text-xl font-bold text-white group-hover:text-pink-400 transition-colors">{anime.originalTitle}</h3>
+                                    <span className="text-sm text-gray-500 font-medium">{anime.title}</span>
                                 </div>
                                 <div className="flex flex-wrap gap-2 mt-1">
                                     {anime.tags.map(tag => (
