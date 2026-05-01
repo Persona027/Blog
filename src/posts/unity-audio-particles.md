@@ -3,7 +3,7 @@ title: Unity 中的声音与粒子系统
 date: 2026-03-02
 category: Unity
 summary: 深入探讨 Unity 中的音频播放机制（AudioSource/AudioListener）、资源异步加载、声音播放器架构设计，以及初探粒子系统与 Render Texture 倒影技术。
-cover: /logo.png
+cover: /assets/covers/logo.png
 ---
 
 # Unity 中的声音

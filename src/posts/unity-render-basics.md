@@ -3,7 +3,7 @@ title: Unity 渲染基础：材质、着色器与光照
 date: 2026-02-12
 category: Unity
 summary: 深入探讨 Unity 渲染的核心三剑客（Material, Shader, Texture）以及 Mesh 和 Lighting 的基础运作机制。
-cover: /logo.png
+cover: /assets/covers/logo.png
 ---
 
 ## 材质（Material）是什么?

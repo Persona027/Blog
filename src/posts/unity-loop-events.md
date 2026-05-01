@@ -2,7 +2,7 @@
 title: Unity 进阶：协程与事件系统
 date: 2026-02-09
 summary: 深入解析 Unity 中的协程 (Coroutine) 实现原理，以及如何利用 C# 的 Action 和 Func 构建模块化的事件系统。
-cover: /logo.png
+cover: /assets/covers/logo.png
 category: Unity
 ---
 

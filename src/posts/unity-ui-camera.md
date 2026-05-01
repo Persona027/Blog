@@ -2,7 +2,7 @@
 title: Unity 相机与 UI 系统详解
 date: 2026-01-26
 summary: 深入解析 Unity 中的 Camera 组件（透视与正交）、UI 系统架构（Canvas, Image, Text, Button）以及如何实现相机跟随和 UI 交互。
-cover: /logo.png
+cover: /assets/covers/logo.png
 category: Unity
 ---
 

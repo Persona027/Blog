@@ -3,7 +3,7 @@ title: 午后随笔：关于独立开发的思考
 date: 2026-02-12
 category: 随笔记录
 summary: 在快节奏的开发周期中，停下来思考代码以外的逻辑同样重要。
-cover: /logo.png
+cover: /assets/covers/logo.png
 ---
 
 ## 思考

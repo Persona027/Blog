@@ -2,7 +2,7 @@
 title: Unity 常用 API、预制件与进阶 UI 系统
 date: 2026-01-28
 summary: 详解 Unity 中常用的 Mathf 数学库、预制件 (Prefab) 的核心概念，以及 Slider、Mask、RectTransform 等进阶 UI 组件的使用技巧。
-cover: /logo.png
+cover: /assets/covers/logo.png
 category: Unity
 ---
 
