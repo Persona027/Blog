@@ -1,15 +1,5 @@
-export interface Anime {
-    id: number;
-    title: string;
-    originalTitle: string;
-    cover: string;
-    watchDate: string;
-    releaseDate: string;
-    tags: string[];
-    review: string;
-    rating: string;
-    studio: string;
-}
+import type { Anime } from '@/types';
+export type { Anime };
 
 export const animes: Anime[] = [
     {

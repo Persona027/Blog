@@ -1,12 +1,5 @@
-export interface Book {
-    id: number;
-    title: string;
-    cover: string;     
-    author: string;    
-    publisher: string; // 出版社
-    review: string;    // 短评
-    rating: string;    // 评分 (暂留空)
-}
+import type { Book } from '@/types';
+export type { Book };
 
 export const books: Book[] = [
     {

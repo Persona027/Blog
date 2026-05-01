@@ -1,27 +1,13 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { ChevronDown } from 'lucide-react';
 import ArticleList from './ArticleList';
+import { useScrollFade } from '@/hooks/useScrollFade';
 
 const Home = () => {
     const heroRef = useRef<HTMLDivElement>(null);
     const buttonRef = useRef<HTMLButtonElement>(null);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            const scrollY = window.scrollY;
-            const newOpacity = Math.max(0, 1 - scrollY / 600);
-            
-            if (heroRef.current) {
-                heroRef.current.style.opacity = newOpacity.toString();
-            }
-            if (buttonRef.current) {
-                buttonRef.current.style.opacity = newOpacity.toString();
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    useScrollFade([heroRef, buttonRef], 600);
 
     const scrollToContent = () => {
         window.scrollTo({
@@ -34,7 +20,7 @@ const Home = () => {
         <div className="relative">
             {/* Hero Section */}
             <div className="h-screen flex flex-col items-center justify-center relative">
-                <div 
+                <div
                     ref={heroRef}
                     className="text-center transition-opacity duration-75 ease-out"
                 >
@@ -44,7 +30,7 @@ const Home = () => {
                 </div>
 
                 {/* Scroll Indicator */}
-                <button 
+                <button
                     ref={buttonRef}
                     onClick={scrollToContent}
                     aria-label="Scroll down to content"

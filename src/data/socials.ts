@@ -1,13 +1,5 @@
-export interface SocialAccount {
-    id: string;
-    name: string;      // 展示的 ID 或 昵称
-    platform: string;  // 平台名
-    icon: string;      // 对应 public/other/ 下的文件名
-    value: string;     // 链接或要复制的内容
-    type: 'link' | 'copy';
-    color: string;     // Tailwind 颜色类 (text-类名)
-    group: number;     // 1 或 2，对应分区
-}
+import type { SocialAccount } from '@/types';
+export type { SocialAccount };
 
 export const socials: SocialAccount[] = [
     // Section A (链接)

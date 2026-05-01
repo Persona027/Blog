@@ -1,12 +1,5 @@
-export interface Game {
-    id: number;
-    title: string;
-    cover: string;
-    review: string;
-    rating: string;
-    tags: string[];
-    link: string;
-}
+import type { Game } from '@/types';
+export type { Game };
 
 export const games: Game[] = [
     {

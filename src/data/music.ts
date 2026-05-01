@@ -1,15 +1,5 @@
-export interface Album {
-    id: number;
-    title: string;
-    artist: string;
-    year: string;
-    genre: string;
-    cover: string;     // 图片路径，建议放在 /public/music/
-    review: string;    // 我的评价
-    rating: string;    // 评分
-    tags: string[];    // 标签
-    link?: string;     // 详情链接
-}
+import type { Album } from '@/types';
+export type { Album };
 
 export const albums: Album[] = [
     {

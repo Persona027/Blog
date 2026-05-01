@@ -1,15 +1,5 @@
-export interface Movie {
-    id: number;
-    title: string;
-    originalTitle: string;
-    cover: string;
-    watchDate: string;
-    releaseDate: string;
-    tags: string[];
-    review: string;
-    rating: string;
-    director: string; // 导演
-}
+import type { Movie } from '@/types';
+export type { Movie };
 
 export const movies: Movie[] = [
     {
