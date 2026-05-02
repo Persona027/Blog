@@ -24,7 +24,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/articles" element={<Layout><ArticleList /></Layout>} />
-                    <Route path="/article/:slug" element={<Layout><ArticleDetail /></Layout>} />
+                    <Route path="/article/:slug" element={<div className="pt-20"><ArticleDetail /></div>} />
                     <Route path="/about" element={<Layout><About /></Layout>} />
                     <Route path="/collections/:category?" element={<Layout><Collections /></Layout>} />
                 </Routes>
