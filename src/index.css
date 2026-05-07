@@ -1,3 +1,4 @@
+@import "katex/dist/katex.min.css";
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
@@ -10,4 +11,25 @@ html {
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
+}
+
+/* KaTeX dark theme overrides */
+.prose .katex,
+.prose .katex * {
+  color: inherit;
+}
+.prose .katex-display {
+  margin: 1.25em 0;
+}
+.prose .katex .mord,
+.prose .katex .mbin,
+.prose .katex .mrel,
+.prose .katex .mopen,
+.prose .katex .mclose,
+.prose .katex .mpunct,
+.prose .katex .minner {
+  color: #e5e7eb;
+}
+.prose .katex .vlist-t2 .vlist-s {
+  color: #e5e7eb;
 }

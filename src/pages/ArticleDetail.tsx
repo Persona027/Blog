@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
 import { List, Menu, X, ChevronRight, Hash } from 'lucide-react';
 import type { ComponentPropsWithoutRef } from 'react';
 import type { TocItem, ArticleMeta, Frontmatter } from '@/types';
@@ -160,7 +162,11 @@ const ArticleDetail = () => {
                 prose-code:text-cyan-300 prose-code:bg-cyan-500/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
                 prose-blockquote:border-cyan-500/50 prose-blockquote:bg-cyan-500/5 prose-blockquote:py-1 prose-blockquote:rounded-r-lg
               ">
-                <ReactMarkdown components={MarkdownComponents}>{content}</ReactMarkdown>
+                <ReactMarkdown
+                  remarkPlugins={[remarkMath]}
+                  rehypePlugins={[rehypeKatex]}
+                  components={MarkdownComponents}
+                >{content}</ReactMarkdown>
               </div>
             </article>
 
