@@ -1,12 +1,10 @@
 ---
 title: 编译原理 Ch3 — 语法分析 考点总结
 date: 2026-05-12
-summary: 编译原理第三章语法分析考点总结：上下文无关文法、LL(1)分析、LR分析（LR(0)/SLR(1)/LR(1)/LALR(1)）、算符优先分析、FIRST/FOLLOW集、预测分析表
-cover: /logo.png
 category: 编译原理
+summary: 编译原理第三章语法分析考点总结
+cover: /logo.png
 ---
-
-\tableofcontents
 
 ## 语法分析简介
 ### 语法分析器在编译器中的位置
@@ -22,9 +20,9 @@ category: 编译原理
 
 ### 语法分析学习路线图
 
-    - 数学理论：上下文无关文法（CFG）
-    - 自顶向下分析：递归下降分析算法、LL分析算法
-    - 自底向上分析：LR分析算法、算符优先分析算法
+- 数学理论：上下文无关文法（CFG）
+- 自顶向下分析：递归下降分析算法、LL分析算法
+- 自底向上分析：LR分析算法、算符优先分析算法
 
 [p.9]
 
@@ -32,20 +30,20 @@ category: 编译原理
 ### 乔姆斯基文法体系
 Noam Chomsky将文法分为四个层次：[p.14]
 
-    - 0-型文法（无限制文法）：$\alpha \rightarrow \beta$，$\alpha$至少含一个非终结符
-    - 1-型文法（上下文有关文法）：$\gamma_1 A \gamma_2 \rightarrow \gamma_1 \delta \gamma_2$，要求$|\alpha| \leq |\beta|$
-    - 2-型文法（上下文无关文法）：$A \rightarrow \delta$，$A \in V_N$, $\delta \in (V_N \cup V_T)^*$
-    - 3-型文法（正规文法）：$A \rightarrow \alpha B$ 或 $A \rightarrow \alpha$（右线性）
+- 0-型文法（无限制文法）：$\alpha \rightarrow \beta$，$\alpha$至少含一个非终结符
+- 1-型文法（上下文有关文法）：$\gamma_1 A \gamma_2 \rightarrow \gamma_1 \delta \gamma_2$，要求$|\alpha| \leq |\beta|$
+- 2-型文法（上下文无关文法）：$A \rightarrow \delta$，$A \in V_N$, $\delta \in (V_N \cup V_T)^*$
+- 3-型文法（正规文法）：$A \rightarrow \alpha B$ 或 $A \rightarrow \alpha$（右线性）
 
 四个文法类逐渐增加限制，包含关系为：3-型 $\subset$ 2-型 $\subset$ 1-型 $\subset$ 0-型。现今大多数高级程序设计语言使用上下文无关文法描述语法已足够。[p.20]
 
 ### 上下文无关文法的形式化定义
 一个上下文无关文法$G$是一个四元组 $G = (T, N, P, S)$：[p.26]
 
-    - $T$：终结符（Terminal）集合
-    - $N$：非终结符（Non-terminal）集合
-    - $P$：产生式规则集合，每条规则形式为 $X \rightarrow \beta_1\beta_2\dots\beta_n$，其中 $X \in N$，$\beta_i \in (T \cup N)$
-    - $S$：唯一的开始符号，$S \in N$
+- $T$：终结符（Terminal）集合
+- $N$：非终结符（Non-terminal）集合
+- $P$：产生式规则集合，每条规则形式为 $X \rightarrow \beta_1\beta_2...\beta_n$，其中 $X \in N$，$\beta_i \in (T \cup N)$
+- $S$：唯一的开始符号，$S \in N$
 
 也可以记为 $G = (V_N, V_T, S, P)$，其中 $V_N \cap V_T = \emptyset$，$S \in V_N$。产生式一般形式：$A \rightarrow \alpha \mid \beta$。[p.15]
 
@@ -60,14 +58,14 @@ BNF（Backus-Naur Form）是上下文无关文法的一种实现表示方法。�
 
 ### 最左推导与最右推导
 
-    - 最左推导（Leftmost Derivation）：每次总是选择最左侧的非终结符进行替换。[p.31]
-    - 最右推导（Rightmost Derivation）：每次总是选择最右侧的非终结符进行替换。最右推导是自底向上LR分析的基础。[p.31]
+- 最左推导（Leftmost Derivation）：每次总是选择最左侧的非终结符进行替换。[p.31]
+- 最右推导（Rightmost Derivation）：每次总是选择最右侧的非终结符进行替换。最右推导是自底向上LR分析的基础。[p.31]
 
 ### 句型、句子、语言
 
-    - 句型：设$S$是文法$G$的开始符号，若$S \stackrel{*}{\Rightarrow} u$，则$u$为句型（$u$可含非终结符）。[p.42]
-    - 句子：若$S \stackrel{*}{\Rightarrow} u$且$u \in V_T^*$，则$u$为句子。[p.42]
-    - 语言：$L(G) = \{u \mid S \stackrel{*}{\Rightarrow} u  且  u \in V_T^*\}$，即文法所有句子的集合。[p.42]
+- 句型：设$S$是文法$G$的开始符号，若$S \stackrel{*}{\Rightarrow} u$，则$u$为句型（$u$可含非终结符）。[p.42]
+- 句子：若$S \stackrel{*}{\Rightarrow} u$且$u \in V_T^*$，则$u$为句子。[p.42]
+- 语言：$L(G) = {u \mid S \stackrel{*}{\Rightarrow} u  且  u \in V_T^*}$，即文法所有句子的集合。[p.42]
 
 ### 直接推导
 若存在规则 $A \rightarrow \beta$，且 $\gamma, \delta \in (V_N \cup V_T)^*$，则有：$\gamma A \delta \Rightarrow \gamma \beta \delta$，称为直接推导。[p.44]
@@ -79,9 +77,9 @@ BNF（Backus-Naur Form）是上下文无关文法的一种实现表示方法。�
 ### 推导与语法树的对应
 推导可以表达成树状结构——语法树。不论推导所用的顺序（最左、最右或其他），都可以表示成语法树。[p.39-40]
 
-    - 树中的每个内部节点代表非终结符
-    - 每个叶子节点代表终结符
-    - 每一步推导代表如何从父节点生成它的直接孩子节点
+- 树中的每个内部节点代表非终结符
+- 每个叶子节点代表终结符
+- 每一步推导代表如何从父节点生成它的直接孩子节点
 
 语法树的含义取决于树的后序遍历。[p.41]
 
@@ -95,15 +93,19 @@ BNF（Backus-Naur Form）是上下文无关文法的一种实现表示方法。�
 例如，将二义性的表达式文法：
 
 ```
+
 E -> num | id | E+E | E*E
+
 ```
 
 重写为无二义性文法，通过引入优先级层次：
 
 ```
+
 E -> E+T | T
 T -> T*F | F
 F -> num | id
+
 ```
 
 这样$*$的优先级高于$+$，且$+$为左结合。[p.51-52]
@@ -118,29 +120,29 @@ F -> num | id
 #### 基本思想
 递归下降分析也称为预测分析（Predictive Parsing）。[p.63]
 
-    - 每个非终结符构造一个分析函数
-    - 对产生式右部的每个非终结符调用其分析函数
-    - "吃掉"产生式右部的每个终结符
-    - "$|$"转换为"else-if"分支，用前看符号指导分支选择
+- 每个非终结符构造一个分析函数
+- 对产生式右部的每个非终结符调用其分析函数
+- "吃掉"产生式右部的每个终结符
+- "$|$"转换为"else-if"分支，用前看符号指导分支选择
 
 [p.66]
 
 递归下降分析的特点：
 
-    - 分析高效（线性时间）
-    - 容易手工编码实现
-    - 错误定位和诊断信息准确
-    - 被GCC 4.0、LLVM等众多编译器采用
+- 分析高效（线性时间）
+- 容易手工编码实现
+- 错误定位和诊断信息准确
+- 被GCC 4.0、LLVM等众多编译器采用
 
 [p.63]
 
 #### 算法步骤
-对每个非终结符$X$及其产生式 $X \rightarrow \beta_{11}\dots\beta_{1i} \mid \beta_{21}\dots\beta_{2j} \mid \dots$：
+对每个非终结符$X$及其产生式 $X \rightarrow \beta_{11}...\beta_{1i} \mid \beta_{21}...\beta_{2j} \mid ...$：
 
-    - 构造一个分析函数
-    - 根据当前的前看符号选择匹配的候选式
-    - 对候选式右部的终结符进行匹配（"吃掉"）
-    - 对候选式右部的非终结符递归调用其分析函数
+- 构造一个分析函数
+- 根据当前的前看符号选择匹配的候选式
+- 对候选式右部的终结符进行匹配（"吃掉"）
+- 对候选式右部的非终结符递归调用其分析函数
 
 [p.64-67]
 
@@ -148,14 +150,18 @@ F -> num | id
 当产生式有公共前缀时，前看符号无法指导分支选择。[p.68]
 
 ```
+
 A -> aB1 | aB2 | aB3 | ...
+
 ```
 
 提取左公因子后：
 
 ```
+
 A  -> aA'
 A' -> B1 | B2 | B3 | ...
+
 ```
 
 #### 预处理：消除左递归
@@ -165,24 +171,30 @@ A' -> B1 | B2 | B3 | ...
 若 $P \rightarrow P\alpha \mid \beta$（$\alpha \neq \varepsilon$，$\beta$不以$P$开头），改写为：
 
 ```
+
 P  -> \beta P'
 P' -> \alpha P' | \varepsilon
-```
-
-一般情况：若 $P \rightarrow P\alpha_1 \mid P\alpha_2 \mid \dots \mid P\alpha_m \mid \beta_1 \mid \dots \mid \beta_n$，改写为：[p.73]
 
 ```
+
+一般情况：若 $P \rightarrow P\alpha_1 \mid P\alpha_2 \mid ... \mid P\alpha_m \mid \beta_1 \mid ... \mid \beta_n$，改写为：[p.73]
+
+```
+
 P  -> \beta_1 P' | \beta_2 P' | ... | \beta_n P'
 P' -> \alpha_1 P' | \alpha_2 P' | ... | \alpha_m P' | \varepsilon
+
 ```
 
 示例：
 
 ```
+
 E -> E+T | T   =>   E  -> TE'
                     E' -> +TE' | \varepsilon
 T -> T*F | F   =>   T  -> FT'
                     T' -> *FT' | \varepsilon
+
 ```
 
 [p.70]
@@ -190,10 +202,10 @@ T -> T*F | F   =>   T  -> FT'
 **完全消除左递归（包括间接左递归）：**[p.74-76]
 对不含回路和$\varepsilon$产生式的文法：
 
-    - 将非终结符按任意顺序排列为 $P_1, P_2, \dots, P_n$
-    - 对 $i=1$ 到 $n$，对 $j=1$ 到 $i-1$，把形如 $P_i \rightarrow P_j\gamma$的规则改写成 $P_i \rightarrow \delta_1\gamma \mid \dots \mid \delta_k\gamma$
-    - 消除关于 $P_i$ 的直接左递归
-    - 化简，去掉无用非终结符产生式
+- 将非终结符按任意顺序排列为 $P_1, P_2, ..., P_n$
+- 对 $i=1$ 到 $n$，对 $j=1$ 到 $i-1$，把形如 $P_i \rightarrow P_j\gamma$的规则改写成 $P_i \rightarrow \delta_1\gamma \mid ... \mid \delta_k\gamma$
+- 消除关于 $P_i$ 的直接左递归
+- 化简，去掉无用非终结符产生式
 
 ### 4.2 LL(1)分析算法
 #### LL(1)的含义
@@ -209,57 +221,57 @@ LL(1)：从左（L）向右读入程序，最左（L）推导，采用一个（1
 
 **近似公式：**[p.92]
 
-    - 对 $N \rightarrow a\dots$：FIRST$(N) \cup= \{a\}$
-    - 对 $N \rightarrow M\dots$：FIRST$(N) \cup=$ FIRST$(M)$
+- 对 $N \rightarrow a...$：FIRST$(N) \cup= {a}$
+- 对 $N \rightarrow M...$：FIRST$(N) \cup=$ FIRST$(M)$
 
 **完整公式（考虑NULLABLE）：**[p.100]
 
-    - 对 $X \rightarrow a$：FIRST$(X) \cup= \{a\}$
-    - 对 $X \rightarrow Y_1 Y_2 \dots Y_n$：
-    
-        - FIRST$(X) \cup=$ FIRST$(Y_1)$
-        - 若 $Y_1 \in$ NULLABLE，FIRST$(X) \cup=$ FIRST$(Y_2)$
-        - 若 $Y_1, Y_2 \in$ NULLABLE，FIRST$(X) \cup=$ FIRST$(Y_3)$
-        - 以此类推
-    
+- 对 $X \rightarrow a$：FIRST$(X) \cup= {a}$
+- 对 $X \rightarrow Y_1 Y_2 ... Y_n$：
+
+- FIRST$(X) \cup=$ FIRST$(Y_1)$
+- 若 $Y_1 \in$ NULLABLE，FIRST$(X) \cup=$ FIRST$(Y_2)$
+- 若 $Y_1, Y_2 \in$ NULLABLE，FIRST$(X) \cup=$ FIRST$(Y_3)$
+- 以此类推
+
 
 #### NULLABLE集合
 非终结符$X$属于NULLABLE当且仅当：[p.97]
 
-    - 基本情况：存在 $X \rightarrow \varepsilon$
-    - 归纳情况：$X \rightarrow Y_1 \dots Y_n$，且 $Y_1, \dots, Y_n$ 都属于NULLABLE
+- 基本情况：存在 $X \rightarrow \varepsilon$
+- 归纳情况：$X \rightarrow Y_1 ... Y_n$，且 $Y_1, ..., Y_n$ 都属于NULLABLE
 
 #### FIRST\_S产生式集
-一个产生式的FIRST\_S集：FIRST\_S$(\beta_1 \dots \beta_n)$定义为从该产生式右部开始推导得出的句子开头的所有可能终结符集合。[p.90]
+一个产生式的FIRST\_S集：FIRST\_S$(\beta_1 ... \beta_n)$定义为从该产生式右部开始推导得出的句子开头的所有可能终结符集合。[p.90]
 
 计算方法（完整版）：[p.107]
 
-    - 若 $\beta_1 = a$（终结符），则FIRST\_S $\cup= \{a\}$
-    - 若 $\beta_1 = M_1$（非终结符），则：
-    
-        - FIRST\_S $\cup=$ FIRST$(M_1)$
-        - 若 $M_1$ 非NULLABLE，停止
-        - 若 $M_1$ NULLABLE，继续FIRST$(M_2)$，以此类推
-        - 若所有 $\beta_i$ 都NULLABLE，则FIRST\_S $\cup=$ FOLLOW$(N)$，其中$N$是该产生式的左部
-    
+- 若 $\beta_1 = a$（终结符），则FIRST\_S $\cup= {a}$
+- 若 $\beta_1 = M_1$（非终结符），则：
+
+- FIRST\_S $\cup=$ FIRST$(M_1)$
+- 若 $M_1$ 非NULLABLE，停止
+- 若 $M_1$ NULLABLE，继续FIRST$(M_2)$，以此类推
+- 若所有 $\beta_i$ 都NULLABLE，则FIRST\_S $\cup=$ FOLLOW$(N)$，其中$N$是该产生式的左部
+
 
 #### FOLLOW集
 FOLLOW$(N)$ = 紧跟在非终结符$N$后面的终结符号的集合。[p.104]
 
 **不���点算法：**[p.105]
-对每条产生式 $N \rightarrow \beta_1 \dots \beta_{n-2} \beta_{n-1} \beta_n$：
+对每条产生式 $N \rightarrow \beta_1 ... \beta_{n-2} \beta_{n-1} \beta_n$：
 
-    - 令 temp = FOLLOW$(N)$
-    - 从右向左扫描 $\beta_i$（$i$ 从 $n$ 到 $1$）：
-    
-        - 若 $\beta_i = a$（终结符），temp $= \{a\}$
-        - 若 $\beta_i = M$（非终结符）：
-        
-            - FOLLOW$(M)$ $\cup=$ temp
-            - 若 $M$ 非NULLABLE，temp $=$ FIRST$(M)$
-            - 若 $M$ NULLABLE，temp $=$ FIRST$(M) \cup$ temp
-        
-    
+- 令 temp = FOLLOW$(N)$
+- 从右向左扫描 $\beta_i$（$i$ 从 $n$ 到 $1$）：
+
+- 若 $\beta_i = a$（终结符），temp $= {a}$
+- 若 $\beta_i = M$（非终结符）：
+
+- FOLLOW$(M)$ $\cup=$ temp
+- 若 $M$ 非NULLABLE，temp $=$ FIRST$(M)$
+- 若 $M$ NULLABLE，temp $=$ FIRST$(M) \cup$ temp
+
+
 
 #### FIRST和FOLLOW的不动点算法
 两者均采用不动点迭代算法：从空集开始，反复应用产生式规则更新集合，直到所有集合不再变化（收敛到不动点）。[p.93, p.101-102, p.105-106]
@@ -267,14 +279,15 @@ FOLLOW$(N)$ = 紧跟在非终结符$N$后面的终结符号的集合。[p.104]
 #### 构造LL(1)分析表
 对每条产生式 $A \rightarrow \beta$：
 
-    - 对FIRST\_S$(\beta)$中的每个终结符$a$：table$[A][a]=$ 该产生式编号
-    - 若 $\beta$ 可以推导出 $\varepsilon$（即NULLABLE），对FOLLOW$(A)$中的每个终结符$b$：table$[A][b]=$ 该产生式编号
+- 对FIRST\_S$(\beta)$中的每个终结符$a$：table$[A][a]=$ 该产生式编号
+- 若 $\beta$ 可以推导出 $\varepsilon$（即NULLABLE），对FOLLOW$(A)$中的每个终结符$b$：table$[A][b]=$ 该产生式编号
 
 [p.109]
 
 #### LL(1)驱动的伪代码
 
 ```
+
 stack.push($); stack.push(S);
 while (栈非空) {
     X = stack.top();
@@ -284,7 +297,8 @@ while (栈非空) {
     else if (table[X][a] != empty)
         pop(); 压入产生式右部(逆序);
     else ERROR;
-}```
+
+```
 
 [p.110]
 
@@ -292,12 +306,12 @@ while (栈非空) {
 #### LL(1)文法的判定条件
 文法$G$为LL(1)文法当且仅当$G$中的任意两条产生式 $A \rightarrow \alpha \mid \beta$ 满足：[p.113]
 
-    - 当$\alpha$与$\beta$都不能推导出$\varepsilon$，则FIRST$(\alpha)$与FIRST$(\beta)$不相交
-    - 当$\alpha$或$\beta$能推导出$\varepsilon$：
-    
-        - 若$\alpha$能推导出$\varepsilon$，则FIRST$(\beta)$与FOLLOW$(A)$不相交
-        - 若$\beta$能推导出$\varepsilon$，则FIRST$(\alpha)$与FOLLOW$(A)$不相交
-    
+- 当$\alpha$与$\beta$都不能推导出$\varepsilon$，则FIRST$(\alpha)$与FIRST$(\beta)$不相交
+- 当$\alpha$或$\beta$能推导出$\varepsilon$：
+
+- 若$\alpha$能推导出$\varepsilon$，则FIRST$(\beta)$与FOLLOW$(A)$不相交
+- 若$\beta$能推导出$\varepsilon$，则FIRST$(\alpha)$与FOLLOW$(A)$不相交
+
 
 #### 冲突消除策略
 **策略1——FIRST相交：**提取左公因子。[p.116]
@@ -307,9 +321,9 @@ while (栈非空) {
 
 **策略3——$\varepsilon$导致FIRST与FOLLOW相交：**展开产生式，消除左递归或提取左公因子。[p.118-119]
 
-    - Case 1: 提取左公因子（展开$\varepsilon$候选式）
-    - Case 2: 消除左递归
-    - Case 3: 某些情况下可能失败（FIRST与FOLLOW永远相交）[p.120]
+- Case 1: 提取左公因子（展开$\varepsilon$候选式）
+- Case 2: 消除左递归
+- Case 3: 某些情况下可能失败（FIRST与FOLLOW永远相交）[p.120]
 
 #### 无回溯文法的不可判定性
 并非所有的CFG都有对应的无回溯文法。对于任意的CFG，其是否存在无回溯文法是**不可判定**的。[p.121]
@@ -320,8 +334,8 @@ while (栈非空) {
 
 LR分析算法特点：
 
-    - 算法运行高效
-    - 广泛应用于语法分析器的自动生成器中：YACC, bison, CUP, C\#yacc等
+- 算法运行高效
+- 广泛应用于语法分析器的自动生成器中：YACC, bison, CUP, C#yacc等
 
 自底向上推导的过程是最右推导的逆过程。[p.129]
 
@@ -335,35 +349,35 @@ $E \rightarrow E + T \bullet$ 表示已读入所有右部符号，可以归约�
 ### 移进-归约的过程
 两个基本操作：[p.133]
 
-    - 移进（Shift）：将一个输入记号压入栈顶
-    - 归约（Reduce）：栈顶上的$n$个记号匹配某产生式右部时，将其弹出并压入该产生式左部
+- 移进（Shift）：将一个输入记号压入栈顶
+- 归约（Reduce）：栈顶上的$n$个记号匹配某产生式右部时，将其弹出并压入该产生式左部
 
 核心问题：如何确定移进和归约的时机？
 
 ### LR分析表
 LR分析表分为两部分：[p.134-137]
 
-    - ACTION表：以状态为行，终结符（包括结束符\$）为列，值为：
-    
-        - $s_n$：移进当前记号，转移到状态$n$
-        - $r_n$：用第$n$条产生式归约
-        - accept：接受
-        - 空白：出错
-    
-    - GOTO表：以状态为行，非终结符为列，值为转移到的状态$g_n$
+- ACTION表：以状态为行，终结符（包括结束符\$）为列，值为：
+
+- $s_n$：移进当前记号，转移到状态$n$
+- $r_n$：用第$n$条产生式归约
+- accept：接受
+- 空白：出错
+
+- GOTO表：以状态为行，非终结符为列，值为转移到的状态$g_n$
 
 **归约操作（$r_n$）的具体步骤：**[p.135]
 
-    - 从记号栈弹出产生式$n$的所有右部记号，同时从状态栈弹出相等数量的状态
-    - 将产生式$n$的左部压入记号栈
-    - 根据当前状态栈栈顶状态，查询GOTO表，转移状态
+- 从记号栈弹出产生式$n$的所有右部记号，同时从状态栈弹出相等数量的状态
+- 将产生式$n$的左部压入记号栈
+- 根据当前状态栈栈顶状态，查询GOTO表，转移状态
 
 **LR分析器的四个动作：**[p.137]
 
-    - 移进(shift)：ACTION$[S_i, a]=S$，将$a$推进栈，新状态$S_j=$ GOTO$[S_i, a]$
-    - 规约(reduce)：ACTION$[S_i, a]=r_d$（规则$A \rightarrow \beta$），弹出$\beta$及相应状态，压入$A$，新状态$S_j=$ GOTO$[S_{i-|\beta|}, A]$
-    - 接受(accept)：成功结束
-    - 出错(error)：报告错误
+- 移进(shift)：ACTION$[S_i, a]=S$，将$a$推进栈，新状态$S_j=$ GOTO$[S_i, a]$
+- 规约(reduce)：ACTION$[S_i, a]=r_d$（规则$A \rightarrow \beta$），弹出$\beta$及相应状态，压入$A$，新状态$S_j=$ GOTO$[S_{i-|\beta|}, A]$
+- 接受(accept)：成功结束
+- 出错(error)：报告错误
 
 ### 5.1 LR(0)分析算法
 #### LR(0)项目集规范族与DFA构造
@@ -374,16 +388,17 @@ LR(0)分析表通过构造DFA来生成。DFA的状态是项目集合（项集）
 
 **closure(I)函数——求闭包：**[p.154-156]
 
-    - $I$中的每个项目均加入closure$(I)$
-    - 如果 $A \rightarrow \alpha \bullet B\beta$ 在 closure$(I)$中，且 $B \rightarrow \gamma$ 是产生式，且 $B \rightarrow \bullet \gamma$ 不在closure$(I)$中，则加入
-    - 重复步骤2直到不再增加
+- $I$中的每个项目均加入closure$(I)$
+- 如果 $A \rightarrow \alpha \bullet B\beta$ 在 closure$(I)$中，且 $B \rightarrow \gamma$ 是产生式，且 $B \rightarrow \bullet \gamma$ 不在closure$(I)$中，则加入
+- 重复步骤2直到不再增加
 
 **goto(I,X)函数：**[p.157]
-$I'$ = goto$(I, X)$ = closure$(\{A \rightarrow \alpha X \bullet \beta \mid A \rightarrow \alpha \bullet X\beta \in I\})$
+$I'$ = goto$(I, X)$ = closure$({A \rightarrow \alpha X \bullet \beta \mid A \rightarrow \alpha \bullet X\beta \in I})$
 
 **DFA构造算法：**[p.149-150]
 
 ```
+
 初始项集 I0 = closure({[S' -> .S$]})
 状态集合 states = {I0}
 while 存在未处理的状态I:
@@ -392,21 +407,22 @@ while 存在未处理的状态I:
         if J非空且J不在states中:
             states添加J
         添加边 I --X--> J
+
 ```
 
 #### LR(0)分析表生成规则
 对每个DFA状态（项集）：[p.148, p.169, p.173]
 
-    - 若项集中包含 $A \rightarrow \alpha \bullet a\beta$，且有状态$j$通过终结符$a$可达，则ACTION$[i][a] = s_j$（移进）
-    - 若项集中包含 $A \rightarrow \alpha \bullet$（点在末尾），则对**所有**终结符ACTION$[i][a] = r_n$（用产生式$n$归约）
-    - 若项集中包含 $S' \rightarrow S \bullet \$$（开始产生式完成），则ACTION$[i][\$] =$ accept
-    - 若有通过非终结符$A$转移到状态$j$的边，则GOTO$[i][A] = j$
+- 若项集中包含 $A \rightarrow \alpha \bullet a\beta$，且有状态$j$通过终结符$a$可达，则ACTION$[i][a] = s_j$（移进）
+- 若项集中包含 $A \rightarrow \alpha \bullet$（点在末尾），则对**所有**终结符ACTION$[i][a] = r_n$（用产生式$n$归约）
+- 若项集中包含 $S' \rightarrow S \bullet \$$（开始产生式完成），则ACTION$[i][\$] =$ accept
+- 若有通过非终结符$A$转移到状态$j$的边，则GOTO$[i][A] = j$
 
 #### LR(0)的缺点
 LR(0)对于归约项直接对所有输入记号进行归约，导致两个问题：[p.179-184]
 
-    - **延迟错误发现时机：**在不该归约时归约，导致错误在后续步骤才被发现
-    - **移进-归约冲突：**某个状态同时有移进项和归约项，表中同一单元格出现多项
+- **延迟错误发现时机：**在不该归约时归约，导致错误在后续步骤才被发现
+- **移进-归约冲突：**某个状态同时有移进项和归约项，表中同一单元格出现多项
 
 内在原因：LR(0)项目只标识了"需要归约"，没有标识"何时归约"。因此对所有输入记号都进行归约。[p.184]
 
@@ -419,25 +435,25 @@ LR(0)对于归约项直接对所有输入记号进行归约，导致两个问题
 #### SLR的优点与局限
 **优点：**
 
-    - 有可能减少需要归约的情况
-    - 有可能去除移进-归约冲突
+- 有可能减少需要归约的情况
+- 有可能去除移进-归约冲突
 
 **缺点：**仍然有冲突出现的可能。因为FOLLOW集判断"遇到产生式后面可能跟的所有输入都归约"，这个条件不够精确。[p.189, p.193]
 
-典型例子：$S \rightarrow L = R \mid R$, $L \rightarrow *R \mid id$, $R \rightarrow L$，在状态3（$S \rightarrow L \bullet = R$ 和 $R \rightarrow L \bullet$共存）中，FOLLOW$(R) = \{=, \$\}$，但对$=$做$R \rightarrow L$的归约是不正确的，因为此时的上下文是期望看到$=$来匹配$S \rightarrow L = R$。[p.190-193]
+典型例子：$S \rightarrow L = R \mid R$, $L \rightarrow *R \mid id$, $R \rightarrow L$，在状态3（$S \rightarrow L \bullet = R$ 和 $R \rightarrow L \bullet$共存）中，FOLLOW$(R) = {=, \$}$，但对$=$做$R \rightarrow L$的归约是不正确的，因为此时的上下文是期望看到$=$来匹配$S \rightarrow L = R$。[p.190-193]
 
 ### 5.3 LR(1)分析算法
 #### LR(1)项目的定义
 LR(1)项目定义为 $[X \rightarrow \alpha \bullet \beta, a]$，其中$a$是前看符号（Lookahead）。含义：[p.194, p.196]
 
-    - 已读入$\alpha$
-    - 剩余的输入能够匹配$\beta a$；当$\beta = \varepsilon$时，仅当下一输入符号为$a$时才能用该产生式归约
+- 已读入$\alpha$
+- 剩余的输入能够匹配$\beta a$；当$\beta = \varepsilon$时，仅当下一输入符号为$a$时才能用该产生式归约
 
 **与LR(0)的关系：**
 
-    - LR(0)：项目为 $[X \rightarrow \alpha \bullet \beta]$
-    - SLR：遇到FOLLOW$(X)$中的所有输入都归约
-    - LR(1)：在遇到推导过程中该产生式后面可能跟的输入才归约，更精确
+- LR(0)：项目为 $[X \rightarrow \alpha \bullet \beta]$
+- SLR：遇到FOLLOW$(X)$中的所有输入都归约
+- LR(1)：在遇到推导过程中该产生式后面可能跟的输入才归约，更精确
 
 [p.194]
 
@@ -446,9 +462,9 @@ LR(1)项目定义为 $[X \rightarrow \alpha \bullet \beta, a]$，其中$a$是前
 
 若推导链为：$S' \Rightarrow^* \alpha Y \beta \$ \Rightarrow \alpha \gamma \beta \$$，其中：
 
-    - $[S' \rightarrow S \bullet, a]$ 中 $a = \$$
-    - $[S \rightarrow \alpha Y \beta \bullet, b]$ 中 $b = \$$
-    - $[Y \rightarrow \gamma \bullet, c]$ 中 $c = \beta$（若$\beta \neq \varepsilon$）；或 $c = \$$（若$\beta = \varepsilon$）；或 $c =$ FIRST\_S$(\beta b)$！
+- $[S' \rightarrow S \bullet, a]$ 中 $a = \$$
+- $[S \rightarrow \alpha Y \beta \bullet, b]$ 中 $b = \$$
+- $[Y \rightarrow \gamma \bullet, c]$ 中 $c = \beta$（若$\beta \neq \varepsilon$）；或 $c = \$$（若$\beta = \varepsilon$）；或 $c =$ FIRST\_S$(\beta b)$！
 
 #### LR(1)的closure计算
 对项目 $[X \rightarrow \alpha \bullet Y \beta, a]$，添加 $[Y \rightarrow \bullet \gamma, b]$ 到项目集，其中 $b \in$ FIRST\_S$(\beta a)$。[p.196]
@@ -467,18 +483,18 @@ LR(1)的状态数量可能非常大。LALR（Look-Ahead LR）合并具有类似�
 
 #### LALR的实现
 
-    - 先构造LR(1)的各个项目集
-    - 合并所有同心项目集，前看符号取并集
-    - 修改ACTION表和GOTO表以反映合并效果
+- 先构造LR(1)的各个项目集
+- 合并所有同心项目集，前看符号取并集
+- 修改ACTION表和GOTO表以反映合并效果
 
 [p.201-206]
 
 ### 二义性文法的LR处理
 虽然二义性文法严格来说无法使用LR分析算法，但实际应用中有些二义性文法更简洁。可以通过给LR分析器添加辅助规则来处理：[p.208-209]
 
-    - **优先级**：定义操作符的优先级（如$*$优先于$+$）
-    - **结合性**：定义操作符是左结合还是右结合
-    - **悬空-else**：规定else与最近的if匹配
+- **优先级**：定义操作符的优先级（如$*$优先于$+$）
+- **结合性**：定义操作符是左结合还是右结合
+- **悬空-else**：规定else与最近的if匹配
 
 示例：对于二义性表达式文法 $E \rightarrow E+E \mid E*E \mid n$，通过左结合和优先级（$* > +$）规则，可以消除分析表中的冲突。[p.209]
 
@@ -488,18 +504,20 @@ YACC（Yet Another Compiler-Compiler）于1975年在Unix上实现，采用LR(1)�
 **YACC文件结构：**[p.213]
 
 ```
+
 声明部分: 用户代码和YACC声明
-%%
+
 语法规则: 上下文无关文法规则及语义动作
-%%
+
 用户代码: 辅助函数
+
 ```
 
 ## 语法分析算法总结与比较
 ### 自顶向下 vs 自底向上
 
-    - 自顶向下分析（LL类）：适用手工编码，文法受限（需要消除左递归和提取左公因子），如递归下降、LL(1)
-    - 自底向上分析（LR类）：适用自动生成工具，对文法的适用范围更广，如LR(0)、SLR(1)、LR(1)、LALR(1)
+- 自顶向下分析（LL类）：适用手工编码，文法受限（需要消除左递归和提取左公因子），如递归下降、LL(1)
+- 自底向上分析（LR类）：适用自动生成工具，对文法的适用范围更广，如LR(0)、SLR(1)、LR(1)、LALR(1)
 
 [p.127, p.219]
 
@@ -527,71 +545,73 @@ LL(1)和LR(1)有交集但不互相包含。[p.127]
 ## 核心考点速记
 ### 关键公式与定义
 
-    - **文法四元组：** $G = (T, N, P, S)$ 或 $G = (V_N, V_T, S, P)$，$V_N \cap V_T = \emptyset$ [p.15, p.26]
+- **文法四元组：** $G = (T, N, P, S)$ 或 $G = (V_N, V_T, S, P)$，$V_N \cap V_T = \emptyset$ [p.15, p.26]
 
-    - **推导：** $S \stackrel{*}{\Rightarrow} u$（句型）；$S \stackrel{*}{\Rightarrow} u \in V_T^*$（句子）[p.42]
+- **推导：** $S \stackrel{*}{\Rightarrow} u$（句型）；$S \stackrel{*}{\Rightarrow} u \in V_T^*$（句子）[p.42]
 
-    - **语言：** $L(G) = \{u \mid S \stackrel{*}{\Rightarrow} u, u \in V_T^*\}$ [p.42]
+- **语言：** $L(G) = {u \mid S \stackrel{*}{\Rightarrow} u, u \in V_T^*}$ [p.42]
 
-    - **二义性：** 存在句子$s$有两棵不同的语法树 [p.50]
+- **二义性：** 存在句子$s$有两棵不同的语法树 [p.50]
 
-    - **NULLABLE：** $X \rightarrow \varepsilon$ 或 $X \rightarrow Y_1\dots Y_n$且所有$Y_i$ NULLABLE [p.97]
+- **NULLABLE：** $X \rightarrow \varepsilon$ 或 $X \rightarrow Y_1... Y_n$且所有$Y_i$ NULLABLE [p.97]
 
-    - **FIRST$(X)$：** $\{a \in V_T \mid X \stackrel{*}{\Rightarrow} a\dots\} \cup (\varepsilon$ 若$X \stackrel{*}{\Rightarrow} \varepsilon)$[p.92, p.100]
+- **FIRST$(X)$：** ${a \in V_T \mid X \stackrel{*}{\Rightarrow} a...} \cup (\varepsilon$ 若$X \stackrel{*}{\Rightarrow} \varepsilon)$[p.92, p.100]
 
-    - **FOLLOW$(X)$：** $\{a \in V_T \mid S \stackrel{*}{\Rightarrow} \dots X a \dots\}$ [p.104]
+- **FOLLOW$(X)$：** ${a \in V_T \mid S \stackrel{*}{\Rightarrow} ... X a ...}$ [p.104]
 
-    - **FIRST\_S$(\beta_1\dots\beta_n)$：** 从$\beta_1\dots\beta_n$推导出的开头终结符集合 [p.90, p.107]
+- **FIRST\_S$(\beta_1...\beta_n)$：** 从$\beta_1...\beta_n$推导出的开头终结符集合 [p.90, p.107]
 
 ### FIRST集计算步骤
 
-    - 计算NULLABLE集合（不动点迭代）
-    - 初始化所有FIRST$(X) = \emptyset$
-    - 对每条产生式 $X \rightarrow Y_1 Y_2 \dots Y_n$：
-    
-        - 对 $a \in$ FIRST$(Y_1)$：FIRST$(X) \cup= \{a\}$
-        - 若$Y_1$ NULLABLE，对 $a \in$ FIRST$(Y_2)$：FIRST$(X) \cup= \{a\}$
-        - 继续判断$Y_2$是否NULLABLE，以此类推
-        - 若所有$Y_i$都NULLABLE：FIRST$(X) \cup= \{\varepsilon\}$
-    
-    - 重复步骤3直到所有FIRST集不再变化
+- 计算NULLABLE集合（不动点迭代）
+- 初始化所有FIRST$(X) = \emptyset$
+- 对每条产生式 $X \rightarrow Y_1 Y_2 ... Y_n$：
+
+- 对 $a \in$ FIRST$(Y_1)$：FIRST$(X) \cup= {a}$
+- 若$Y_1$ NULLABLE，对 $a \in$ FIRST$(Y_2)$：FIRST$(X) \cup= {a}$
+- 继续判断$Y_2$是否NULLABLE，以此类推
+- 若所有$Y_i$都NULLABLE：FIRST$(X) \cup= {\varepsilon}$
+
+- 重复步骤3直到所有FIRST集不再变化
 
 [p.100-102]
 
 ### FOLLOW集计算步骤
 
-    - FOLLOW$(S) \cup= \{\$\}$（$S$是开始符号）
-    - 对每条产生式，从右向左扫描：
-    
-        - 维护一个temp集合= FOLLOW(左部)
-        - 对于右部最后一个符号$M$：FOLLOW$(M) \cup=$ temp
-        - 若$M$ NULLABLE，temp $\cup=$ FIRST$(M)$，否则 temp = FIRST$(M)$
-        - 向前继续处理
-    
-    - 重复直到不动点
+- FOLLOW$(S) \cup= {\$}$（$S$是开始符号）
+- 对每条产生式，从右向左扫描：
+
+- 维护一个temp集合= FOLLOW(左部)
+- 对于右部最后一个符号$M$：FOLLOW$(M) \cup=$ temp
+- 若$M$ NULLABLE，temp $\cup=$ FIRST$(M)$，否则 temp = FIRST$(M)$
+- 向前继续处理
+
+- 重复直到不动点
 
 [p.105]
 
 ### LL(1)分析表构造步骤
 
-    - 消除左递归、提取左公因子
-    - 计算NULLABLE集
-    - 计算FIRST集和FOLLOW集（不动点算法）
-    - 计算每条产生式的FIRST\_S集
-    - 填充分析表：
-    
-        - 对每条产生式 $A \rightarrow \beta$，对FIRST\_S$(\beta)$中每个$a$：table$[A][a]$ = 产生式编号
-        - 若$\beta \Rightarrow^* \varepsilon$，对FOLLOW$(A)$中每个$b$：table$[A][b]$ = 产生式编号
-    
+- 消除左递归、提取左公因子
+- 计算NULLABLE集
+- 计算FIRST集和FOLLOW集（不动点算法）
+- 计算每条产生式的FIRST\_S集
+- 填充分析表：
+
+- 对每条产生式 $A \rightarrow \beta$，对FIRST\_S$(\beta)$中每个$a$：table$[A][a]$ = 产生式编号
+- 若$\beta \Rightarrow^* \varepsilon$，对FOLLOW$(A)$中每个$b$：table$[A][b]$ = 产生式编号
+
 
 [p.91-109]
 
 ### 消除左递归的通用公式
-对 $P \rightarrow P\alpha_1 \mid \dots \mid P\alpha_m \mid \beta_1 \mid \dots \mid \beta_n$：
+对 $P \rightarrow P\alpha_1 \mid ... \mid P\alpha_m \mid \beta_1 \mid ... \mid \beta_n$：
 
 ```
+
 P  -> \beta_1 P' | ... | \beta_n P'
 P' -> \alpha_1 P' | ... | \alpha_m P' | \varepsilon
+
 ```
 
 [p.73]
@@ -599,6 +619,7 @@ P' -> \alpha_1 P' | ... | \alpha_m P' | \varepsilon
 ### LR(0) DFA构造算法
 
 ```
+
 function closure(I):
     重复直到不再变化:
         for each A -> \alpha.B\beta in I:
@@ -620,6 +641,7 @@ for each I in states:
         J = goto(I, X)
         if J not in states: add J
         建立从I到J的边(标注X)
+
 ```
 
 [p.149-150, p.154-157]
@@ -638,40 +660,40 @@ for each I in states:
 ### LR(1) closure计算
 对项目 $[X \rightarrow \alpha \bullet Y \beta, a]$：
 
-    - 对每个产生式 $Y \rightarrow \gamma$
-    - 添加 $[Y \rightarrow \bullet \gamma, b]$ 到项目集
-    - 其中 $b \in$ FIRST\_S$(\beta a)$（如果$\beta a$全为NULLABLE则为$a$）
+- 对每个产生式 $Y \rightarrow \gamma$
+- 添加 $[Y \rightarrow \bullet \gamma, b]$ 到项目集
+- 其中 $b \in$ FIRST\_S$(\beta a)$（如果$\beta a$全为NULLABLE则为$a$）
 
 [p.196-197]
 
 ### LL(1)文法判定条件速查
 两条产生式 $A \rightarrow \alpha \mid \beta$，以下条件必须全部满足：[p.113]
 
-    - $\alpha,\beta$都不能$\Rightarrow^*\varepsilon$：FIRST$(\alpha) \cap$ FIRST$(\beta) = \emptyset$
-    - $\alpha$能$\Rightarrow^*\varepsilon$：FIRST$(\beta) \cap$ FOLLOW$(A) = \emptyset$
-    - $\beta$能$\Rightarrow^*\varepsilon$：FIRST$(\alpha) \cap$ FOLLOW$(A) = \emptyset$
+- $\alpha,\beta$都不能$\Rightarrow^*\varepsilon$：FIRST$(\alpha) \cap$ FIRST$(\beta) = \emptyset$
+- $\alpha$能$\Rightarrow^*\varepsilon$：FIRST$(\beta) \cap$ FOLLOW$(A) = \emptyset$
+- $\beta$能$\Rightarrow^*\varepsilon$：FIRST$(\alpha) \cap$ FOLLOW$(A) = \emptyset$
 
 ### LR/SLR/LR(1)/LALR的冲突判定
 
-    - 移进-归约冲突：某状态同时有移进项和归约项，且对同一输入分别需要移进和归约
-    - 归约-归约冲突：某状态有两个不同产生式的归约项（且对同一输入都可以归约）
-    - SLR可以解决LR(0)的部分冲突，但不能解决所有
-    - LR(1)可以解决SLR的冲突（通过精确前看符号）
-    - LALR(1)合并同心项目后，可能会引入新的归约-归约冲突（但实际语言中很少见）
+- 移进-归约冲突：某状态同时有移进项和归约项，且对同一输入分别需要移进和归约
+- 归约-归约冲突：某状态有两个不同产生式的归约项（且对同一输入都可以归约）
+- SLR可以解决LR(0)的部分冲突，但不能解决所有
+- LR(1)可以解决SLR的冲突（通过精确前看符号）
+- LALR(1)合并同心项目后，可能会引入新的归约-归约冲突（但实际语言中很少见）
 
 [p.189-206]
 
 ### 期末考试常见题型
 
-    - 给定文法，判断类型（0/1/2/3型），求$L(G)$
-    - 给定文法和句子，写出最左/最右推导，画语法树
-    - 判断文法是否有二义性
-    - 消除左递归、提取左公因子
-    - 计算FIRST集、FOLLOW集、NULLABLE集
-    - 判定是否为LL(1)文法，构造LL(1)预测分析表
-    - 构造LR(0)项目集规范族及DFA
-    - 构造SLR(1)分析表
-    - 构造LR(1)项目集和分析表
-    - 利用LR分析表分析给定输入串
+- 给定文法，判断类型（0/1/2/3型），求$L(G)$
+- 给定文法和句子，写出最左/最右推导，画语法树
+- 判断文法是否有二义性
+- 消除左递归、提取左公因子
+- 计算FIRST集、FOLLOW集、NULLABLE集
+- 判定是否为LL(1)文法，构造LL(1)预测分析表
+- 构造LR(0)项目集规范族及DFA
+- 构造SLR(1)分析表
+- 构造LR(1)项目集和分析表
+- 利用LR分析表分析给定输入串
 
 [p.220-223]
