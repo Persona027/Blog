@@ -6,7 +6,7 @@ summary: 第十二章复习要点：模板语法、响应式原理、Composition
 cover: /logo.png
 ---
 
-> 面向对象：软件开发架构课程学习者，基于课堂课件整理<br/>
+> 面向对象：软件开发架构课程学习者，基于课堂课件整理
 > 本文涵盖核心考点、概念和最佳实践。
 
 ------------------------------------------------------------------------
@@ -33,12 +33,12 @@ cover: /logo.png
 ### Vue 与 React 对比 (Comparison) \pg{6}
 
 | |l|X|X|}
-  维度 | Vue | React 
-  模板语法 | HTML-based 模板 | JSX 
-  响应式 | 基于 Proxy 的响应式系统 | 基于 setState 的状态更新 
-  数据绑定 | 双向绑定 (v-model) | 单向数据流 
-  学习曲线 | 平缓，渐进式 | 中等，需学习 JSX 
-  生态系统 | Vue Router、Pinia、Vue CLI | React Router、Redux、CRA 
+  维度 | Vue | React
+  模板语法 | HTML-based 模板 | JSX
+  响应式 | 基于 Proxy 的响应式系统 | 基于 setState 的状态更新
+  数据绑定 | 双向绑定 (v-model) | 单向数据流
+  学习曲线 | 平缓，渐进式 | 中等，需学习 JSX
+  生态系统 | Vue Router、Pinia、Vue CLI | React Router、Redux、CRA
   灵活性 | 中等 | 高，更接近原生 JS |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
@@ -70,14 +70,14 @@ cover: /logo.png
 ### 指令系统 (Directive System) \pg{9--12}
 
 | |l|l|X|}
-  指令 | 作用 | 示例 
-  `v-text` | 纯文本绑定 | `<span v-text="message"></span>` 
-  `v-html` | HTML 内容绑定 | `<div v-html="htmlContent"></div>` 
-  `v-bind` | 属性绑定 | `<img v-bind:src="imageUrl" />` 
-  `v-on` | 事件绑定 | `<button v-on:click="handleClick">` 
-  `v-model` | 双向绑定 | `<input v-model="username" />` 
-  `v-if` | 条件渲染 | `<div v-if="show">显示</div>` 
-  `v-for` | 列表渲染 | `<li v-for="item in list">{{ item `}</li>} 
+  指令 | 作用 | 示例
+  `v-text` | 纯文本绑定 | `<span v-text="message"></span>`
+  `v-html` | HTML 内容绑定 | `<div v-html="htmlContent"></div>`
+  `v-bind` | 属性绑定 | `<img v-bind:src="imageUrl" />`
+  `v-on` | 事件绑定 | `<button v-on:click="handleClick">`
+  `v-model` | 双向绑定 | `<input v-model="username" />`
+  `v-if` | 条件渲染 | `<div v-if="show">显示</div>`
+  `v-for` | 列表渲染 | `<li v-for="item in list">{{ item `}</li>}
   `v-show` | 条件显示 | `<div v-show="visible">可见</div>` |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
@@ -85,9 +85,9 @@ cover: /logo.png
 ### v-if 与 v-show 对比 \pg{11}
 
 | |l|X|X|}
-  场景 | v-if | v-show 
-  条件频繁切换 | 不推荐 | **推荐** 
-  条件很少改变 | **推荐** | 不推荐 
+  场景 | v-if | v-show
+  条件频繁切换 | 不推荐 | **推荐**
+  条件很少改变 | **推荐** | 不推荐
   需要销毁子组件 | **推荐** | 不适用 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
@@ -107,9 +107,9 @@ cover: /logo.png
 **.vue 文件成员：**
 
 | |l|X|}
-  成员 | 作用 
-  `<template>` | HTML 结构，只能有一个根元素 
-  `<script>` | JavaScript 逻辑，`setup` 是组合式 API (Composition API) 
+  成员 | 作用
+  `<template>` | HTML 结构，只能有一个根元素
+  `<script>` | JavaScript 逻辑，`setup` 是组合式 API (Composition API)
   `<style>` | 样式，`scoped` 表示样式只作用于当前组件 |
 | --- | --- | --- | --- | --- |
 
@@ -121,10 +121,10 @@ cover: /logo.png
 **Props 配置选项：**
 
 | |l|X|}
-  选项 | 说明 
-  `type` | 指定类型：String, Number, Boolean, Array, Object, Function 
-  `required` | 是否必填 (Boolean) 
-  `default` | 默认值 
+  选项 | 说明
+  `type` | 指定类型：String, Number, Boolean, Array, Object, Function
+  `required` | 是否必填 (Boolean)
+  `default` | 默认值
   `validator` | 自定义验证函数 |
 | --- | --- | --- | --- | --- | --- |
 
@@ -158,8 +158,8 @@ cover: /logo.png
 **响应式数据声明方式：**
 
 | |l|l|l|}
-  方式 | 适用类型 | 说明 
-  `ref()` | 基本类型 (String, Number 等) | 通过 `.value` 访问/修改 
+  方式 | 适用类型 | 说明
+  `ref()` | 基本类型 (String, Number 等) | 通过 `.value` 访问/修改
   `reactive()` | 对象类型 (Object, Array) | 直接访问/修改属性 |
 | --- | --- | --- | --- | --- | --- | --- |
 
@@ -172,11 +172,11 @@ cover: /logo.png
 **computed 与 methods 对比：**
 
 | |l|X|X|}
-  对比维度 | `computed` | `methods` 
-  缓存 | 依赖变化时重新计算 | 每次调用都执行 
-  调用方式 | `\{\{ fullName \`\}} | `\{\{ getFullName() \`\}} 
-  返回值 | 必须返回值 | 可返回可不返回 
-  副作用 | 不应该有副作用 | 可以有副作用 
+  对比维度 | `computed` | `methods`
+  缓存 | 依赖变化时重新计算 | 每次调用都执行
+  调用方式 | `\{\{ fullName \`\}} | `\{\{ getFullName() \`\}}
+  返回值 | 必须返回值 | 可返回可不返回
+  副作用 | 不应该有副作用 | 可以有副作用
   使用场景 | 派生值计算、过滤、格式化 | 事件处理、数据获取、操作执行 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
@@ -197,12 +197,12 @@ cover: /logo.png
 
 
 | |l|l|X|}
-  钩子函数 | 触发时机 | 常用场景 
-  `onBeforeMount` | 组件挂载前 | 准备工作 
-  `onMounted` | 组件挂载后 | **数据初始化、DOM 操作** 
-  `onBeforeUpdate` | 组件更新前 | 保存状态 
-  `onUpdated` | 组件更新后 | 更新 DOM 
-  `onBeforeUnmount` | 组件卸载前 | 确认操作 
+  钩子函数 | 触发时机 | 常用场景
+  `onBeforeMount` | 组件挂载前 | 准备工作
+  `onMounted` | 组件挂载后 | **数据初始化、DOM 操作**
+  `onBeforeUpdate` | 组件更新前 | 保存状态
+  `onUpdated` | 组件更新后 | 更新 DOM
+  `onBeforeUnmount` | 组件卸载前 | 确认操作
   `onUnmounted` | 组件卸载后 | **清理资源、取消订阅** |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 

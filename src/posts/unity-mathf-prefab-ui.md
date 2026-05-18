@@ -28,12 +28,17 @@ category: Unity
 `Lerp` 是一个初学者较难理解的但又十分有用的函数。
 
 一个常见的用途是**“非线性动画”**，比如：
-```csharp
+
+
+```
+csharp
 Vector3 pos = new Vector3(50, 0, 0);
 void Update() {
     transform.position = Vector3.Lerp(transform.position, pos, 0.1f);
 }
 ```
+
+
 上方的代码是做什么的？`Vector3.Lerp` 是什么?
 
 另一个（明显）的用途是**“混合”两个数据**。

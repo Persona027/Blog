@@ -81,9 +81,12 @@ Collision 事件函数会在有个实际物理体积的碰撞盒碰撞时触发�
 
 ### OnCollisionEnter2D 详解
 
-```csharp
+
+```
+csharp
 void OnCollisionEnter2D(Collision2D collision)
 ```
+
 
 这里有一个参数 `Collision2D collision`，其中包含了这次碰撞的所有信息，比如：
 - `collision.collider`：对方的碰撞盒
@@ -94,11 +97,14 @@ void OnCollisionEnter2D(Collision2D collision)
 
 ## Trigger2D 事件函数 (触发)
 
-```csharp
+
+```
+csharp
 void OnTriggerEnter2D(Collider2D collision)
 void OnTriggerExit2D(Collider2D collision)
 void OnTriggerStay2D(Collider2D collision)
 ```
+
 
 Trigger 事件函数会在两个无实际物理体积（Trigger）的碰撞盒碰撞时触发。它们也是 MonoBehaviour 生命周期的一部分。
 与 Collision 不同，这里的参数是 `Collider2D`，即对方的碰撞盒。
@@ -138,9 +144,12 @@ LayerMask 是一个 int，它代表了一些 layer 的集合 (比如一个 layer
 
 它有非常非常多可选的参数，其中比较常用的是：
 
-```csharp
+
+```
+csharp
 RaycastHit2D Raycast(Vector2 origin, Vector2 direction, float distance, int layerMask)
 ```
+
 
 - `origin`：射线开始的位置
 - `direction`：射线方向

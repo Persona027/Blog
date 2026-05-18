@@ -6,7 +6,7 @@ summary: 第四章复习要点：MVC设计模式、DispatcherServlet、控制器
 cover: /logo.png
 ---
 
-> 面向对象：软件开发架构课程学习者，基于课堂课件整理<br/>
+> 面向对象：软件开发架构课程学习者，基于课堂课件整理
 > 本文涵盖核心考点、概念和最佳实践。
 
 ------------------------------------------------------------------------
@@ -142,11 +142,11 @@ cover: /logo.png
 - 传统 JSP、FreeMarker 等在组件化 (Componentization) 和去耦合 (Decoupling) 上有明显缺点。[p.30]
 - **Thymeleaf** 的核心特点是数据和 HTML 的分离 (Separation of Data and HTML)，模板文件可以直接在浏览器中预览。[p.30]
 - 模板语法对比：[p.31]
-  
+
     - Velocity: `<p>\$message</p>`
     - FreeMarker: `<p>\$\{message\`</p>}
     - Thymeleaf: `<p th:text="\$\{message\`">Hello World!</p>}
-  
+
 - Thymeleaf 的优势：静态原型即模板，前端和后端可并行开发。[p.30--32]
 
 % ================================================================

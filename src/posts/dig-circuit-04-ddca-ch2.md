@@ -6,7 +6,7 @@ summary: DDCA Chapter 2复习要点：布尔代数、SOP/POS形式、布尔定�
 cover: /logo.png
 ---
 
-> 面向对象：数字电路设计课程学习者，DDCA ARM Edition教材复习资料<br/>
+> 面向对象：数字电路设计课程学习者，DDCA ARM Edition教材复习资料
 > 本文基于课堂课件整理，涵盖核心考点、公式、概念和解题技巧。
 
 ------------------------------------------------------------------------
@@ -78,14 +78,10 @@ cover: /logo.png
 
 ### 德摩根定理（DeMorgan's Theorem）[pp.99--103]
 $$
-
 \overline{B_0\cdot B_1\cdot B_2...} = \overline{B_0}+\overline{B_1}+\overline{B_2}...
-
 $$
 $$
-
 \overline{B_0+B_1+B_2...} = \overline{B_0}\cdot\overline{B_1}\cdot\overline{B_2}...
-
 $$
 
 ### 气泡推动（Bubble Pushing）[pp.110--117]
@@ -140,7 +136,7 @@ $$
 - 可作查找表（LUT）使用：输入连选择线，数据输入端接常量 [p.150]
 
 ### 译码器（Decoder）[pp.153--155]
-N输入$2^N$输出，独热码（One-hot）：任意时刻仅一个输出为高。<br/>
+N输入$2^N$输出，独热码（One-hot）：任意时刻仅一个输出为高。
 例：2:4译码器：$A_1A_0$组合控制$Y_0$--$Y_3$
 
 ## 时序（Timing）（pp.156--164）

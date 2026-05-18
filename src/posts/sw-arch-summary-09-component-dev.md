@@ -6,7 +6,7 @@ summary: 第九章复习要点：组件化设计原则、组件通信、状态�
 cover: /logo.png
 ---
 
-> 面向对象：软件开发架构课程学习者，基于课堂课件整理<br/>
+> 面向对象：软件开发架构课程学习者，基于课堂课件整理
 > 本文涵盖核心考点、概念和最佳实践。
 
 ------------------------------------------------------------------------
@@ -63,16 +63,16 @@ cover: /logo.png
 - 该函数的两个参数 \fn{resolve} 和 \fn{reject} 也是函数：分别在\kk{成功}和\kk{失败}时调用进行存值。
 - 通过实例的 \fn{.then()} 方法中的两个回调分别在成功时\kk{取值}或失败时\kk{处理}。
 - Promise 对象维护两个内部属性：
-  
+
     - \fn{PromiseResult}：保存异步结果的值。
     - \fn{PromiseState}：保存状态\en{pending / fulfilled / rejected}。
-  
+
 - \fn{.then()} 监听 \fn{PromiseState} 的变化，选择对应的回调执行。
 
 ### Promise 的三种状态 \pc{11}
 
 | lll@{}}
-  
+
   **状态** | **含义** | **说明** |
 | --- | --- | --- |
 | \fn{pending} | 进行中 | 初始状态，既未成功也未失败 |
@@ -83,10 +83,10 @@ cover: /logo.png
 
 - **状态不受外界影响**：只有异步操作的结果可决定状态，任何其他操作无法改变。
 - **状态一旦改变就凝固**：
-  
+
     - 只能从 \fn{pending} $\to$ \fn{fulfilled}，或 \fn{pending} $\to$ \fn{rejected}。
     - 改变后不再变化，此时称为 \kk{resolved}（已定型）。
-  
+
 - **定型后可立即取值**：与事件不同，即使状态已定型，再添加回调函数，也会\kk{立即得到结果}。
 
 ### 使用范例要点 \pc{12--13}
@@ -122,10 +122,10 @@ cover: /logo.png
 - \fn{await} 调用异步函数时\kk{阻塞当前执行流}，等待异步函数执行结束。
 - 自动从返回的 Promise 对象中\kk{取值并返回}。
 - **使用规则**：
-  
+
     - 只能用于 \fn{async} 声明的异步函数中。
     - 只阻塞 \fn{async} 函数\kk{内部}代码，不阻塞外部代码。
-  
+
 - **优点**：用\kk{同步的方式}编写和使用异步，代码可读性大幅提升。
 - **缺点**：reject 回调被自动忽略，必须用额外的 \fn{try-catch} 处理失败。\pc{19}
 
@@ -156,13 +156,13 @@ cover: /logo.png
 
 - \fn{fetch()} 返回一个 **Response 对象**（Promise 包装）。
 - 常用属性和方法：
-  
+
     - \fn{Response.ok}      --- 布尔值，2xx 为 \fn{true}，其他 \fn{false}。
     - \fn{Response.status}  --- 整型，真实 HTTP 状态码。
     - \fn{response.text()}  --- 返回文本字符串（返回 Promise）。
     - \fn{response.json()}  --- 返回 JSON 对象（返回 Promise）。
     - \fn{Response.clone()} --- 底层通过 Stream 流实现，只能\kk{读取一次}，clone() 创建副本。
-  
+
 
 % ================================================================
 %  5. Axios 库 (pp.28--29)
@@ -174,11 +174,11 @@ cover: /logo.png
 - 基于 Promise 的\kk{第三方 HTTP 库}，可用于浏览器和 Node.js。
 - 本质上是对原生 XHR 的封装，用 Promise 实现。
 - Axios 封装后提供更便捷的 API：
-  
+
     - \kk{拦截请求和响应} \en{Interceptors}：统一添加 token、日志、错误处理等。
     - \kk{转换请求/响应数据} \en{Transform}。
     - \kk{自动转换 JSON} 数据。
-  
+
 
 ### Axios 使用范例要点 \pc{29}
 
@@ -194,36 +194,36 @@ cover: /logo.png
 ### Fetch API  \pc{31}
 
 - **优点**：
-  
+
     - 原生支持，无需额外依赖。
     - Promise 风格，比 XHR 更简洁。
     - 现代化设计，支持 \fn{async/await}。
     - \kk{流式处理} \en{ReadableStream}：适合大文件和渐进式加载。
-  
+
 - **缺点**：
-  
+
     - 不自动处理 JSON：需手动调用 \fn{res.json()}。
     - \kk{错误处理不友好}：只对网络错误 reject，HTTP 错误码（404、500）不会抛错，需手动检查 \fn{response.ok}。
     - 不支持请求取消（早期），现需 \fn{AbortController}。
     - 缺乏对旧浏览器（如 IE）的支持。
-  
+
 
 ### Axios  \pc{32}
 
 - **优点**：
-  
+
     - 自动转换 JSON，请求和响应自动序列化/反序列化。
     - \kk{更友好的错误处理}：HTTP 错误自动进入 \fn{.catch()}。
     - 支持请求取消：\fn{CancelToken} 或 \fn{AbortController}。
     - 请求和响应拦截器。
     - 更丰富的配置项：超时、请求头、转换函数等。
     - 更好的浏览器兼容性。
-  
+
 - **缺点**：
-  
+
     - 需要额外引入库（增加体积和依赖）。
     - 非原生 API，项目越大依赖问题越明显。
-  
+
 
 % ================================================================
 %  7. 项目案例 & 前端项目演进 (pp.34--39)
@@ -284,12 +284,11 @@ cover: /logo.png
 
 %
 
-{ 速查表 --- 核心 API 一览<br/>
-
+{ 速查表 --- 核心 API 一览
 \footnotesize
 
 | p{0.35\columnwidth}p{0.58\columnwidth}@{}}
-  
+
   **API / 语法** | **说明** |
 | --- | --- |
 | \fn{new Promise(fn)} | 创建 Promise，fn 接收 resolve、reject |
@@ -307,8 +306,7 @@ cover: /logo.png
 
 %
 
-{ 状态转换图<br/>
-
+{ 状态转换图
 | \fn{new Promise()} |
 | --- |
 | \downarrow |
@@ -326,12 +324,11 @@ cover: /logo.png
 
 %
 
-{ Fetch vs Axios 决策速览<br/>
-
+{ Fetch vs Axios 决策速览
 \footnotesize
 
 | p{0.25\columnwidth}p{0.34\columnwidth}p{0.34\columnwidth}@{}}
-  
+
   **特性** | **Fetch \pc{31**} | **Axios \pc{32**} |
 | --- | --- | --- |
 | 来源 | 原生 ES6 | 第三方库 |

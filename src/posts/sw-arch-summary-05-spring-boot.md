@@ -6,7 +6,7 @@ summary: 第五章复习要点：自动配置原理、起步依赖、内嵌服�
 cover: /logo.png
 ---
 
-> 面向对象：软件开发架构课程学习者，基于课堂课件整理<br/>
+> 面向对象：软件开发架构课程学习者，基于课堂课件整理
 > 本文涵盖核心考点、概念和最佳实践。
 
 ------------------------------------------------------------------------
@@ -39,12 +39,12 @@ cover: /logo.png
 ### 为什么需要 Spring Boot？(Why Spring Boot?)
 
 - **Spring 框架相关组件使用的复杂性**： [p.5]
-  
+
     - 几乎所有 Spring 组件或技术都基于 Spring IoC 和 Spring AOP。 [p.5]
     - 每个组件或技术又有自身的相关配置。 [p.5]
     - Web 容器和数据库等还有一些其他相关配置。 [p.5]
     - 导致一般在使用 Spring 框架相关技术时，“搭环境”往往比“写代码”更耗时、更容易出错。 [p.5]
-  
+
 
 ### 什么是 Spring Boot？(What is Spring Boot?)
 
@@ -67,12 +67,12 @@ cover: /logo.png
 
 - **传统 Spring Web 应用开发流程**：配置环境 $\to$ 创建工程 $\to$ 构建目录结构 $\to$ 设置组件参数 $\to$ 配置 Web 容器 $\to$ 组件依赖管理 $\to$ 业务开发 $\to$ 测试与构建 $\to$ 部署与发布 $\to$ 运维与监控。 [p.8]
 - **Spring Boot 脚手架的解决思路**： [p.9]
-  
+
     - 创建工程与构建目录结构：使用 Spring Initializr 简化操作。 [p.9]
     - 设置组件参数、配置 Web 容器、组件依赖管理：由 Spring Boot 自动完成。 [p.9]
     - 业务开发、测试与构建、部署与发布：开发人员专注业务。 [p.9]
     - 运维与监控：通过 Spring Actuator 工具提供。 [p.9]
-  
+
 
 % ================================================================
 % 3. Spring Boot 快速入门 (Quick Start)
@@ -88,14 +88,14 @@ cover: /logo.png
 
 - Spring Boot 约定的 Web 项目目录结构：直接运行的 `main` 方法、集成所有配置的默认 `application.properties`。 [p.12]
 - 标准目录布局： [p.13]
-  
+
     - `/src/main/java` --- Java 源代码目录。 [p.13]
     - `/src/main/resources` --- 资源目录。 [p.13]
     - `/src/main/resources/static` --- 静态资源目录。 [p.13]
     - `/src/main/resources/templates` --- 表示层页面目录。 [p.13]
     - `/src/main/resources/application.properties` --- Spring Boot 配置文件。 [p.13]
     - `/src/test` --- 测试文件目录。 [p.13]
-  
+
 
 ### 运行项目 (Run the Project)
 
@@ -142,7 +142,7 @@ Spring Boot 的自动化和“开箱即用” (Out-of-the-Box) 主要由以下�
     - **加载配置**：扫描所有 jar 包下的 `META-INF/spring/XXX.AutoConfiguration.imports` 文件。 [p.20]
     - **条件评估**：读取该文件中列出的所有自动配置类（如 `DispatcherServlet\-AutoConfiguration`）。 [p.20]
     - **条件注解**：使用 `@ConditionalOnClass` 等条件注解进行判断（如：如果 classpath 下有 `DispatcherServlet.class`，且用户没有自定义 `DispatcherServlet` Bean，则自动配置一个 `DispatcherServlet`）。 [p.20]
-  
+
 
 \subsubsection{源码剖析：以 DispatcherServletAutoConfiguration 为例 [p.21]}
 [nosep,label=\arabic*.]
@@ -163,10 +163,10 @@ Spring Boot 的自动化和“开箱即用” (Out-of-the-Box) 主要由以下�
 - **需求**：开发环境 (dev)、测试环境 (test)、生产环境 (prod) 配置不同（如端口、日志级别）。 [p.24]
 - **命名规范**：`application-\{profile\`.yml}，如 `application-dev.yml`、`application-prod.yml`。 [p.24]
 - **激活方式**： [p.24]
-  
+
     - 在 `application.yml` 中指定 `spring.profiles.active: dev`。 [p.24]
     - 命令行参数激活：`java -jar myapp.jar\ --spring.profiles.active=prod`。 [p.24]
-  
+
 
 % ---------- 4d. 内嵌容器 ----------
 ### 内嵌式 Servlet 容器 (Embedded Servlet Container)
@@ -174,10 +174,10 @@ Spring Boot 的自动化和“开箱即用” (Out-of-the-Box) 主要由以下�
 - Spring Boot 默认使用嵌入式 Tomcat 作为 Servlet 容器，还支持 Jetty、Undertow 等。 [p.25]
 - Spring Boot 的 Web 应用无需部署到外部服务器，直接 `java -jar` 即可运行。 [p.25]
 - **传统模式 vs Spring Boot 模式**： [p.25]
-  
+
     - 传统模式：应用 $\to$ 丢进 Tomcat $\to$ Tomcat 启动。 [p.25]
     - Spring Boot 模式：`main` 方法 $\to$ `SpringApplication` $\to$ 创建应用上下文 (ApplicationContext) $\to$ 启动 Tomcat / Jetty $\to$ 注册 DispatcherServlet。 [p.25]
-  
+
 - Spring Boot 通过 Java 代码在运行时动态创建 Tomcat 实例，并将当前应用注册进去，因此可以直接通过 `java -jar` 运行。 [p.25]
 
 \subsubsection{Servlet 容器常用配置 (Servlet Container Configuration) [p.26]}
@@ -250,9 +250,9 @@ Spring Boot 启动流程概览：
 % ================================================================
 
 [colback=blue!5!white,colframe=blue!50!black,title=**本章小结 (Chapter Summary) [p.37]**]
-  
+
     - **Spring Boot 概述**：为什么需要 Spring Boot？Spring Boot 是什么？ [p.37]
     - **Spring Boot 自动配置原理**：Starter 机制、自动配置、配置文件的使用、内嵌 Tomcat 容器的使用。 [p.37]
     - **项目中使用范例**：实际项目中通过 Spring Boot 进行日志管理（SLF4J + Logback）和事务管理（编程式与声明式事务）。 [p.37]
-  
+
 

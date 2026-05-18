@@ -92,21 +92,21 @@ BNF（Backus-Naur Form）是上下文无关文法的一种实现表示方法。�
 
 例如，将二义性的表达式文法：
 
-```
 
+```
 E -> num | id | E+E | E*E
-
 ```
+
 
 重写为无二义性文法，通过引入优先级层次：
 
-```
 
+```
 E -> E+T | T
 T -> T*F | F
 F -> num | id
-
 ```
+
 
 这样$*$的优先级高于$+$，且$+$为左结合。[p.51-52]
 
@@ -149,20 +149,20 @@ F -> num | id
 #### 预处理：提取左公因子
 当产生式有公共前缀时，前看符号无法指导分支选择。[p.68]
 
-```
 
+```
 A -> aB1 | aB2 | aB3 | ...
-
 ```
+
 
 提取左公因子后：
 
-```
 
+```
 A  -> aA'
 A' -> B1 | B2 | B3 | ...
-
 ```
+
 
 #### 预处理：消除左递归
 左递归会使递归下降分析器陷入无限递归。[p.69]
@@ -170,32 +170,32 @@ A' -> B1 | B2 | B3 | ...
 **直接左递归的消除：**[p.72]
 若 $P \rightarrow P\alpha \mid \beta$（$\alpha \neq \varepsilon$，$\beta$不以$P$开头），改写为：
 
-```
 
+```
 P  -> \beta P'
 P' -> \alpha P' | \varepsilon
-
 ```
+
 
 一般情况：若 $P \rightarrow P\alpha_1 \mid P\alpha_2 \mid ... \mid P\alpha_m \mid \beta_1 \mid ... \mid \beta_n$，改写为：[p.73]
 
-```
 
+```
 P  -> \beta_1 P' | \beta_2 P' | ... | \beta_n P'
 P' -> \alpha_1 P' | \alpha_2 P' | ... | \alpha_m P' | \varepsilon
-
 ```
+
 
 示例：
 
-```
 
+```
 E -> E+T | T   =>   E  -> TE'
                     E' -> +TE' | \varepsilon
 T -> T*F | F   =>   T  -> FT'
                     T' -> *FT' | \varepsilon
-
 ```
+
 
 [p.70]
 
@@ -272,7 +272,6 @@ FOLLOW$(N)$ = 紧跟在非终结符$N$后面的终结符号的集合。[p.104]
 - 若 $M$ NULLABLE，temp $=$ FIRST$(M) \cup$ temp
 
 
-
 #### FIRST和FOLLOW的不动点算法
 两者均采用不动点迭代算法：从空集开始，反复应用产生式规则更新集合，直到所有集合不再变化（收敛到不动点）。[p.93, p.101-102, p.105-106]
 
@@ -286,8 +285,8 @@ FOLLOW$(N)$ = 紧跟在非终结符$N$后面的终结符号的集合。[p.104]
 
 #### LL(1)驱动的伪代码
 
-```
 
+```
 stack.push($); stack.push(S);
 while (栈非空) {
     X = stack.top();
@@ -297,8 +296,8 @@ while (栈非空) {
     else if (table[X][a] != empty)
         pop(); 压入产生式右部(逆序);
     else ERROR;
-
 ```
+
 
 [p.110]
 
@@ -342,8 +341,8 @@ LR分析算法特点：
 ### 点记号与LR(0)项目
 为了方便标记语法分析器已经读入了多少输入，引入点记号"$\bullet$"。一个产生式加入一个圆点，成为一个LR(0)项目（Item）。[p.130]
 
-例如：$E \rightarrow \bullet E + T$ 表示尚未读入任何$E$的右部符号；<br/>
-$E \rightarrow E \bullet + T$ 表示已经读入$E$，还期待读入$+T$；<br/>
+例如：$E \rightarrow \bullet E + T$ 表示尚未读入任何$E$的右部符号；
+$E \rightarrow E \bullet + T$ 表示已经读入$E$，还期待读入$+T$；
 $E \rightarrow E + T \bullet$ 表示已读入所有右部符号，可以归约。
 
 ### 移进-归约的过程
@@ -397,8 +396,8 @@ $I'$ = goto$(I, X)$ = closure$({A \rightarrow \alpha X \bullet \beta \mid A \rig
 
 **DFA构造算法：**[p.149-150]
 
-```
 
+```
 初始项集 I0 = closure({[S' -> .S$]})
 状态集合 states = {I0}
 while 存在未处理的状态I:
@@ -407,8 +406,8 @@ while 存在未处理的状态I:
         if J非空且J不在states中:
             states添加J
         添加边 I --X--> J
-
 ```
+
 
 #### LR(0)分析表生成规则
 对每个DFA状态（项集）：[p.148, p.169, p.173]
@@ -503,15 +502,15 @@ YACC（Yet Another Compiler-Compiler）于1975年在Unix上实现，采用LR(1)�
 
 **YACC文件结构：**[p.213]
 
-```
 
+```
 声明部分: 用户代码和YACC声明
 
 语法规则: 上下文无关文法规则及语义动作
 
 用户代码: 辅助函数
-
 ```
+
 
 ## 语法分析算法总结与比较
 ### 自顶向下 vs 自底向上
@@ -607,19 +606,19 @@ LL(1)和LR(1)有交集但不互相包含。[p.127]
 ### 消除左递归的通用公式
 对 $P \rightarrow P\alpha_1 \mid ... \mid P\alpha_m \mid \beta_1 \mid ... \mid \beta_n$：
 
-```
 
+```
 P  -> \beta_1 P' | ... | \beta_n P'
 P' -> \alpha_1 P' | ... | \alpha_m P' | \varepsilon
-
 ```
+
 
 [p.73]
 
 ### LR(0) DFA构造算法
 
-```
 
+```
 function closure(I):
     重复直到不再变化:
         for each A -> \alpha.B\beta in I:
@@ -641,8 +640,8 @@ for each I in states:
         J = goto(I, X)
         if J not in states: add J
         建立从I到J的边(标注X)
-
 ```
+
 
 [p.149-150, p.154-157]
 

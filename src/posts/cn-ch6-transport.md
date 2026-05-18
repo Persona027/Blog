@@ -48,9 +48,9 @@ cover: /logo.png
 
 ### 端口号的分类（IANA划分）
 
-- **熟知端口号（Well-Known Ports）**：范围 0 \textasciitilde 1023，由IANA统一分配给标准的Internet服务 [p.14-15]。
-- **注册端口号（Registered Ports）**：范围 1024 \textasciitilde 49151，为用户开发的新网络应用程序在IANA登记 [p.15]。
-- **临时端口号（Ephemeral Ports）**：范围 49152 \textasciitilde 65535，由客户端的TCP/UDP软件随机选取，只对一次进程通信有效 [p.15]。
+- **熟知端口号（Well-Known Ports）**：范围 0 ~ 1023，由IANA统一分配给标准的Internet服务 [p.14-15]。
+- **注册端口号（Registered Ports）**：范围 1024 ~ 49151，为用户开发的新网络应用程序在IANA登记 [p.15]。
+- **临时端口号（Ephemeral Ports）**：范围 49152 ~ 65535，由客户端的TCP/UDP软件随机选取，只对一次进程通信有效 [p.15]。
 
 ### 常见熟知端口号
 
@@ -71,9 +71,7 @@ cover: /logo.png
 ### 五元组标识
 五元组是唯一标识一个通信会话的组合：[p.18]
 $$
-
 五元组 = (协议, 本地地址, 本地端口号, 远程地址, 远程端口号)
-
 $$
 
 ## 连接建立与释放
@@ -99,13 +97,13 @@ $$
 
 用TCP术语表示 [p.49]：
 
-```
 
+```
 1. CLOSED -> SYN-SENT:  <SEQ=100><CTL=SYN>           ->
 2. LISTEN -> SYN-RCVD:  <- <SEQ=300><ACK=101><CTL=SYN,ACK> <-
 3. SYN-SENT -> ESTABLISHED: -> <SEQ=101><ACK=301><CTL=ACK> ->
-
 ```
+
 
 ### 连接释放
 
@@ -215,23 +213,17 @@ TCP段的结构（固定头部20字节，可扩展到60字节）[p.41-42]：
 - **SampleRTT**：测量从发出某个报文段到收到其确认报文段之间经过的时间 [p.57]。
 - **EstimatedRTT**：通过指数加权移动平均（EWMA）估算平均RTT [p.57]：
     $$
-
-    EstimatedRTT = (1-\alpha) \times EstimatedRTT + \alpha \times SampleRTT
-
+EstimatedRTT = (1-\alpha) \times EstimatedRTT + \alpha \times SampleRTT
 $$
     通常 $\alpha = 0.125$。
 - **DevRTT**：估算 SampleRTT 与 EstimatedRTT 的偏差 [p.58]：
     $$
-
-    DevRTT = (1-\beta) \times DevRTT + \beta \times |SampleRTT - EstimatedRTT|
-
+DevRTT = (1-\beta) \times DevRTT + \beta \times |SampleRTT - EstimatedRTT|
 $$
     通常 $\beta = 0.25$。
 - **超时值（TimeoutInterval）** [p.58]：
     $$
-
-    TimeoutInterval = EstimatedRTT + 4 \times DevRTT
-
+TimeoutInterval = EstimatedRTT + 4 \times DevRTT
 $$
 - 合理设置超时值的重要性：太小容易产生不必要的重传；太大则丢包恢复时间太长 [p.57]。
 
@@ -349,27 +341,19 @@ $$
 
 - **EstimatedRTT**（指数加权移动平均）：
     $$
-
-    EstimatedRTT = (1-\alpha) \times EstimatedRTT + \alpha \times SampleRTT,    \alpha = 0.125
-
+EstimatedRTT = (1-\alpha) \times EstimatedRTT + \alpha \times SampleRTT,    \alpha = 0.125
 $$
 - **DevRTT**（RTT偏差）：
     $$
-
-    DevRTT = (1-\beta) \times DevRTT + \beta \times |SampleRTT - EstimatedRTT|,    \beta = 0.25
-
+DevRTT = (1-\beta) \times DevRTT + \beta \times |SampleRTT - EstimatedRTT|,    \beta = 0.25
 $$
 - **TimeoutInterval**（超时值）：
     $$
-
-    TimeoutInterval = EstimatedRTT + 4 \times DevRTT
-
+TimeoutInterval = EstimatedRTT + 4 \times DevRTT
 $$
 - **有效窗口**：
     $$
-
-    EffectiveWindow = \min(rwnd, cwnd)
-
+EffectiveWindow = \min(rwnd, cwnd)
 $$
 - **AIMD**：
 

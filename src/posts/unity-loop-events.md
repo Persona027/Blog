@@ -17,12 +17,15 @@ category: Unity
 在这种情况下，考虑这个问题：在一篇代码中，我们想要在2秒后执行某条指
 令，即类似以下的功能：
 
-```csharp
+
+```
+csharp
 void func(){
     Wait(2);
     DoSomething();
 }
 ```
+
 
 虽然 Unity 有自带的 `Invoke` 函数实现这种功能，但该函数局限性很大，不建议使用。
 怎么做呢？`Wait` 函数该怎么写？
@@ -40,12 +43,15 @@ Unity 中的协程提供了“多线程”的功能，即多份代码在同时�
 
 协程是一个函数；定义如下：
 
-```csharp
+
+```
+csharp
 IEnumerator <FuncName>(<params>)
 {
     <content>
 }
 ```
+
 
 即把一个函数的返回值改为 `IEnumerator` 即可！
 
@@ -55,18 +61,24 @@ IEnumerator <FuncName>(<params>)
 
 比如：
 
-```csharp
+
+```
+csharp
 IEnumerator MyCoroutine(float f) {
     f = 5;
     // ...
 }
 ```
 
+
 调用协程函数：
 
-```csharp
+
+```
+csharp
 StartCoroutine(MyCoroutine(5f));
 ```
+
 
 注意这里要用这个专门的函数来调用协程！
 
@@ -92,12 +104,15 @@ StartCoroutine(MyCoroutine(5f));
 
 例子：
 
-```csharp
+
+```
+csharp
 IEnumerator DisableAfterTwoSec(){
     yield return new WaitForSeconds(2);
     gameObject.SetActive(false);
 }
 ```
+
 
 ---
 
@@ -105,7 +120,9 @@ IEnumerator DisableAfterTwoSec(){
 
 这个协程函数的作用是什么？这样写有什么好处？（方便管理不同协程）
 
-```csharp
+
+```
+csharp
 IEnumerator MyUpdate(){
     while(true){
         DoSomething();
@@ -114,15 +131,19 @@ IEnumerator MyUpdate(){
 }
 ```
 
+
 那这个呢？
 
-```csharp
+
+```
+csharp
 IEnumerator StartUICutScene(){
     TurnOnBlackScreen();
     yield return new WaitForSeconds(0.5f);
     PlayCutscene();
 }
 ```
+
 
 ---
 
@@ -133,13 +154,16 @@ IEnumerator StartUICutScene(){
 
 **一个好习惯**：如果我们在循环中多次等待同一段时间，最好先建立 `WaitForSeconds` 实例再使用，而不是在循环中不断 `new`。
 
-```csharp
+
+```
+csharp
 WaitForSeconds w1 = new WaitForSeconds(1);
 // …
 while(true){
     yield return w1;
 }
 ```
+
 
 > 💡 **导师补充**: 为什么这是一个好习惯？
 >
@@ -193,13 +217,16 @@ C# 中的事件系统中有两个常用的组件：`Action` 和 `Func`。可以�
 
 比如：
 
-```csharp
+
+```
+csharp
 public Action onPlayerInjure;
 
 void Start() {
     onPlayerInjure += ScreenFlash;
 }
 ```
+
 
 上方的代码所做的事是：定义了 `onPlayerInjure` 这个 `Action` 类型变量，并在游戏开始运行时将 `ScreenFlash` 这个函数放进 `onPlayerInjure` 里。
 
@@ -246,17 +273,23 @@ void Start() {
 
 比如:
 
-```csharp
+
+```
+csharp
 private Action<float> onDamage;
 ```
+
 
 这代表 `onDamage` 中的函数都是接受一个 `float` 类型的参数，且无返回值的函数。
 
 这时，使用它的时候就可以传入一个参数了：
 
-```csharp
+
+```
+csharp
 onDamage(45.2f);
 ```
+
 
 ---
 
@@ -269,7 +302,9 @@ onDamage(45.2f);
 
 在定义 `Func` 的时候，需要在所有参数之后加上返回值的类型：
 
-```csharp
+
+```
+csharp
 private Func<int, float> func1;
 // func1 中的函数接受 1 个 int 类型的变量，并返回 float
 
@@ -283,17 +318,21 @@ private Func<int, int, int> func3;
 // func4 会报错，为什么？
 ```
 
+
 > 💡 **导师补充**: 为什么 `func4` 会报错？
 >
 > 因为 `Func` 的语义是“带返回值的委托”。它至少需要一个泛型参数来指定返回值的类型。如果不返回任何值，应该使用 `Action`。
 
 使用 `Func` 的时候，当一个普通的有返回值的函数即可！
 
-```csharp
+
+```
+csharp
 private Func<int, int, int> add;
 // ...
 int sum = add(4,5);
 ```
+
 
 ---
 

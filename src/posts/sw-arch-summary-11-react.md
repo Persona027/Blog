@@ -6,7 +6,7 @@ summary: 第十一章复习要点：JSX语法、组件/Hooks、虚拟DOM、状�
 cover: /logo.png
 ---
 
-> 面向对象：软件开发架构课程学习者，基于课堂课件整理<br/>
+> 面向对象：软件开发架构课程学习者，基于课堂课件整理
 > 本文涵盖核心考点、概念和最佳实践。
 
 ------------------------------------------------------------------------
@@ -19,11 +19,11 @@ cover: /logo.png
 
 - 2011 年，Facebook 工程师 **Jordan Walke** 创建 React，应对新闻动态页面日益复杂的挑战；2013 年正式开源。 [p.4]
 - 当时面临的核心问题：
-  
+
     - 代码复杂度急剧上升：大量 DOM 操作与业务逻辑混杂在一起，难以维护。 [p.4]
     - 数据同步困难：多个组件共享状态时，难以保持数据一致性。 [p.4]
     - 性能问题：频繁的 DOM 更新导致页面卡顿。 [p.4]
-  
+
 
 ### React 的设计理念 (Design Philosophy)
 
@@ -44,10 +44,10 @@ cover: /logo.png
 
 - React 是**库 (Library)**，非框架 (Framework)：只负责 UI 的渲染和更新，不强制项目结构。 [p.7]
 - 控制权对比：
-  
+
     - 库：开发者调用库的 API；低约束，灵活使用；关注解决特定问题；易于替换和组合。 [p.7]
     - 框架：框架控制执行流程；高约束，遵循约定；提供完整解决方案；难以替换核心模块。 [p.7]
-  
+
 - React 无侵入性：可逐步引入现有项目，可与其他框架共存，不强制改变现有代码结构。 [p.7]
 - 灵活技术选型：路由 (React Router、Next.js)、状态管理 (Context、Redux、Zustand、Jotai)、HTTP 请求 (axios、fetch、SWR、React Query) 均可自由选择。 [p.7]
 - 对比 Angular（框架）：强制使用 TypeScript、强制特定项目结构、内置路由/状态管理/HTTP 客户端、遵循严格设计模式和约定。 [p.8]
@@ -66,10 +66,10 @@ cover: /logo.png
 - **JSX** (JavaScript XML)：JavaScript 的扩展语法，允许在 JavaScript 代码中编写类似 HTML 的结构。 [p.11]
 - 本质：JSX 不是浏览器原生支持的语法，会被 **Babel 编译器**转换为普通的 JavaScript 函数调用（`React.createElement`）。 [p.11]
 - 编程范式对比：
-  
+
     - **命令式编程** (Imperative)：告诉计算机“怎么做”，详细描述执行步骤。 [p.11]
     - **声明式编程** (Declarative)：告诉计算机“做什么”，描述目标状态。 [p.11]
-  
+
 
 ### JSX 核心语法规则 (Core Syntax Rules)
 
@@ -92,34 +92,34 @@ cover: /logo.png
 
 - 将复杂的 UI 界面拆分为独立的、可复用的组件，每个组件负责自己的逻辑和样式。 [p.16]
 - 组件化的优势：
-  
+
     - **高复用性**：一次编写，多处使用。 [p.16]
     - **低耦合**：组件之间相互独立，便于维护。 [p.16]
     - **易测试**：组件可以独立进行单元测试。 [p.16]
     - **可维护性**：代码结构清晰，易于定位问题。 [p.16]
     - **团队协作**：不同开发者可以负责不同组件的开发。 [p.16]
-  
+
 
 ### 函数组件 (Function Components)
 
 - 函数组件是定义组件的主要方式：使用 JavaScript 函数返回 JSX。 [p.17]
 - 组件命名规范：
-  
+
     - 必须以**大写字母开头**，区分组件和普通 HTML 标签。 [p.17]
     - 使用 **PascalCase**（大驼峰命名法）。 [p.17]
     - 文件名与组件名一致，便于查找和维护。 [p.17]
-  
+
 
 ### Props —— 组件间数据传递 (Props: Data Transfer)
 
 - **Props** (Properties 的缩写)：组件间传递数据的方式，从父组件流向子组件。 [p.18]
 - Props 的核心特性：
-  
+
     - **只读性** (Read-Only)：子组件不能修改 props，保证数据流向的单向性。 [p.19]
     - **单向传递** (Unidirectional)：只能从父组件传递到子组件，简化数据流追踪。 [p.19]
     - **类型检查** (Type Checking)：可使用 PropTypes 或 TypeScript，提高代码健壮性。 [p.19]
     - **默认值** (Default Values)：可设置默认属性值，增强代码健壮性。 [p.19]
-  
+
 - **子传父**：子组件通过回调函数 (Callback Function) 向父组件传递数据。 [p.20]
 
 % ======================================================================
@@ -135,18 +135,18 @@ cover: /logo.png
 
 - **State** 是一种特殊的数据存储机制，当 State 变化时 React 会自动重新渲染组件（响应式, Reactive）。 [p.23]
 - State 的核心特性：
-  
+
     - State 是**组件内部的可变数据**（组件私有，外部无法直接访问），用于存储组件的动态信息。 [p.23]
     - State **不可直接修改**，必须通过 setState 函数更新（Hook 机制）。 [p.23]
     - 一个组件中若有多个 State，React 会**批量更新** (Batched Update)，以提高性能（异步更新, Asynchronous Update）。 [p.23]
-  
+
 - 基本语法：`const [state, setState] = useState(initialValue);` [p.23]
 - 参数说明：
-  
+
     - `initialValue`：初始值，可以是任意类型（数字、字符串、对象、数组等）。 [p.23]
     - `state`：当前状态值。 [p.23]
     - `setState`：更新状态的 Hook 函数。 [p.23]
-  
+
 - **异步更新注意事项**：连续多次调用 setState 可能不会立即反映最新值，应使用函数式更新 `setState(prev => prev + 1)` 获取前一次状态。 [p.25]
 
 % ======================================================================
@@ -157,13 +157,13 @@ cover: /logo.png
 
 - **useEffect**（副作用 Hook 函数）：处理与组件渲染无关的操作，通过 Hook 实现。 [p.27]
 - 常见副作用操作：
-  
+
     - **数据获取** (Data Fetching)：调用 API 获取数据。 [p.27]
     - **订阅事件** (Event Subscription)：WebSocket 订阅、事件监听。 [p.27]
     - **DOM 操作** (DOM Manipulation)：修改 document title、操作 DOM 元素。 [p.27]
     - **定时器** (Timers)：setTimeout、setInterval。 [p.27]
     - **日志记录** (Logging)：发送分析数据到服务器。 [p.27]
-  
+
 
 ### useEffect 依赖数组与执行时机 (Dependency Array \& Execution Timing)
 
@@ -257,21 +257,21 @@ cover: /logo.png
 ### 概念定义 (Definitions)
 
 - **MPA** (Multi-Page Application, 多页面应用)：
-  
+
     - 传统的 Web 应用架构，每个页面都是独立的 HTML 文件。 [p.37]
     - 流程：用户点击链接 $\rightarrow$ 浏览器发送请求 $\rightarrow$ 服务器返回新 HTML $\rightarrow$ 浏览器重新渲染整个页面。 [p.37]
-  
+
 - **SPA** (Single-Page Application, 单页面应用)：
-  
+
     - 现代前端应用架构，只有一个 HTML 文件，所有内容通过 JavaScript 动态更新。 [p.37]
     - 流程：用户首次访问 $\rightarrow$ 加载唯一的 HTML $\rightarrow$ 后续导航通过 JavaScript 处理 $\rightarrow$ 仅更新部分页面。 [p.37]
-  
+
 - SPA 的核心技术：
-  
+
     - **前端路由** (Frontend Routing)：如 React Router、Vue Router。 [p.37]
     - **虚拟 DOM** (Virtual DOM)：高效的局部更新。 [p.37]
     - **状态管理** (State Management)：如 Redux、React Context。 [p.37]
-  
+
 
 ### MPA 与 SPA 架构对比 (Comparison)
 

@@ -6,7 +6,7 @@ summary: 第一章复习要点：软件开发架构概念、框架技术概述�
 cover: /logo.png
 ---
 
-> 面向对象：软件开发架构课程学习者，基于课堂课件整理<br/>
+> 面向对象：软件开发架构课程学习者，基于课堂课件整理
 > 本文涵盖核心考点、概念和最佳实践。
 
 ------------------------------------------------------------------------
@@ -20,10 +20,10 @@ cover: /logo.png
 - 课程名称：软件开发架构平台（Software Development Architecture Platform），聚焦 Java EE 平台与企业级 Web 应用 [p.2]
 - 前置知识（Prerequisites）：JavaSE、DB/SQL、JDBC、JSP/Servlet、HTML/CSS/XML、JavaScript、AJAX [p.2]
 - 开发架构（Development Architecture，面向“人”）与 系统架构（System Architecture，面向“机器”） [p.2]
-  
+
     - 开发架构：系统分层 MVC、前后端分离、各种框架技术 [p.2]
     - 系统架构：数据缓存技术（Caching）、服务器集群部署（Clustering）、服务与 REST API 设计 [p.2]
-  
+
 - 考核方式：闭卷考试（60\%）+ 实验（40\%）；实验分组，每组 4--6 人 [p.4]
 - 参考书籍：《Spring in Action》 [p.5]
 
@@ -35,11 +35,11 @@ cover: /logo.png
 
 - 经典的 MVC（Model-View-Controller）开发架构已成为事实标准（de facto standard） [p.7]
 - Model 层进一步细分为三部分 [p.8]:
-  
+
     - 业务逻辑对象（Service / Business Bean）：完成业务逻辑 [p.8]
     - 数据持久化对象（DAO, Data Access Object）：实现数据持久化操作 [p.8]
     - 值对象（POJO, Plain Old Java Object）：仅用于表达数据的值对象 [p.8]
-  
+
 - 请求--响应链路：客户端请求 $\to$ Servlet $\to$ Service $\to$ DAO $\to$ POJO $\leftrightarrow$ 数据库服务器；响应经 JSP 返回客户端 [p.8]
 - 严格遵守 MVC 模式的 Web 项目应具有规范的文件/包结构 [p.9]
 
@@ -51,11 +51,11 @@ cover: /logo.png
 ### Servlet 代码分析：相同点与不同点
 
 - **相同点（不可变部分）**：每个 Servlet 程序的流程基本一致，一般由三个部分组成 [p.13]:
-  
+
     - 从客户端获取数据 [p.13]
     - 调用业务逻辑进行处理 [p.13]
     - 根据处理的结果响应视图（JSP 页面） [p.13]
-  
+
 - **不同点（可变部分）**：具体操作的数据不一样——获取数据的个数/类型、调用业务逻辑的方法、响应的 JSP 页面 [p.13]
 - **表示层框架的设计思想**：使用配置文件设定可变部分，将不可变部分用框架的方式确定下来，不由程序员编写 [p.13]
 - **效果**：约束了程序员遵循 MVC 架构规范，提高了 Web 应用程序表示层的开发效率，同时使项目具有较好的可维护性和可扩展性 [p.13]
@@ -115,20 +115,20 @@ cover: /logo.png
 
 - **定义（Definition）**：在软件开发过程中，由于使用第三方框架技术而导致项目自身代码发生改变的程度，被称为框架/架构的侵入性 [p.24]
 - **高侵入性（High Invasiveness）** [p.24]:
-  
+
     - 直接继承（Inheritance）或实现（Implementation）第三方框架的类或接口 [p.24]
     - 项目脱离框架时将无法运行 [p.24]
     - 导致项目重构（Refactoring）和单元测试（Unit Testing）效率降低，可维护性下降 [p.24]
     - 示例：Struts 1.x 等高侵入性框架 [p.24]
-  
+
 - **低侵入性（Low Invasiveness）** [p.24]:
-  
+
     - 通过反射（Reflection）、动态代理（Dynamic Proxy）等语言特性 [p.24]
     - 结合 IoC（Inversion of Control，控制反转）和 AOP（Aspect-Oriented Programming，面向切面编程）等架构理论 [p.24]
     - 动态调用第三方框架的类和接口，项目脱离框架时依然可以运行 [p.24]
     - 提高可维护性和可扩展性，方便进行项目重构和单元测试等 [p.24]
     - 示例：Spring、MyBatis 等低侵入性框架 [p.24]
-  
+
 - 软件架构设计理论中“高内聚、低耦合”（High Cohesion, Low Coupling）的主要目标也是为了降低侵入性 [p.24]
 
 % ======================================================================
@@ -167,11 +167,11 @@ cover: /logo.png
 - 配置 web.xml（注册 DispatcherServlet） [p.33]
 - 配置 applicationContext.xml（Spring Bean 上下文配置） [p.34]
 - 编写 Controller 类，使用以下注解 [p.35]:
-  
+
     - `@Controller`：标注该类为一个 Servlet 控制器 [p.35]
     - `@GetMapping`：注解 URL 映射，如 `http://localhost:8080/hello` [p.35]
     - `@ResponseBody`：注解方法返回值为直接以字符串内容进行响应 [p.35]
-  
+
 
 % ======================================================================
 ## Struts 1 vs.\ Struts 2 vs.\ Spring MVC 对比
@@ -195,11 +195,11 @@ cover: /logo.png
 ### Maven 仓库（Repository）
 
 - 按所在地分为三类 [p.38]:
-  
+
     - 本地仓库（Local Repository）—— 位于开发者本机 [p.38]
     - 中央仓库（Central Repository）—— Maven 官方维护，存放大部分开源项目依赖包 [p.38]
     - 远程仓库/私服（Remote Repository / Private Server）—— 组织或公司自行搭建的第三方仓库 [p.38]
-  
+
 - 中央仓库地址：\url{https://mvnrepository.com/} [p.38]
 - Maven 通过 pom.xml 识别依赖，将项目的相关依赖包下载到本地仓库中 [p.39]
 - 如果项目所需要的依赖包中央仓库中没有，可以在 pom.xml 中设置远程仓库 [p.39]
@@ -210,17 +210,17 @@ cover: /logo.png
 
 - 每个 Maven 项目都有一个唯一的 pom.xml 文件 [p.40]
 - 每个 pom.xml 都有一个唯一的表示自身的坐标（Coordinate），由三部分组成 [p.40]:
-  
+
     - groupId —— 组织/项目组标识 [p.40]
     - artifactId —— 项目/模块标识 [p.40]
     - version —— 版本号 [p.40]
-  
+
 - pom.xml 文件大部分内容是描述项目的依赖 [p.40]:
-  
+
     - 依赖通过 `<dependencies>` 子节点声明 [p.40]
     - 每个 `<dependency>` 表示一种依赖 [p.40]
     - 每个依赖也有其所依赖项目的坐标（groupId、artifactId、version 三要素）组成 [p.40]
-  
+
 
 ### Maven 约定目录结构（Convention）
 

@@ -72,9 +72,13 @@ cover: /assets/covers/logo.png
 3. **路径要求**: 填写路径时**不能包含文件扩展名**（如 `.mp3`, `.wav`）。
 
 ### 示例代码
-```csharp
+
+
+```
+csharp
 AudioClip clip = Resources.Load<AudioClip>("audio/explosion");
 ```
+
 
 > 💡 **导师补充：关于 `<AudioClip>`**
 > 这叫 **泛型 (Generics)**。我们在 `List<T>` 或 `GetComponent<T>` 中经常见到。它告诉 `Resources.Load` 我们期望获取的文件类型是 `AudioClip`，这样编译器就能直接返回正确的类型，而不需要我们手动进行类型强制转换。
@@ -84,24 +88,28 @@ AudioClip clip = Resources.Load<AudioClip>("audio/explosion");
 ## 5. 编写声音播放器 (AudioManager)
 
 ### 任务 3 实现方案：初级播放器
-```csharp
+
+
+```
+csharp
 public static class AudioManager {
     public static void Play(string clipName) {
         // 1. 加载资源 (Load)
         AudioClip clip = Resources.Load<AudioClip>(clipName);
-        
+
         // 2. 找到或者动态创建一个 AudioSource 来播放
         // 注意：静态类中通常需要引用一个场景中的对象或动态创建一个
         GameObject go = new GameObject("TempAudio");
         AudioSource source = go.AddComponent<AudioSource>();
         source.clip = clip;
         source.Play();
-        
+
         // 播放完后需要销毁物体，否则会内存泄漏
         Object.Destroy(go, clip.length);
     }
 }
 ```
+
 
 > 💡 **导师补充：为什么用静态方法？**
 > `static` 方法可以直接通过类名 `AudioManager.Play()` 调用，不需要先在场景中 `new` 一个实例。这对于“工具类”非常方便，可以在项目的任何地方随时调用。
@@ -121,7 +129,10 @@ public static class AudioManager {
 > - **区别**: 数组是靠“序号(0,1,2)”找数据，Dictionary 是靠“名字(string/int)”找数据。
 
 ### 任务：实现带缓存的声音播放器
-```csharp
+
+
+```
+csharp
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -139,11 +150,12 @@ public class AudioManager : MonoBehaviour {
 
         // 从字典直接取出，避免重复 Load
         AudioClip targetClip = audioCache[clipName];
-        
+
         // 播放逻辑...
     }
 }
 ```
+
 
 > 💡 **导师补充：Remove(key) 为什么不需要 value？**
 > 因为字典中的 `Key` 是唯一的，通过 `Key` 已经能锁定唯一的“词条”。既然词条删除了，它对应的 `Value` 自然也就一起消失了。就像你在字典里撕掉一个单词，它的解释也就跟着没了。

@@ -435,6 +435,7 @@ category: 软件开发架构
 
 ## 状态转换图
 
+
 ```
 new Promise()
     |
@@ -454,6 +455,7 @@ resolved (已定型)
     v
 .then() / .catch() 回调执行
 ```
+
 
 - **设计要点**：理解状态转换图是理解 Promise 全部行为的钥匙。图中最关键的两条规则是：(1) 状态只能从 `pending` 出发，到达 `fulfilled` 或 `rejected` 后不可再变；(2) `resolved`（已定型）是 `fulfilled` 和 `rejected` 的上位概念，表示"已经结束了，无论成功还是失败"。一旦理解了这两条规则，就能自行推导出 Promise 在各种场景下的行为——链式调用的值传递、错误冒泡、多次 `.then()` 的行为等。
 

@@ -6,7 +6,7 @@ summary: 第七章复习要点：REST架构风格、HTTP方法/状态码、API�
 cover: /logo.png
 ---
 
-> 面向对象：软件开发架构课程学习者，基于课堂课件整理<br/>
+> 面向对象：软件开发架构课程学习者，基于课堂课件整理
 > 本文涵盖核心考点、概念和最佳实践。
 
 ------------------------------------------------------------------------
@@ -121,7 +121,7 @@ REST 在大部分应用场景中更受欢迎：轻量级、高性能、JSON 数�
     - POST + 动词（如 `POST /orders/1/cancel`）；
     - 查询字符串中带 action 字段（如 `POST /orders/1?action=cancel`）；
     - 设计子资源 (Sub-resource)（如 `POST /orders/1/cancellation`）。
-  
+
 
 ### 4.2 HTTP 请求方法 (HTTP Verbs / Methods)  [p.27]
 
@@ -156,6 +156,7 @@ REST 在大部分应用场景中更受欢迎：轻量级、高性能、JSON 数�
 
 典型统一响应结构（JSON格式）：
 
+
 ```
 {
   "code": 200,
@@ -163,6 +164,7 @@ REST 在大部分应用场景中更受欢迎：轻量级、高性能、JSON 数�
   "data": { ... }
 }
 ```
+
 
 - 统一格式便于客户端统一处理成功和错误两种情况。
 - 错误时 data 可为 null，message 中包含具体错误信息。
@@ -200,12 +202,12 @@ REST 在大部分应用场景中更受欢迎：轻量级、高性能、JSON 数�
 - **同源策略**：浏览器的安全策略之一，指一个网页的内容只能来自于同一个服务器来源。
 - **同源 (Same Origin)** 判断标准：两个 URL 如果**协议 (Protocol)、主机名 (Host)、端口 (Port)** 均一致则同源，三者中有一个不相同即不同源（跨域, Cross-Origin）。
 - 示例：对于基准 URL `http://www.csu.edu.cn/cs/index.html`：
-  
+
     - `http://www.csu.edu.cn/cs1/page.html` —— 同源（只有路径不同）
     - `https://www.csu.edu.cn/cs/page.html` —— 不同源（协议不同, HTTP vs HTTPS）
     - `http://www.csu.edu.cn:8080/cs/page.html` —— 不同源（端口不同, 80 vs 8080）
     - `http://mail.csu.edu.cn/cs1/page.html` —— 不同源（主机不同, www vs mail）
-  
+
 
 ### 6.2 Spring Boot 中解决跨域问题的三种方式  [p.41]
 
@@ -221,10 +223,10 @@ REST 在大部分应用场景中更受欢迎：轻量级、高性能、JSON 数�
 
 - **前后端未分离架构**：前端登录 $\to$ 后端生成 `jsessionid` 并保存到 Session 中（连同用户ID） $\to$ 将 `jsessionid` 传给用户存入浏览器 Cookie $\to$ 后续请求带上 Cookie $\to$ 后端根据 Cookie 值查询用户、验证是否过期。
 - **前后端分离后的问题**：
-  
+
     - 问题1：前后端分离后浏览器不能自动使用 Cookie、存在跨域问题（Cookie 跨域限制）、或根本没有浏览器可用（如移动端 App、IoT 设备）。
     - 问题2：服务器进行系统架构后（分布式/集群环境, Distributed/Clustered），Session 不便于存储和共享。
-  
+
 
 ### 7.2 Token 机制 (Token-based Authentication)  [p.44]
 
@@ -249,17 +251,17 @@ REST 在大部分应用场景中更受欢迎：轻量级、高性能、JSON 数�
 
 - JWT 的 token 字符串由三部分组成，每部分均为一个 JSON 对象，用 Base64 URL 安全编码后以句点 (`.`) 分隔：`Header.Payload.Signature`
 - **Header（头部）**  [p.47]：描述 JWT 元数据。包含：
-  
+
     - `alg`：签名算法（如 HS256、RS256）
     - `typ`：token 类型（JWT）
-  
+
 - **Payload（载荷/负载）**  [p.47]：存放实际需传递的数据，包含标准字段 (Registered Claims) 和自定义字段 (Private Claims)。官方标准字段：
-  
+
     - `iss`（Issuer，签发人）  `exp`（Expiration Time，过期时间）
     - `sub`（Subject，主题）  `aud`（Audience，使用者/受众）
     - `nbf`（Not Before，生效时间）  `iat`（Issued At，签发时间）
     - `jti`（JWT ID，唯一编号）
-  
+
 - **Signature（签名）**  [p.47]：对 Header 和 Payload 的签名，防止数据篡改。默认使用 HMAC SHA256：
   `HMACSHA256(base64UrlEncode(header) + "." + base64UrlEncode(payload), secret)`
 
@@ -278,13 +280,13 @@ REST 在大部分应用场景中更受欢迎：轻量级、高性能、JSON 数�
     - 客户端发送账号和密码（登录请求）。
     - 服务器验证成功，生成 JWT 令牌 (Token) 并返回给客户端。
     - 客户端保存令牌（如存储在 localStorage 或内存中）。
-  
+
 - **后续请求（认证阶段）**：
   [label=步骤\arabic*.]
     - 客户端在请求头中携带 JWT 令牌（通常格式：`Authorization: Bearer <token>`）。
     - 服务器验证令牌（检查签名是否正确、令牌是否过期等）。
     - 验证通过后完成响应。
-  
+
 
 % =================================================================
 ## 八、用户鉴权 (Authorization) 与 OAuth 框架
@@ -312,10 +314,10 @@ REST 在大部分应用场景中更受欢迎：轻量级、高性能、JSON 数�
 - OAuth 为桌面、手机或 Web 应用提供了一种简单的、标准的方式去访问需要用户授权的 API 服务。
 - Spring Framework 中提供 **Spring Security OAuth2** 组件，实现了 OAuth 规范。
 - **核心概念区分**：
-  
+
     - **认证 (Authentication)**：验证``你是谁'' (Who are you?)，如 JWT Token 确认用户身份。
     - **鉴权/授权 (Authorization)**：验证``你能做什么'' (What can you do?)，如 OAuth 2.0 授予第三方有限访问权限。
-  
+
 
 % =================================================================
 ## 九、本章小结  [p.53]

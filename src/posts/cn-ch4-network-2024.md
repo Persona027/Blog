@@ -42,7 +42,7 @@ cover: /logo.png
 
 ### IPv4 地址 (IPv4 Address)
 
-- IPv4地址为32位二进制数，通常用点分十进制表示 (Dotted Decimal Notation)，如 \verb|192.168.1.1|
+- IPv4地址为32位二进制数，通常用点分十进制表示 (Dotted Decimal Notation)，如 `192.168.1.1`
 - 每个IPv4地址由**网络号 (Net ID)**和**主机号 (Host ID)**两部分组成
 - 分类编址 (Classful Addressing)：
 
@@ -60,26 +60,22 @@ cover: /logo.png
 - 通过 IP地址 AND 子网掩码 获得网络地址
 - 公式：
     $$
-
-    子网数 = 2^n    (其中  n  为子网位数)
-
+子网数 = 2^n    (其中  n  为子网位数)
 $$
     $$
-
-    每个子网可用主机数 = 2^m - 2    (其中  m  为剩余主机位数，减2为网络号和广播地址)
-
+每个子网可用主机数 = 2^m - 2    (其中  m  为剩余主机位数，减2为网络号和广播地址)
 $$
 
 ### CIDR 无分类域间路由 (Classless Inter-Domain Routing)
 
 - 消除传统A/B/C类地址界限，采用**网络前缀 (Network Prefix)**表示
-- 记法：IP地址/前缀长度，如 \verb|192.168.0.0/22|
+- 记法：IP地址/前缀长度，如 `192.168.0.0/22`
 - 支持**路由聚合 (Route Aggregation)**：将多个连续的网络前缀聚合为一个更短的前缀，缩小路由表
 - **最长前缀匹配 (Longest Prefix Match)**：查路由表时，选择与目的地址匹配的最长前缀条目
 
 ### IPv6 地址 (IPv6 Address)
 
-- IPv6地址为128位，用冒号十六进制表示，如 \verb|2001:0db8:85a3::8a2e:0370:7334|
+- IPv6地址为128位，用冒号十六进制表示，如 `2001:0db8:85a3::8a2e:0370:7334`
 - 相比IPv4的改进：更大的地址空间、更简洁的首部格式、内置IPSec、更好的QoS支持
 - IPv6地址类型：单播 (Unicast)、组播 (Multicast)、任播 (Anycast)
 - IPv4到IPv6的过渡技术：双协议栈 (Dual Stack)、隧道技术 (Tunneling)、NAT64
@@ -192,9 +188,7 @@ IPv6首部固定为40字节，简化设计：
 #### Bellman-Ford方程 [p.28]
 假设$D_x(y)$是从$x$到$y$最小代价路径的代价值，则：
 $$
-
 D_x(y) = \min_{m \in  neighbors of  x} {c(x,m) + D_m(y)}
-
 $$
 其中$m$为$x$的邻居，$c(x,m)$为$x$到$m$的链路代价。
 
@@ -205,9 +199,7 @@ $$
 - 每个节点周期性地向邻居发送自己的距离向量
 - 节点$x$收到来自邻居的新DV估计后，使用B-F方程更新自己的DV：
     $$
-
-    D_x(y) \leftarrow \min_v{c(x,v) + D_v(y)}    for each node  y
-
+D_x(y) \leftarrow \min_v{c(x,v) + D_v(y)}    for each node  y
 $$
 - **特点**：迭代的、分布式的。本地迭代由本地链路费用改变或邻居更新报文引起
 - 所有路由器都得到正确的路由选择信息时网络进入**收敛 (Convergence)**状态 [p.34]
@@ -313,9 +305,7 @@ $$
 - 检测拥塞标准：输出线路利用率（突发流量）、缓冲的数据包数目（最常用）、丢包数目（太迟）、平均分组延迟、分组延迟方差等
 - **指数加权移动平均公式**：
         $$
-
-        u_{new} = a \cdot u_{old} + (1-a) \cdot f
-
+u_{new} = a \cdot u_{old} + (1-a) \cdot f
 $$
         其中 $0 \leq a \leq 1$ 是遗忘系数，$f=0$表示线路未被占用，$f=1$表示线路被占用。$a=0$ 完全遗忘，$a=1$ 一点不遗忘，$0<a<1$ 逐渐遗忘。[p.65]
 - 当$u \geq u_{阈值}$，输出线处于警告状态，触发动作
@@ -355,9 +345,7 @@ $$
 ### 流的四个需求参数 (Flow Requirements) [p.71]
 一个从源到目标的分组流，用4个基本参数描述需求：
 $$
-
 可靠性 (Reliability),    延迟 (Delay),    抖动 (Jitter),    带宽 (Bandwidth)
-
 $$
 
 ### 流量整形 (Traffic Shaping) [p.73--79]
@@ -402,9 +390,7 @@ $$
 - **字节级公平排队 (Demers 1990)**：按字节进行扫描，找到每个包结束的时刻，按顺序排队服务。 [p.83]
 - **加权公平队列 (Weighted Fair Queuing, WFQ)**：给不同主机不同优先级别。公式：
     $$
-
-    F_i = \max(A_i, F_{i-1}) + \frac{L_i}{W}
-
+F_i = \max(A_i, F_{i-1}) + \frac{L_i}{W}
 $$
     其中 $F_i$ 是第 $i$ 个包的虚拟完成时间，$A_i$ 是到达时间，$L_i$ 是包长度，$W$ 是权重。 [p.84]
 - **优先级调度 (Priority Scheduling)**：按优先级队列区分，总是优先发送高优先级队列中的包

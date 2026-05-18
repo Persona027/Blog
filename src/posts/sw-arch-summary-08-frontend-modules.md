@@ -6,7 +6,7 @@ summary: 第八章复习要点：模块化概念、CommonJS/AMD/ES6 Module、打
 cover: /logo.png
 ---
 
-> 面向对象：软件开发架构课程学习者，基于课堂课件整理<br/>
+> 面向对象：软件开发架构课程学习者，基于课堂课件整理
 > 本文涵盖核心考点、概念和最佳实践。
 
 ------------------------------------------------------------------------
@@ -19,13 +19,13 @@ cover: /logo.png
 
 - 前后端分离后，前端需要独立进行开发，拥有自己的开发工具和项目目录结构 [p.8]。
 - 登录功能范例暴露的问题：
-  
+
     - 必须手动引入所有JS文件，且**引入顺序**非常重要 [p.9]。
     - 全局变量污染严重，命名冲突风险高，函数全部暴露在全局作用域 [p.10]。
     - 代码繁琐、可读性差、代码质量低，不利于业务逻辑复杂的应用 [p.11]。
     - 一个页面可能多次异步请求服务器，服务器压力大 [p.11]。
     - 无规范的开发流程和构建标准，难以重用 [p.11]。
-  
+
 
 ### 前端工程化与模块化的概念
 
@@ -38,11 +38,11 @@ cover: /logo.png
 - **外部模块化（External Modularization）：**引入第三方包或插件，通常由一个或多个JS文件组成 [p.13]。
 - **内部模块化（Internal Modularization）：**项目内部的分层或分类，通常内部一个模块由一个JS文件表示 [p.13]。
 - 模块化的主要内容：
-  
+
     - 外部模块的管理——Node.js 和 NPM [p.13]。
     - 内部模块的组织——CommonJS、ES6 Module 和构建工具 [p.13]。
     - 模块源码到目标代码的编译和转换——Babel 等 [p.13]。
-  
+
 
 ## Node.js 与 NPM
 
@@ -52,12 +52,12 @@ cover: /logo.png
 - Node.js 是后端 JavaScript 运行时（Back-end JavaScript Runtime Environment），运行在 V8 JavaScript 引擎上，使 JavaScript 可以脱离浏览器运行 [p.15--16]。
 - 对等关系：Java 的 JDK $\leftrightarrow$ JVM，对应 Node.js $\leftrightarrow$ Chrome V8 [p.15]。
 - Node.js 核心组成：
-  
+
     - **V8 引擎（V8 Engine）：**来自 Chrome 浏览器，让 JavaScript 脱离浏览器运行 [p.16]。
     - **事件驱动、非阻塞 I/O（Event-driven, Non-blocking I/O）：**高性能，适合处理大量并发请求 [p.16]。
     - **NPM（Node Package Manager）：**包管理器，管理第三方依赖 [p.16]。
     - **内置模块（Built-in Modules）：**fs(文件系统)、http(HTTP服务器)、path(路径处理)等 [p.16]。
-  
+
 
 ### Node.js 对前端开发的意义
 
@@ -71,10 +71,10 @@ cover: /logo.png
 - NPM 内置于 Node.js 环境中，是 Node.js 的包管理工具 [p.20]。
 - 使用 `npm init` 初始化项目，会生成 `package.json` 文件 [p.20]。
 - NPM 两大功能：
-  
+
     - **包仓库（Registry）：**云端包存储仓库 [p.20]。
     - **CLI 命令行工具：**安装、卸载和管理包 [p.20]。
-  
+
 - 语义化版本（Semantic Versioning）：采用主版本.次版本.修订号（如 2.1.x）的格式 [p.21]。
 
 \subsubsection{NPM 常用命令}
@@ -89,11 +89,11 @@ cover: /logo.png
 - Yarn 由 Facebook、Google 等公司联合推出，旨在弥补 NPM 的缺陷 [p.24]。
 - NPM 主要缺点：安装速度慢（大项目尤其明显）、版本一致性问题 [p.24]。
 - Yarn 的改进：
-  
+
     - 并行安装、本地缓存，提高安装速度 [p.24]。
     - 提供 `yarn.lock` 文件锁定包版本 [p.24]。
     - 更简洁的输出信息、语义化的命令 [p.24]。
-  
+
 
 ## 前端模块化体系（内部模块化）
 
@@ -102,13 +102,13 @@ cover: /logo.png
 - 方式一：将不同的 JS 文件在 HTML 中逐一引入，每个文件代表一个模块 [p.27]。
 - 方式二：将每个模块包裹在函数作用域（IIFE）中执行，通过执行匿名函数返回模块输出，避免污染全局环境 [p.28]。
 - 主要问题：
-  
+
     - 项目增大后，HTML 中包含大量 `<script>` 标签 [p.29]。
     - `<script>` 标签顺序不能准确反映模块间的依赖关系（树状或网状），容易因变量未加载而报错 [p.29]。
     - 代码逻辑关系难以理解，不便维护 [p.29]。
     - 同步加载模式容易导致页面卡死 [p.29]。
     - 仍可能存在全局变量污染导致命名冲突 [p.29]。
-  
+
 
 ### 在线处理阶段——AMD 与 CMD
 
@@ -116,10 +116,10 @@ cover: /logo.png
 - **AMD（Asynchronous Module Definition）：**异步模块定义，代表库为 `require.js` [p.30]。
 - **CMD（Common Module Definition）：**通用模块定义，代表库为 `sea.js` [p.30]。
 - 主要问题：
-  
+
     - 在线组织模块延长了页面加载时间，影响用户体验 [p.30]。
     - 加载过程中发出大量 HTTP 请求，降低页面性能 [p.30]。
-  
+
 
 ### 预处理阶段——CommonJS 与 ES Module
 
@@ -132,11 +132,11 @@ cover: /logo.png
 - 每个模块内部，`module` 代表当前模块，`module.exports` 是对外的接口；加载某个模块实际上是加载其 `module.exports` 属性 [p.34]。
 - 使用 `require()` 方法加载模块 [p.34]。
 - 核心特点：
-  
+
     - 所有代码都运行在模块作用域，不会污染全局作用域 [p.37]。
     - 模块可多次加载，但只在第一次加载时运行一次，之后读取缓存结果；要重新运行需清除缓存 [p.37]。
     - 模块加载的顺序按照在代码中出现的顺序 [p.37]。
-  
+
 
 ### ES Module（ES6 模块化）
 
@@ -154,14 +154,14 @@ cover: /logo.png
   [nosep,left=1.5em]
     - 通过 CommonJS 或 ES6 实现 JS 的模块化编写 [p.40]。
     - 通过 Webpack、Vite 等构建打包工具对各模块进行编译，处理请求合并、依赖去重、体积优化、兼容性处理、导入 npm 包等 [p.40]。
-  
+
 - 前端其他资源（HTML、CSS、图片等）也需要构建打包工具进行模块化 [p.40]。
 - 构建打包工具的三大角色：
-  
+
     - **翻译官：**将 ES6/TypeScript 等转译成浏览器可运行的代码 [p.41]。
     - **优化师：**压缩、去重、合并、tree-shaking 等优化 [p.41]。
     - **搬运工：**处理资源路径、复制静态文件等 [p.41]。
-  
+
 
 ### Webpack
 
@@ -171,31 +171,31 @@ cover: /logo.png
 \subsubsection{Webpack 五大核心概念}
 
 - **入口（Entry）：**
-  
+
     - 入口起点指示 Webpack 应使用哪个模块作为构建内部依赖图（Dependency Graph）的开始 [p.44]。
     - 通过 `webpack.config.js` 中的 `entry` 属性配置一个或多个入口起点 [p.44]。
-  
+
 - **输出（Output）：**
-  
+
     - `output` 属性告诉 Webpack 在哪里输出所创建的 bundles，以及如何命名这些文件 [p.45]。
     - 通过 `webpack.config.js` 中的 `output` 属性配置 [p.45]。
-  
+
 - **加载器（Loader）：**
-  
+
     - Webpack 自身只理解 JavaScript，非 JS 资源（如 CSS、图片等）需要 Loader 进行加载和转换 [p.46]。
     - 例如加载 CSS 需要 `css-loader` 和 `style-loader`，使用前需通过 NPM 安装 [p.46]。
-  
+
 - **插件（Plugin）：**
-  
+
     - 插件执行比 Loader 范围更广的任务，包括打包优化、压缩、重新定义环境变量等 [p.47]。
     - 使用插件需要先 `require`，再添加到 `plugins` 数组中 [p.47]。
     - 如 `HtmlWebpackPlugin` 用于给 HTML 文件进行打包和处理 [p.47]。
-  
+
 - **模式（Mode）：**
-  
+
     - Webpack 有两种打包模式：开发模式（Development）和生产模式（Production）[p.48]。
     - 生产模式会对打包结果进行加密和压缩 [p.48]。
-  
+
 
 ### Vite
 

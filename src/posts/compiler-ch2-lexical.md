@@ -27,15 +27,15 @@ cover: /logo.png
 ### 记号的数据结构定义
 记号的典型数据结构（以C语言为例）[p.8]：
 
-```
 
+```
 enum kind {IF, LPAREN, IDENT, INT, GT, ...};
 struct token {
     enum kind k;    // 单词类别
     char *lexeme;   // 单词自身的字符串值（关键字/界符可为NULL）
 };
-
 ```
+
 
 例如，输入 `if (x>5)` 将被切分为6个记号（IF, LPAREN, IDENT, GT, INT, RPAREN）。
 
@@ -50,9 +50,7 @@ struct token {
 
 词法分析程序输出的单词符号通常用**二元式**表示：[p.14--17]
 $$
-
 (单词类别, 单词内部码值)
-
 $$
 
 ### 词法分析器的两种实现方案
@@ -146,9 +144,7 @@ $$
 ### 正则表达式的归纳定义（另一种表述）
 对给定字符集 $\Sigma = {c_1, c_2, ..., c_n}$：[p.41]
 $$
-
 e \to \varepsilon \mid c \in \Sigma \mid e|e \mid ee \mid e^*
-
 $$
 
 ### 典型例子
@@ -156,15 +152,11 @@ $$
 - **C语言关键字** if：正则表达式为 `if` [p.43]
 - **C语言标识符**（字母|下划线开头，后跟零或多个字母、数字、下划线）：[p.44]
     $$
-
-    (a|b|\cdots|z|A|B|\cdots|Z|\_)(a|b|\cdots|z|A|B|\cdots|Z|0|1|\cdots|9|\_)^*
-
+(a|b|\cdots|z|A|B|\cdots|Z|\_)(a|b|\cdots|z|A|B|\cdots|Z|0|1|\cdots|9|\_)^*
 $$
 - **C语言无符号十进制整数**（0或1-9开头后跟0-9）：[p.45]
     $$
-
-    0 \mid ((1|2|\cdots|9)(0|1|2|\cdots|9)^*)
-
+0 \mid ((1|2|\cdots|9)(0|1|2|\cdots|9)^*)
 $$
 
 ### 语法糖（Syntactic Sugar）
@@ -174,16 +166,17 @@ $$
 - `e+`：等价于 $e^*e$，一个或多个 $e$（正闭包）
 - `e?`：等价于 $e|\varepsilon$，零个或一个 $e$（可选）
 - `e{i,j\`}：$i$ 到 $j$ 个 $e$ 的连接（重复次数）
-- ```.''`：除换行符 `\textbackslash n` 外的任意字符
+-
+
+```
+.''`：除换行符 `\textbackslash n` 外的任意字符
 
 ## 有限状态自动机（Finite Automaton, FA）
 
 ### 自动机的五元组定义
 一个有限状态自动机 $M$ 定义为五元组：[p.50--51]
 $$
-
 M = (\Sigma, S, q_0, F, \delta)
-
 $$
 其中：
 
@@ -198,15 +191,11 @@ $$
 
 - **确定有限自动机（DFA, Deterministic FA）**：对任意的字符，最多有一个状态可以转移。
     $$
-
-    \delta: S \times \Sigma \to S
-
+\delta: S \times \Sigma \to S
 $$
 - **非确定有限自动机（NFA, Nondeterministic FA）**：对任意的字符，有多于一个状态可以转移。
     $$
-
-    \delta: S \times (\Sigma \cup {\varepsilon}) \to \mathcal{P}(S)
-
+\delta: S \times (\Sigma \cup {\varepsilon}) \to \mathcal{P}(S)
 $$
     （$\mathcal{P}(S)$ 表示 $S$ 的幂集）
 
@@ -218,24 +207,22 @@ $$
 
 ### DFA的实现：转移表
 给定DFA的转移表（Transition Table），以一个二维数组存储状态转换：[p.53]
-
 ```
+
 
 状态\字符  a  b
    0       1  0
    1       2  1
    2       2  2
 
-```
 
+```
 词法分析驱动代码通过查表驱动状态转移，简单高效。
 
 ### 自动生成词法分析器的完整流程
 [p.55, p.60, p.86, p.97]
 $$
-
 正则表达式（RE） \xrightarrow{Thompson算法} NFA \xrightarrow{子集构造算法} DFA \xrightarrow{Hopcroft最小化} 最小DFA \xrightarrow{代码生成} 词法分析器代码
-
 $$
 
 ## 正则表达式转NFA —— Thompson算法
@@ -279,8 +266,8 @@ Thompson算法基于对正则表达式结构的**归纳**：[p.56]
 - **对语法树递归生成NFA**。
 
 REG节点数据结构如下：[p.104]
-
 ```
+
 
 enum kind {eps, c, and, or, closure};
 struct reg {
@@ -308,9 +295,7 @@ struct reg {
 ### $I_a$ 的定义[p.72]
 假定 $I$ 是 $M'$ 的状态子集，$a$ 是 $\Sigma$ 中的字符，定义：
 $$
-
 I_a = \varepsilon-CLOSURE(J)
-
 $$
 其中 $J$ 是 $I$ 中任意状态出发（跳过前面任意多条 $\varepsilon$ 弧），经过一条 $a$ 弧而能达到的状态结点全体。
 
@@ -449,71 +434,52 @@ $$
 
 ### 关键公式速查
 $$
-
 \begin{array}{c|c}
 
-概念 & 公式/定义 <br/>
+概念 & 公式/定义
+\varepsilon-CLOSURE(I) & {s \mid s \in I} \cup {s' \mid s \in I,\ s 经\varepsilon可达s'} \\[4pt]
 
-\varepsilon-CLOSURE(I) & {s \mid s \in I} \cup {s' \mid s \in I,\ s 经\varepsilon可达s'} <br/>[4pt]
+I_a （子集构造） & \varepsilon-CLOSURE({t \mid s \in I,\ s \xrightarrow{a} t}) \\[4pt]
 
-I_a （子集构造） & \varepsilon-CLOSURE({t \mid s \in I,\ s \xrightarrow{a} t}) <br/>[4pt]
+正则闭包 & A^+ = A^1 \cup A^2 \cup \cdots \\[4pt]
 
-正则闭包 & A^+ = A^1 \cup A^2 \cup \cdots <br/>[4pt]
+Kleene闭包 & A^* = A^0 \cup A^+ = {\varepsilon} \cup A^+ \\[4pt]
 
-Kleene闭包 & A^* = A^0 \cup A^+ = {\varepsilon} \cup A^+ <br/>[4pt]
+A^* （等价式） & A^* = \varepsilon \mid A^+ \\[4pt]
 
-A^* （等价式） & A^* = \varepsilon \mid A^+ <br/>[4pt]
+DFA转移函数 & \delta: S \times \Sigma \to S \\[4pt]
 
-DFA转移函数 & \delta: S \times \Sigma \to S <br/>[4pt]
+NFA转移函数 & \delta: S \times (\Sigma \cup {\varepsilon}) \to \mathcal{P}(S) \\[4pt]
 
-NFA转移函数 & \delta: S \times (\Sigma \cup {\varepsilon}) \to \mathcal{P}(S) <br/>[4pt]
-
-子集构造最坏复杂度 & O(2^{|S|})_{NFA状态数} <br/>[4pt]
+子集构造最坏复杂度 & O(2^{|S|})_{NFA状态数} \\[4pt]
 
 \end{array}
-
 $$
 
 ### 概念对照表
 
 $$
-
 \begin{array}{c|c|c}
 
-对比维度 & DFA & NFA <br/>
-
-转移确定性 & 确定的（每字符最多一转移） & 非确定的（可多转移） <br/>
-
-\varepsilon转移 & 不允许 & 允许 <br/>
-
-转移函数值域 & S\ (单个状态) & \mathcal{P}(S)\ (状态集合) <br/>
-
-实现难度 & 直接可用转移表 & 需回溯/遍历 <br/>
-
-状态数 & 指数级（相对NFA） & 较少 <br/>
-
-执行效率 & 高（O(输入长度)） & 低（最坏指数级） <br/>
-
+对比维度 & DFA & NFA
+转移确定性 & 确定的（每字符最多一转移） & 非确定的（可多转移）
+\varepsilon转移 & 不允许 & 允许
+转移函数值域 & S\ (单个状态) & \mathcal{P}(S)\ (状态集合)
+实现难度 & 直接可用转移表 & 需回溯/遍历
+状态数 & 指数级（相对NFA） & 较少
+执行效率 & 高（O(输入长度)） & 低（最坏指数级）
 \end{array}
-
 $$
 
 $$
-
 \begin{array}{c|c|c}
 
-对比维度 & 手工编码 & 自动生成 <br/>
-
-复杂度 & 较高，易出错 & 代码量少，快速原型 <br/>
-
-控制细度 & 可精细控制 & 细节较难控制 <br/>
-
-典型工具 & 手写C/C++代码 & Lex, Flex, JLex <br/>
-
-使用场景 & GCC, LLVM & 原型/小语言 <br/>
-
+对比维度 & 手工编码 & 自动生成
+复杂度 & 较高，易出错 & 代码量少，快速原型
+控制细度 & 可精细控制 & 细节较难控制
+典型工具 & 手写C/C++代码 & Lex, Flex, JLex
+使用场景 & GCC, LLVM & 原型/小语言
 \end{array}
-
 $$
 
 ### 重点考点清单
@@ -531,7 +497,5 @@ $$
 
 ### 重要等价关系
 $$
-
 正则表达式(RE) \Leftrightarrow NFA \Leftrightarrow DFA \Leftrightarrow 最小DFA \Leftrightarrow 正规文法 \Leftrightarrow 正规集
-
 $$

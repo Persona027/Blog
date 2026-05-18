@@ -109,7 +109,9 @@ Animator 组件是用来管理动画播放的顺序与逻辑的。
 
 **常用 API:**
 
-```csharp
+
+```
+csharp
 // 设定一个 bool 变量的值
 animator.SetBool("isRunning", true);
 
@@ -117,9 +119,12 @@ animator.SetBool("isRunning", true);
 animator.SetTrigger("jump");
 ```
 
+
 **更简单的动画播放 (适合 2D 帧动画):**
 
-```csharp
+
+```
+csharp
 // 直接跳转到对应的 State，无过渡
 animator.Play("Idle");
 
@@ -127,3 +132,5 @@ animator.Play("Idle");
 // Play(stateName, layer, normalizedTime)
 animator.Play("Attack", 0, 0f);
 ```
+
+
