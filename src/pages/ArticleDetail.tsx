@@ -3,11 +3,13 @@ import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
-import { List, Menu, X, ChevronRight, Hash } from 'lucide-react';
+import { List, Menu, X, ChevronRight, Hash, FileDown } from 'lucide-react';
 import type { ComponentPropsWithoutRef } from 'react';
 import type { TocItem, ArticleMeta, Frontmatter } from '@/types';
 import { parseMarkdownFrontmatter, slugify, flattenChildren } from '@/utils/markdown';
 import { useScrollSpy } from '@/hooks/useScrollSpy';
+import { getPdfPost, pdfPosts } from '@/data/pdfPosts';
+import PdfViewer from '@/components/PdfViewer';
 
 const ArticleDetail = () => {
   const { slug } = useParams();
@@ -17,7 +19,7 @@ const ArticleDetail = () => {
   const contentRef = useRef<HTMLDivElement>(null);
   const activeId = useScrollSpy(contentRef, 'h2, h3', 160);
 
-  const { content, metadata, toc, relatedArticles } = useMemo(() => {
+  const { content, metadata, toc, relatedArticles, isPdf, pdfUrl } = useMemo(() => {
     const modules = import.meta.glob<{ default: string }>('../posts/*.md', { query: '?raw', eager: true });
     const allArticles: ArticleMeta[] = [];
 
@@ -31,6 +33,27 @@ const ArticleDetail = () => {
         date: frontmatter.date || '',
         category: frontmatter.category || 'Uncategorized',
       });
+    }
+
+    for (const pdf of pdfPosts) {
+      allArticles.push({
+        slug: pdf.slug,
+        title: pdf.title,
+        date: pdf.date,
+        category: pdf.category,
+      });
+    }
+
+    const pdfPost = getPdfPost(slug || '');
+    if (pdfPost) {
+      return {
+        content: '',
+        metadata: pdfPost as unknown as Frontmatter,
+        toc: [] as TocItem[],
+        relatedArticles: allArticles.filter((a) => a.category === pdfPost.category),
+        isPdf: true,
+        pdfUrl: pdfPost.pdfUrl,
+      };
     }
 
     const targetPath = `../posts/${slug}.md`;
@@ -55,6 +78,8 @@ const ArticleDetail = () => {
         metadata: frontmatter,
         toc: tocItems,
         relatedArticles: allArticles.filter((a) => a.category === frontmatter.category),
+        isPdf: false,
+        pdfUrl: undefined,
       };
     }
 
@@ -63,6 +88,8 @@ const ArticleDetail = () => {
       metadata: {} as Frontmatter,
       toc: [] as TocItem[],
       relatedArticles: [] as ArticleMeta[],
+      isPdf: false,
+      pdfUrl: undefined,
     };
   }, [slug]);
 
@@ -153,22 +180,26 @@ const ArticleDetail = () => {
               <div className="h-1 w-20 bg-cyan-500/50 rounded-full"></div>
             </div>
 
-            <article ref={contentRef} className="bg-black/40 rounded-3xl p-8 lg:p-12 border border-white/5 backdrop-blur-md shadow-2xl">
-              <div className="prose prose-invert prose-lg max-w-none
-                prose-headings:font-bold prose-headings:tracking-tight
-                prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-4 prose-h2:mt-12
-                prose-a:text-cyan-400 hover:prose-a:text-cyan-300 transition-colors
-                prose-img:rounded-2xl prose-img:border prose-img:border-white/10
-                prose-code:text-cyan-300 prose-code:bg-cyan-500/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
-                prose-blockquote:border-cyan-500/50 prose-blockquote:bg-cyan-500/5 prose-blockquote:py-1 prose-blockquote:rounded-r-lg
-              ">
-                <ReactMarkdown
-                  remarkPlugins={[remarkMath]}
-                  rehypePlugins={[rehypeKatex]}
-                  components={MarkdownComponents}
-                >{content}</ReactMarkdown>
-              </div>
-            </article>
+            {isPdf ? (
+              <PdfViewer pdfUrl={pdfUrl!} title={metadata.title || slug || ''} />
+            ) : (
+              <article ref={contentRef} className="bg-black/40 rounded-3xl p-8 lg:p-12 border border-white/5 backdrop-blur-md shadow-2xl">
+                <div className="prose prose-invert prose-lg max-w-none
+                  prose-headings:font-bold prose-headings:tracking-tight
+                  prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-4 prose-h2:mt-12
+                  prose-a:text-cyan-400 hover:prose-a:text-cyan-300 transition-colors
+                  prose-img:rounded-2xl prose-img:border prose-img:border-white/10
+                  prose-code:text-cyan-300 prose-code:bg-cyan-500/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+                  prose-blockquote:border-cyan-500/50 prose-blockquote:bg-cyan-500/5 prose-blockquote:py-1 prose-blockquote:rounded-r-lg
+                ">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkMath]}
+                    rehypePlugins={[rehypeKatex]}
+                    components={MarkdownComponents}
+                  >{content}</ReactMarkdown>
+                </div>
+              </article>
+            )}
 
             <div className="mt-16 flex items-center justify-between border-t border-white/5 pt-8">
               <Link to="/" className="text-gray-500 hover:text-cyan-400 transition-colors flex items-center gap-2">
@@ -179,40 +210,65 @@ const ArticleDetail = () => {
           </div>
         </main>
 
-        {/* --- 右侧侧边栏：目录 (TOC) --- */}
+        {/* --- 右侧侧边栏：目录 (TOC) 或 PDF 信息 --- */}
         <aside className={`
           fixed inset-y-0 right-0 z-50 w-72 bg-zinc-900 lg:bg-transparent border-l border-white/5 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:z-0 lg:border-none
           ${isRightOpen ? 'translate-x-0' : 'translate-x-full'}
         `}>
           <div className="h-full flex flex-col p-6 overflow-y-auto lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]">
             <div className="flex items-center justify-between mb-8 lg:hidden">
-              <span className="font-bold text-white">目录</span>
+              <span className="font-bold text-white">{isPdf ? 'PDF 文档' : '目录'}</span>
               <button onClick={() => setIsRightOpen(false)} title="关闭目录" aria-label="关闭目录"><X size={20} /></button>
             </div>
-            <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-6 flex items-center gap-2">
-              <Hash size={16} className="text-cyan-500" />
-              目录索引
-            </h3>
-            <nav className="flex flex-col gap-1">
-              {toc.length > 0 ? toc.map((item) => (
-                <button
-                  key={item.id}
-                  onClick={() => scrollToAnchor(item.id)}
-                  className={`text-left transition-all duration-200 py-1.5 px-3 rounded-md text-sm group ${
-                    activeId === item.id
-                    ? 'text-cyan-400 bg-cyan-400/5 translate-x-1 font-bold'
-                    : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'
-                  } ${
-                    item.level === 3 ? 'ml-3' : ''
-                  }`}
+            {isPdf ? (
+              <div className="flex flex-col gap-4">
+                <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2 flex items-center gap-2">
+                  <svg className="w-4 h-4 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                  </svg>
+                  PDF 复习总结
+                </h3>
+                <p className="text-sm text-gray-400 leading-relaxed">
+                  本文为 PDF 格式的考点复习总结，可直接在页面内阅读或下载到本地。
+                </p>
+                <a
+                  href={pdfUrl}
+                  download
+                  className="flex items-center justify-center gap-2 px-4 py-3 text-sm text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 rounded-xl hover:bg-cyan-500/20 transition-colors"
                 >
-                  <span className={`inline-block w-1.5 h-1.5 rounded-full mr-2 transition-transform ${activeId === item.id ? 'bg-cyan-400 scale-125' : 'bg-gray-700 opacity-0 group-hover:opacity-100'}`}></span>
-                  {item.text}
-                </button>
-              )) : (
-                <span className="text-xs text-gray-600 italic">暂无目录内容</span>
-              )}
-            </nav>
+                  <FileDown size={16} />
+                  下载 PDF
+                </a>
+              </div>
+            ) : (
+              <>
+                <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-6 flex items-center gap-2">
+                  <Hash size={16} className="text-cyan-500" />
+                  目录索引
+                </h3>
+                <nav className="flex flex-col gap-1">
+                  {toc.length > 0 ? toc.map((item) => (
+                    <button
+                      key={item.id}
+                      onClick={() => scrollToAnchor(item.id)}
+                      className={`text-left transition-all duration-200 py-1.5 px-3 rounded-md text-sm group ${
+                        activeId === item.id
+                        ? 'text-cyan-400 bg-cyan-400/5 translate-x-1 font-bold'
+                        : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'
+                      } ${
+                        item.level === 3 ? 'ml-3' : ''
+                      }`}
+                    >
+                      <span className={`inline-block w-1.5 h-1.5 rounded-full mr-2 transition-transform ${activeId === item.id ? 'bg-cyan-400 scale-125' : 'bg-gray-700 opacity-0 group-hover:opacity-100'}`}></span>
+                      {item.text}
+                    </button>
+                  )) : (
+                    <span className="text-xs text-gray-600 italic">暂无目录内容</span>
+                  )}
+                </nav>
+              </>
+            )}
           </div>
         </aside>
       </div>

@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { CoverImage } from '@/components/CoverImage';
 import { Archive, FileText, ChevronRight, ChevronDown } from 'lucide-react';
 import { parseMarkdownFrontmatter } from '@/utils/markdown';
+import { pdfPosts } from '@/data/pdfPosts';
 import type { Post } from '@/types';
 
 const ArticleList = () => {
@@ -13,12 +14,14 @@ const ArticleList = () => {
   const posts = useMemo(() => {
     const modules = import.meta.glob<{ default: string }>('../posts/*.md', { query: '?raw', eager: true });
     const loadedPosts: Post[] = [];
+    const seenSlugs = new Set<string>();
 
     for (const path in modules) {
       const rawContent = modules[path].default;
       const { frontmatter } = parseMarkdownFrontmatter(rawContent);
       const fileName = path.split('/').pop()?.replace('.md', '') || '';
 
+      seenSlugs.add(fileName);
       loadedPosts.push({
         slug: fileName,
         title: frontmatter.title || '无标题',
@@ -27,6 +30,19 @@ const ArticleList = () => {
         summary: frontmatter.summary || '暂无简介',
         cover: frontmatter.cover || undefined,
       });
+    }
+
+    for (const pdf of pdfPosts) {
+      if (!seenSlugs.has(pdf.slug)) {
+        loadedPosts.push({
+          slug: pdf.slug,
+          title: pdf.title,
+          date: pdf.date,
+          category: pdf.category,
+          summary: pdf.summary,
+          cover: pdf.cover,
+        });
+      }
     }
 
     loadedPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
