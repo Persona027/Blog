@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { ChevronDown, LayoutGrid, Archive, Layers } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { ROUTES } from '@/constants';
 
@@ -9,7 +9,8 @@ const Navbar = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    useClickOutside(dropdownRef, () => setIsDropdownOpen(false));
+    const closeDropdown = useCallback(() => setIsDropdownOpen(false), []);
+    useClickOutside(dropdownRef, closeDropdown);
 
     const isActive = (path: string) => {
         if (path.includes('?')) {
@@ -29,7 +30,7 @@ const Navbar = () => {
             </Link>
 
             <div className="flex space-x-6 md:space-x-8 text-sm md:text-base items-center">
-                <Link to={ROUTES.HOME} className={linkStyle('/')}>首页</Link>
+                <Link to={ROUTES.HOME} className={linkStyle(ROUTES.HOME)}>首页</Link>
 
                 <div ref={dropdownRef} className="relative dropdown-container">
                     <button
@@ -62,7 +63,7 @@ const Navbar = () => {
                 </div>
 
                 <Link to={ROUTES.ABOUT} className={linkStyle('/about')}>关于</Link>
-                <Link to={ROUTES.COLLECTIONS.replace('/:category?', '')} className={linkStyle('/collections')}>收藏</Link>
+                <Link to={ROUTES.COLLECTIONS_BASE} className={linkStyle(ROUTES.COLLECTIONS_BASE)}>收藏</Link>
             </div>
         </nav>
     );

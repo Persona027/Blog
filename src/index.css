@@ -1,5 +1,4 @@
 @import "katex/dist/katex.min.css";
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,500;1,400;1,500&display=swap');
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
@@ -14,7 +13,6 @@ html {
   background-attachment: fixed;
 }
 
-/* 暗色滚动条 */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -30,7 +28,11 @@ html {
   background: rgba(255, 255, 255, 0.2);
 }
 
-/* Prose 中文排版优化 */
+.glow-dot-cyan {
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
+}
+
+/* Prose overrides for dark theme + CJK readability */
 .prose {
   --tw-prose-body: #e5e7eb;
   --tw-prose-headings: #ffffff;
@@ -68,7 +70,6 @@ html {
   font-size: 0.875em;
 }
 
-/* KaTeX dark theme overrides */
 .prose .katex,
 .prose .katex * {
   color: inherit;

@@ -5,11 +5,23 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import { List, Menu, X, ChevronRight, Hash, FileDown } from 'lucide-react';
 import type { ComponentPropsWithoutRef } from 'react';
-import type { TocItem, ArticleMeta, Frontmatter } from '@/types';
+import type { TocItem, Frontmatter } from '@/types';
 import { parseMarkdownFrontmatter, slugify, flattenChildren } from '@/utils/markdown';
 import { useScrollSpy } from '@/hooks/useScrollSpy';
-import { getPdfPost, pdfPosts } from '@/data/pdfPosts';
+import { getPdfPost } from '@/data/pdfPosts';
+import { useAllPosts, getRawMd } from '@/data/postsIndex';
 import PdfViewer from '@/components/PdfViewer';
+
+const heading = (Tag: 'h2' | 'h3') =>
+  ({ children, ...props }: ComponentPropsWithoutRef<'h2' | 'h3'>) => {
+    const id = slugify(flattenChildren(children));
+    return <Tag id={id} {...props} className="scroll-mt-24" />;
+  };
+
+const MarkdownComponents = {
+  h2: heading('h2'),
+  h3: heading('h3'),
+};
 
 const ArticleDetail = () => {
   const { slug } = useParams();
@@ -19,47 +31,24 @@ const ArticleDetail = () => {
   const contentRef = useRef<HTMLDivElement>(null);
   const activeId = useScrollSpy(contentRef, 'h2, h3', 160);
 
+  const { articles } = useAllPosts();
+
   const { content, metadata, toc, relatedArticles, isPdf, pdfUrl } = useMemo(() => {
-    const modules = import.meta.glob<{ default: string }>('../posts/*.md', { query: '?raw', eager: true });
-    const allArticles: ArticleMeta[] = [];
-
-    for (const path in modules) {
-      const fileSlug = path.split('/').pop()?.replace('.md', '') || '';
-      const raw = modules[path].default;
-      const { frontmatter } = parseMarkdownFrontmatter(raw);
-      allArticles.push({
-        slug: fileSlug,
-        title: frontmatter.title || fileSlug,
-        date: frontmatter.date || '',
-        category: frontmatter.category || 'Uncategorized',
-      });
-    }
-
-    for (const pdf of pdfPosts) {
-      allArticles.push({
-        slug: pdf.slug,
-        title: pdf.title,
-        date: pdf.date,
-        category: pdf.category,
-      });
-    }
-
     const pdfPost = getPdfPost(slug || '');
     if (pdfPost) {
       return {
         content: '',
         metadata: pdfPost as unknown as Frontmatter,
         toc: [] as TocItem[],
-        relatedArticles: allArticles.filter((a) => a.category === pdfPost.category),
+        relatedArticles: articles.filter((a) => a.category === pdfPost.category),
         isPdf: true,
         pdfUrl: pdfPost.pdfUrl,
       };
     }
 
-    const targetPath = `../posts/${slug}.md`;
-    if (modules[targetPath]) {
-      const rawContent = modules[targetPath].default;
-      const { frontmatter, content: mdContent } = parseMarkdownFrontmatter(rawContent);
+    const rawMd = getRawMd(slug || '');
+    if (rawMd) {
+      const { frontmatter, content: mdContent } = parseMarkdownFrontmatter(rawMd);
 
       const tocItems: TocItem[] = [];
       const lines = mdContent.split('\n');
@@ -77,7 +66,7 @@ const ArticleDetail = () => {
         content: mdContent,
         metadata: frontmatter,
         toc: tocItems,
-        relatedArticles: allArticles.filter((a) => a.category === frontmatter.category),
+        relatedArticles: articles.filter((a) => a.category === frontmatter.category),
         isPdf: false,
         pdfUrl: undefined,
       };
@@ -87,11 +76,11 @@ const ArticleDetail = () => {
       content: '# 404 文章未找到\n或许它已经迷失在宇宙中了。',
       metadata: {} as Frontmatter,
       toc: [] as TocItem[],
-      relatedArticles: [] as ArticleMeta[],
+      relatedArticles: [] as typeof articles,
       isPdf: false,
       pdfUrl: undefined,
     };
-  }, [slug]);
+  }, [slug, articles]);
 
   /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
@@ -109,17 +98,6 @@ const ArticleDetail = () => {
       window.scrollTo({ top: y, behavior: 'smooth' });
       setIsRightOpen(false);
     }
-  };
-
-  const MarkdownComponents = {
-    h2: ({ children, ...props }: ComponentPropsWithoutRef<'h2'>) => {
-      const id = slugify(flattenChildren(children));
-      return <h2 id={id} {...props} className="scroll-mt-24" />;
-    },
-    h3: ({ children, ...props }: ComponentPropsWithoutRef<'h3'>) => {
-      const id = slugify(flattenChildren(children));
-      return <h3 id={id} {...props} className="scroll-mt-24" />;
-    },
   };
 
   return (
@@ -143,7 +121,7 @@ const ArticleDetail = () => {
               <button onClick={() => setIsLeftOpen(false)} title="关闭侧边栏" aria-label="关闭侧边栏"><X size={20} /></button>
             </div>
             <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-              <span className="w-1.5 h-4 bg-cyan-400 rounded-full shadow-[0_0_8px_rgba(34,211,238,0.5)]"></span>
+              <span className="w-1.5 h-4 bg-cyan-400 rounded-full glow-dot-cyan"></span>
               {metadata.category} 杂谈 ({relatedArticles.length})
             </h3>
             <nav className="space-y-1">
@@ -167,47 +145,45 @@ const ArticleDetail = () => {
 
         {/* --- 中间：正文内容 --- */}
         <main className="flex-1 min-w-0 py-8 lg:py-12 px-6 lg:px-4">
-          <div className="">
-            <div className="mb-12">
-              <div className="flex items-center gap-2 text-cyan-500 text-sm font-bold mb-4 uppercase tracking-wider">
-                <span>{metadata.category}</span>
-                <ChevronRight size={14} />
-                <span className="text-gray-400">{metadata.date}</span>
+          <div className="mb-12">
+            <div className="flex items-center gap-2 text-cyan-500 text-sm font-bold mb-4 uppercase tracking-wider">
+              <span>{metadata.category}</span>
+              <ChevronRight size={14} />
+              <span className="text-gray-400">{metadata.date}</span>
+            </div>
+            <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-8 leading-tight tracking-tight">
+              {metadata.title || 'Loading...'}
+            </h1>
+            <div className="h-1 w-24 rounded-full bg-gradient-to-r from-cyan-400 to-transparent"></div>
+          </div>
+
+          {isPdf ? (
+            <PdfViewer pdfUrl={pdfUrl!} title={metadata.title || slug || ''} />
+          ) : (
+            <article ref={contentRef} className="bg-black/40 rounded-2xl p-8 lg:p-12 border border-white/5 backdrop-blur-md shadow-2xl">
+              <div className="prose prose-invert prose-xl max-w-none
+                prose-headings:font-bold prose-headings:tracking-tight
+                prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-4 prose-h2:mt-14 prose-h3:mt-10
+                prose-p:my-5
+                prose-a:text-cyan-400 hover:prose-a:text-cyan-300 transition-colors
+                prose-img:rounded-2xl prose-img:border prose-img:border-white/10
+                prose-code:text-cyan-200 prose-code:bg-cyan-500/20 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+                prose-blockquote:border-cyan-500/50 prose-blockquote:bg-cyan-500/5 prose-blockquote:py-1 prose-blockquote:rounded-r-lg
+              ">
+                <ReactMarkdown
+                  remarkPlugins={[remarkMath]}
+                  rehypePlugins={[rehypeKatex]}
+                  components={MarkdownComponents}
+                >{content}</ReactMarkdown>
               </div>
-              <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-8 leading-tight tracking-tight">
-                {metadata.title || 'Loading...'}
-              </h1>
-              <div className="h-1 w-24 rounded-full bg-gradient-to-r from-cyan-400 to-transparent"></div>
-            </div>
+            </article>
+          )}
 
-            {isPdf ? (
-              <PdfViewer pdfUrl={pdfUrl!} title={metadata.title || slug || ''} />
-            ) : (
-              <article ref={contentRef} className="bg-black/40 rounded-2xl p-8 lg:p-12 border border-white/5 backdrop-blur-md shadow-2xl">
-                <div className="prose prose-invert prose-xl max-w-none
-                  prose-headings:font-bold prose-headings:tracking-tight
-                  prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-4 prose-h2:mt-14 prose-h3:mt-10
-                  prose-p:my-5
-                  prose-a:text-cyan-400 hover:prose-a:text-cyan-300 transition-colors
-                  prose-img:rounded-2xl prose-img:border prose-img:border-white/10
-                  prose-code:text-cyan-200 prose-code:bg-cyan-500/20 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
-                  prose-blockquote:border-cyan-500/50 prose-blockquote:bg-cyan-500/5 prose-blockquote:py-1 prose-blockquote:rounded-r-lg
-                ">
-                  <ReactMarkdown
-                    remarkPlugins={[remarkMath]}
-                    rehypePlugins={[rehypeKatex]}
-                    components={MarkdownComponents}
-                  >{content}</ReactMarkdown>
-                </div>
-              </article>
-            )}
-
-            <div className="mt-16 flex items-center justify-between border-t border-white/5 pt-8">
-              <Link to="/" className="text-gray-500 hover:text-cyan-400 transition-colors flex items-center gap-2">
-                ← 回到首页
-              </Link>
-              <span className="text-gray-600 text-sm italic">End of Article</span>
-            </div>
+          <div className="mt-16 flex items-center justify-between border-t border-white/5 pt-8">
+            <Link to="/" className="text-gray-500 hover:text-cyan-400 transition-colors flex items-center gap-2">
+              ← 回到首页
+            </Link>
+            <span className="text-gray-600 text-sm italic">End of Article</span>
           </div>
         </main>
 

@@ -21,9 +21,7 @@ const Home = () => {
             {/* Hero Section */}
             <div className="h-screen flex flex-col items-center justify-center relative">
                 {/* 装饰光圈 */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(34,211,238,0.06),transparent_70%)]" />
-                </div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(34,211,238,0.06),transparent_70%)] pointer-events-none" />
 
                 <div
                     ref={heroRef}

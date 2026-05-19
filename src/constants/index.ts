@@ -18,4 +18,5 @@ export const ROUTES = {
   ARTICLE: '/article/:slug',
   ABOUT: '/about',
   COLLECTIONS: '/collections/:category?',
+  COLLECTIONS_BASE: '/collections',
 } as const;

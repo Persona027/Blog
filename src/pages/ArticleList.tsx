@@ -1,53 +1,15 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CoverImage } from '@/components/CoverImage';
 import { Archive, FileText, ChevronRight, ChevronDown } from 'lucide-react';
-import { parseMarkdownFrontmatter } from '@/utils/markdown';
-import { pdfPosts } from '@/data/pdfPosts';
-import type { Post } from '@/types';
+import { useAllPosts } from '@/data/postsIndex';
 
 const ArticleList = () => {
   const [searchParams] = useSearchParams();
   const [expandedCats, setExpandedCats] = useState<string[]>([]);
   const view = searchParams.get('view') || 'grid';
 
-  const posts = useMemo(() => {
-    const modules = import.meta.glob<{ default: string }>('../posts/*.md', { query: '?raw', eager: true });
-    const loadedPosts: Post[] = [];
-    const seenSlugs = new Set<string>();
-
-    for (const path in modules) {
-      const rawContent = modules[path].default;
-      const { frontmatter } = parseMarkdownFrontmatter(rawContent);
-      const fileName = path.split('/').pop()?.replace('.md', '') || '';
-
-      seenSlugs.add(fileName);
-      loadedPosts.push({
-        slug: fileName,
-        title: frontmatter.title || '无标题',
-        date: frontmatter.date || '未知日期',
-        category: frontmatter.category || '未分类',
-        summary: frontmatter.summary || '暂无简介',
-        cover: frontmatter.cover || undefined,
-      });
-    }
-
-    for (const pdf of pdfPosts) {
-      if (!seenSlugs.has(pdf.slug)) {
-        loadedPosts.push({
-          slug: pdf.slug,
-          title: pdf.title,
-          date: pdf.date,
-          category: pdf.category,
-          summary: pdf.summary,
-          cover: pdf.cover,
-        });
-      }
-    }
-
-    loadedPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-    return loadedPosts;
-  }, []);
+  const posts = useAllPosts().posts;
 
   const renderGridView = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -87,7 +49,7 @@ const ArticleList = () => {
         {years.map((year) => (
           <div key={year} className="mb-10">
             <h3 className="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-3">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
+              <span className="w-2 h-2 rounded-full bg-cyan-400 glow-dot-cyan" />
               <Archive size={24} /> {year}
             </h3>
             <div className="space-y-4 border-l-2 border-white/10 ml-3 pl-6">
@@ -123,6 +85,7 @@ const ArticleList = () => {
             <div key={cat} className="relative z-10">
               <button
                 onClick={() => toggleCategory(cat)}
+                type="button"
                 className="w-full flex items-center justify-between py-4 px-2 hover:bg-white/5 active:bg-white/10 transition-all group cursor-pointer select-none"
               >
                 <div className="flex items-center gap-3">
