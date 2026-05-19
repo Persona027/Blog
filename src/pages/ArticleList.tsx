@@ -53,11 +53,11 @@ const ArticleList = () => {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {posts.map((post) => (
         <Link to={`/article/${post.slug}`} key={post.slug} className="group block">
-          <div className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:border-cyan-400/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]">
+          <div className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:border-cyan-400/50 hover:-translate-y-1.5 transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]">
             {post.cover ? (
-              <CoverImage src={post.cover} alt={post.title} className="w-full aspect-square" />
+              <CoverImage src={post.cover} alt={post.title} className="w-full aspect-[3/2]" />
             ) : (
-              <div className="aspect-square w-full flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800">
+              <div className="aspect-[3/2] w-full flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800">
                 <span className="text-4xl text-gray-500">📄</span>
               </div>
             )}
@@ -87,12 +87,13 @@ const ArticleList = () => {
         {years.map((year) => (
           <div key={year} className="mb-10">
             <h3 className="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
               <Archive size={24} /> {year}
             </h3>
             <div className="space-y-4 border-l-2 border-white/10 ml-3 pl-6">
               {posts.filter((p) => p.date.startsWith(year)).map((post) => (
-                <Link to={`/article/${post.slug}`} key={post.slug} className="flex items-center group">
-                  <span className="text-gray-500 text-sm mr-6 font-mono">{post.date.substring(5)}</span>
+                <Link to={`/article/${post.slug}`} key={post.slug} className="flex items-center group hover:translate-x-1 transition-transform">
+                  <span className="text-gray-400 text-sm mr-6 font-mono">{post.date.substring(5)}</span>
                   <span className="text-gray-200 group-hover:text-cyan-300 transition-colors uppercase tracking-wide">{post.title}</span>
                 </Link>
               ))}
@@ -146,7 +147,7 @@ const ArticleList = () => {
                     <Link
                       to={`/article/${post.slug}`}
                       key={post.slug}
-                      className="block py-3 px-4 text-gray-400 hover:text-cyan-300 hover:bg-cyan-500/10 rounded-lg transition-all"
+                      className="block py-3 px-4 text-gray-400 hover:text-cyan-300 hover:bg-white/[0.04] rounded-lg transition-all"
                     >
                       {post.title}
                     </Link>

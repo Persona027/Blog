@@ -24,7 +24,7 @@ const Navbar = () => {
 
     return (
         <nav className="fixed top-0 left-0 w-full z-50 h-16 bg-black/30 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 md:px-10">
-            <Link to={ROUTES.HOME} className="text-2xl font-black tracking-tighter text-white hover:text-cyan-400 transition-colors">
+            <Link to={ROUTES.HOME} className="text-2xl font-black tracking-tighter text-white hover:text-cyan-400 hover:scale-[1.02] transition-all inline-block">
                 Persona
             </Link>
 

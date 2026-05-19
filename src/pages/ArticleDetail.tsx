@@ -142,8 +142,8 @@ const ArticleDetail = () => {
               <span className="font-bold text-white">分类文章</span>
               <button onClick={() => setIsLeftOpen(false)} title="关闭侧边栏" aria-label="关闭侧边栏"><X size={20} /></button>
             </div>
-            <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-6 flex items-center gap-2">
-              <span className="w-1.5 h-4 bg-cyan-400 rounded-full"></span>
+            <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+              <span className="w-1.5 h-4 bg-cyan-400 rounded-full shadow-[0_0_8px_rgba(34,211,238,0.5)]"></span>
               {metadata.category} 杂谈 ({relatedArticles.length})
             </h3>
             <nav className="space-y-1">
@@ -154,7 +154,7 @@ const ArticleDetail = () => {
                   className={`group flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                     slug === art.slug
                     ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
-                    : 'text-gray-400 hover:bg-white/5 hover:text-gray-200 border border-transparent'
+                    : 'text-gray-400 hover:bg-white/[0.08] hover:text-gray-200 border border-transparent'
                   }`}
                 >
                   <span className={`w-1 h-1 rounded-full transition-transform group-hover:scale-150 ${slug === art.slug ? 'bg-cyan-400 animate-pulse' : 'bg-gray-600'}`}></span>
@@ -172,24 +172,25 @@ const ArticleDetail = () => {
               <div className="flex items-center gap-2 text-cyan-500 text-sm font-bold mb-4 uppercase tracking-wider">
                 <span>{metadata.category}</span>
                 <ChevronRight size={14} />
-                <span className="text-gray-500">{metadata.date}</span>
+                <span className="text-gray-400">{metadata.date}</span>
               </div>
               <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-8 leading-tight tracking-tight">
                 {metadata.title || 'Loading...'}
               </h1>
-              <div className="h-1 w-20 bg-cyan-500/50 rounded-full"></div>
+              <div className="h-1 w-24 rounded-full bg-gradient-to-r from-cyan-400 to-transparent"></div>
             </div>
 
             {isPdf ? (
               <PdfViewer pdfUrl={pdfUrl!} title={metadata.title || slug || ''} />
             ) : (
-              <article ref={contentRef} className="bg-black/40 rounded-3xl p-8 lg:p-12 border border-white/5 backdrop-blur-md shadow-2xl">
-                <div className="prose prose-invert prose-lg max-w-none
+              <article ref={contentRef} className="bg-black/40 rounded-2xl p-8 lg:p-12 border border-white/5 backdrop-blur-md shadow-2xl">
+                <div className="prose prose-invert prose-xl max-w-none
                   prose-headings:font-bold prose-headings:tracking-tight
-                  prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-4 prose-h2:mt-12
+                  prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-4 prose-h2:mt-14 prose-h3:mt-10
+                  prose-p:my-5
                   prose-a:text-cyan-400 hover:prose-a:text-cyan-300 transition-colors
                   prose-img:rounded-2xl prose-img:border prose-img:border-white/10
-                  prose-code:text-cyan-300 prose-code:bg-cyan-500/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+                  prose-code:text-cyan-200 prose-code:bg-cyan-500/20 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
                   prose-blockquote:border-cyan-500/50 prose-blockquote:bg-cyan-500/5 prose-blockquote:py-1 prose-blockquote:rounded-r-lg
                 ">
                   <ReactMarkdown
