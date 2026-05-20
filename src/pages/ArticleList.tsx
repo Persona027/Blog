@@ -1,41 +1,55 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { CoverImage } from '@/components/CoverImage';
 import { Archive, FileText, ChevronRight, ChevronDown } from 'lucide-react';
 import { useAllPosts } from '@/data/postsIndex';
+import Pagination from '@/components/Pagination';
+
+const ITEMS_PER_PAGE = 9;
 
 const ArticleList = () => {
   const [searchParams] = useSearchParams();
   const [expandedCats, setExpandedCats] = useState<string[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
   const view = searchParams.get('view') || 'grid';
 
   const posts = useAllPosts().posts;
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [view]);
+
+  const totalPages = Math.ceil(posts.length / ITEMS_PER_PAGE);
+  const paginatedPosts = posts.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+
   const renderGridView = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {posts.map((post) => (
-        <Link to={`/article/${post.slug}`} key={post.slug} className="group block">
-          <div className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:border-cyan-400/50 hover:-translate-y-1.5 transition-all duration-300 hover:shadow-[0_0_20px_rgba(34,211,238,0.2)]">
-            {post.cover ? (
-              <CoverImage src={post.cover} alt={post.title} className="w-full aspect-[3/2]" />
-            ) : (
-              <div className="aspect-[3/2] w-full flex items-center justify-center bg-gradient-to-br from-slate-700 to-slate-800">
-                <span className="text-4xl text-gray-500">📄</span>
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {paginatedPosts.map((post, index) => (
+          <Link to={`/article/${post.slug}`} key={post.slug} className="group block animate-fade-in-up" style={{ animationDelay: `${(index % 9) * 80}ms` }}>
+            <div className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:border-cyan-400/50 hover:-translate-y-2 transition-all duration-500 hover:shadow-[0_8px_32px_rgba(34,211,238,0.12)]">
+              {post.cover ? (
+                <CoverImage src={post.cover} alt={post.title} className="w-full aspect-[3/2]" />
+              ) : (
+                <div className="aspect-[3/2] w-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900">
+                  <FileText size={48} className="text-gray-600" />
+                </div>
+              )}
+              <div className="p-6">
+                <div className="flex items-center text-cyan-400 text-sm mb-3">
+                  <span>{post.date}</span>
+                  <span className="mx-2">•</span>
+                  <span>{post.category}</span>
+                </div>
+                <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-cyan-300 transition font-heading tracking-tight line-clamp-2">{post.title}</h2>
+                <p className="text-gray-300 leading-relaxed line-clamp-2">{post.summary}</p>
               </div>
-            )}
-            <div className="p-6">
-              <div className="flex items-center text-cyan-400 text-sm mb-3">
-                <span>{post.date}</span>
-                <span className="mx-2">•</span>
-                <span>{post.category}</span>
-              </div>
-              <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-cyan-300 transition">{post.title}</h2>
-              <p className="text-gray-300 leading-relaxed line-clamp-2">{post.summary}</p>
             </div>
-          </div>
-        </Link>
-      ))}
-    </div>
+          </Link>
+        ))}
+      </div>
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+    </>
   );
 
   const renderArchiveView = () => {
@@ -43,12 +57,12 @@ const ArticleList = () => {
     return (
       <div className="max-w-3xl mx-auto">
         <div className="mb-12 text-center">
-          <h2 className="text-4xl font-bold text-white mb-4">归档</h2>
+          <h2 className="text-4xl font-bold text-white mb-4 font-heading">归档</h2>
           <p className="text-gray-400">目前共计 {posts.length} 篇文章</p>
         </div>
         {years.map((year) => (
           <div key={year} className="mb-10">
-            <h3 className="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-3">
+            <h3 className="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-3 font-heading">
               <span className="w-2 h-2 rounded-full bg-cyan-400 glow-dot-cyan" />
               <Archive size={24} /> {year}
             </h3>
@@ -56,7 +70,7 @@ const ArticleList = () => {
               {posts.filter((p) => p.date.startsWith(year)).map((post) => (
                 <Link to={`/article/${post.slug}`} key={post.slug} className="flex items-center group hover:translate-x-1 transition-transform">
                   <span className="text-gray-400 text-sm mr-6 font-mono">{post.date.substring(5)}</span>
-                  <span className="text-gray-200 group-hover:text-cyan-300 transition-colors uppercase tracking-wide">{post.title}</span>
+                  <span className="text-gray-200 group-hover:text-cyan-300 transition-colors">{post.title}</span>
                 </Link>
               ))}
             </div>

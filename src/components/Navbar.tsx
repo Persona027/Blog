@@ -24,8 +24,8 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="fixed top-0 left-0 w-full z-50 h-16 bg-black/30 backdrop-blur-md border-b border-white/10 flex items-center justify-between px-6 md:px-10">
-            <Link to={ROUTES.HOME} className="text-2xl font-black tracking-tighter text-white hover:text-cyan-400 hover:scale-[1.02] transition-all inline-block">
+        <nav className="fixed top-0 left-0 w-full z-50 h-16 bg-black/40 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-6 md:px-10">
+            <Link to={ROUTES.HOME} className="text-2xl font-heading font-black tracking-tighter text-white hover:text-cyan-400 hover:scale-[1.02] transition-all inline-block">
                 Persona
             </Link>
 
@@ -40,7 +40,7 @@ const Navbar = () => {
                         文章 <ChevronDown size={14} className={`transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                     </button>
 
-                    <div className={`absolute top-full right-0 mt-0 w-40 bg-black/80 backdrop-blur-xl border border-white/10 rounded-xl py-2 transition-all duration-300 shadow-2xl ${isDropdownOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-2 pointer-events-none'}`}>
+                    <div className={`absolute top-full right-0 mt-0 w-40 bg-black/90 backdrop-blur-xl border border-white/10 rounded-xl py-2 transition-all duration-200 shadow-2xl ${isDropdownOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-1 pointer-events-none'}`}>
                         <Link
                             to={ROUTES.ARTICLES}
                             className={`flex items-center gap-2 px-4 py-2 text-sm hover:bg-white/10 transition-colors ${isActive('/articles') ? 'text-cyan-400' : 'text-gray-300'}`}

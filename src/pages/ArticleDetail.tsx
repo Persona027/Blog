@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
-import { List, Menu, X, ChevronRight, Hash, FileDown } from 'lucide-react';
+import { List, Menu, X, ChevronRight, Hash } from 'lucide-react';
 import type { ComponentPropsWithoutRef } from 'react';
 import type { TocItem, Frontmatter } from '@/types';
 import { parseMarkdownFrontmatter, slugify, flattenChildren } from '@/utils/markdown';
@@ -100,17 +100,41 @@ const ArticleDetail = () => {
     }
   };
 
+  /* ── PDF 模式 ── */
+  if (isPdf) {
+    return (
+      <div className="min-h-screen bg-transparent text-gray-200">
+        <div className="max-w-[1920px] mx-auto px-0 lg:px-2 py-4">
+          <div className="flex items-center gap-2 text-sm text-gray-500 mb-4 px-4 lg:px-4">
+            <span className="text-cyan-500 font-bold">{metadata.category}</span>
+            <ChevronRight size={14} />
+            <span>{metadata.date}</span>
+          </div>
+          <PdfViewer pdfUrl={pdfUrl!} title={metadata.title || slug || ''} />
+          <div className="mt-12 flex items-center justify-between border-t border-white/5 pt-8 px-4">
+            <Link to="/" className="text-gray-500 hover:text-cyan-400 transition-colors flex items-center gap-2">
+              ← 回到首页
+            </Link>
+            <span className="text-gray-600 text-sm italic">End of Article</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* ── Markdown 模式 ── */
   return (
     <div className="min-h-screen bg-transparent text-gray-200">
+      {/* Mobile header */}
       <div className="max-w-[1600px] mx-auto px-6 py-4 flex items-center justify-between sticky top-0 z-30 bg-black/20 backdrop-blur-md border-b border-white/5 lg:hidden">
-        <button onClick={() => setIsLeftOpen(true)} className="p-2 text-gray-400 hover:text-cyan-400" title="打开侧边栏" aria-label="打开侧边栏"><List size={24} /></button>
-        <Link to="/collections/music" className="font-bold text-cyan-400">文章详情</Link>
-        <button onClick={() => setIsRightOpen(true)} className="p-2 text-gray-400 hover:text-cyan-400" title="打开目录" aria-label="打开目录"><Menu size={24} /></button>
+        <button type="button" onClick={() => setIsLeftOpen(true)} className="p-2 text-gray-400 hover:text-cyan-400" title="打开侧边栏" aria-label="打开侧边栏"><List size={24} /></button>
+        <Link to="/" className="font-bold text-cyan-400">文章详情</Link>
+        <button type="button" onClick={() => setIsRightOpen(true)} className="p-2 text-gray-400 hover:text-cyan-400" title="打开目录" aria-label="打开目录"><Menu size={24} /></button>
       </div>
 
       <div className="max-w-[1920px] mx-auto flex flex-col lg:flex-row gap-0 lg:gap-4 px-0 lg:px-2">
 
-        {/* --- 左侧侧边栏：同分类文章 --- */}
+        {/* ── 左侧侧边栏：同分类文章 ── */}
         <aside className={`
           fixed inset-y-0 left-0 z-50 w-72 bg-zinc-900 lg:bg-transparent border-r border-white/5 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:z-0 lg:border-none
           ${isLeftOpen ? 'translate-x-0' : '-translate-x-full'}
@@ -118,24 +142,25 @@ const ArticleDetail = () => {
           <div className="h-full flex flex-col p-6 overflow-y-auto lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]">
             <div className="flex items-center justify-between mb-8 lg:hidden">
               <span className="font-bold text-white">分类文章</span>
-              <button onClick={() => setIsLeftOpen(false)} title="关闭侧边栏" aria-label="关闭侧边栏"><X size={20} /></button>
+              <button type="button" onClick={() => setIsLeftOpen(false)} title="关闭侧边栏" aria-label="关闭侧边栏"><X size={20} /></button>
             </div>
             <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-2">
               <span className="w-1.5 h-4 bg-cyan-400 rounded-full glow-dot-cyan"></span>
-              {metadata.category} 杂谈 ({relatedArticles.length})
+              <span className="font-heading text-base normal-case tracking-normal text-white">{metadata.category}</span>
+              <span className="text-gray-500">({relatedArticles.length})</span>
             </h3>
             <nav className="space-y-1">
               {relatedArticles.map((art) => (
                 <Link
                   key={art.slug}
                   to={`/article/${art.slug}`}
-                  className={`group flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
+                  className={`group flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                     slug === art.slug
                     ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
                     : 'text-gray-400 hover:bg-white/[0.08] hover:text-gray-200 border border-transparent'
                   }`}
                 >
-                  <span className={`w-1 h-1 rounded-full transition-transform group-hover:scale-150 ${slug === art.slug ? 'bg-cyan-400 animate-pulse' : 'bg-gray-600'}`}></span>
+                  <span className={`w-1.5 h-1.5 rounded-full transition-transform group-hover:scale-150 ${slug === art.slug ? 'bg-cyan-400' : 'bg-gray-600'}`}></span>
                   <span className="text-sm font-medium line-clamp-2 leading-snug">{art.title}</span>
                 </Link>
               ))}
@@ -143,109 +168,88 @@ const ArticleDetail = () => {
           </div>
         </aside>
 
-        {/* --- 中间：正文内容 --- */}
+        {/* ── 中间：正文内容 ── */}
         <main className="flex-1 min-w-0 py-8 lg:py-12 px-6 lg:px-4">
-          <div className="mb-12">
+          <div className="mb-12 animate-fade-in">
             <div className="flex items-center gap-2 text-cyan-500 text-sm font-bold mb-4 uppercase tracking-wider">
               <span>{metadata.category}</span>
               <ChevronRight size={14} />
               <span className="text-gray-400">{metadata.date}</span>
             </div>
-            <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-8 leading-tight tracking-tight">
+            <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-8 leading-tight tracking-tight font-heading">
               {metadata.title || 'Loading...'}
             </h1>
             <div className="h-1 w-24 rounded-full bg-gradient-to-r from-cyan-400 to-transparent"></div>
           </div>
 
-          {isPdf ? (
-            <PdfViewer pdfUrl={pdfUrl!} title={metadata.title || slug || ''} />
-          ) : (
-            <article ref={contentRef} className="bg-black/40 rounded-2xl p-8 lg:p-12 border border-white/5 backdrop-blur-md shadow-2xl">
-              <div className="prose prose-invert prose-xl max-w-none
-                prose-headings:font-bold prose-headings:tracking-tight
-                prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-4 prose-h2:mt-14 prose-h3:mt-10
-                prose-p:my-5
-                prose-a:text-cyan-400 hover:prose-a:text-cyan-300 transition-colors
-                prose-img:rounded-2xl prose-img:border prose-img:border-white/10
-                prose-code:text-cyan-200 prose-code:bg-cyan-500/20 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
-                prose-blockquote:border-cyan-500/50 prose-blockquote:bg-cyan-500/5 prose-blockquote:py-1 prose-blockquote:rounded-r-lg
-              ">
-                <ReactMarkdown
-                  remarkPlugins={[remarkMath]}
-                  rehypePlugins={[rehypeKatex]}
-                  components={MarkdownComponents}
-                >{content}</ReactMarkdown>
-              </div>
-            </article>
-          )}
+          <article ref={contentRef} className="bg-black/40 rounded-2xl p-8 lg:p-12 border border-white/5 backdrop-blur-md shadow-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
+            <div className="prose prose-invert prose-xl max-w-none
+              prose-headings:font-bold prose-headings:tracking-tight
+              prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-4 prose-h2:mt-14 prose-h3:mt-10
+              prose-p:my-5
+              prose-a:text-cyan-400 hover:prose-a:text-cyan-300 transition-colors
+              prose-img:rounded-2xl prose-img:border prose-img:border-white/10
+              prose-code:text-cyan-200 prose-code:bg-cyan-500/20 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+              prose-blockquote:border-cyan-500/50 prose-blockquote:bg-cyan-500/5 prose-blockquote:py-1 prose-blockquote:rounded-r-lg
+            ">
+              <ReactMarkdown
+                remarkPlugins={[remarkMath]}
+                rehypePlugins={[rehypeKatex]}
+                components={MarkdownComponents}
+              >{content}</ReactMarkdown>
+            </div>
+          </article>
 
-          <div className="mt-16 flex items-center justify-between border-t border-white/5 pt-8">
-            <Link to="/" className="text-gray-500 hover:text-cyan-400 transition-colors flex items-center gap-2">
-              ← 回到首页
-            </Link>
-            <span className="text-gray-600 text-sm italic">End of Article</span>
+          <div className="mt-16 flex flex-col items-center gap-6 border-t border-white/5 pt-8">
+            <div className="flex items-center justify-center gap-3">
+              <span className="block w-1 h-1 rounded-full bg-cyan-500/40"></span>
+              <span className="block w-1.5 h-1.5 rounded-full bg-cyan-500/60"></span>
+              <span className="block w-1 h-1 rounded-full bg-cyan-500/40"></span>
+            </div>
+            <div className="flex items-center justify-between w-full">
+              <Link to="/" className="text-gray-500 hover:text-cyan-400 transition-colors flex items-center gap-2">
+                ← 回到首页
+              </Link>
+              <span className="text-gray-600 text-sm italic">End of Article</span>
+            </div>
           </div>
         </main>
 
-        {/* --- 右侧侧边栏：目录 (TOC) 或 PDF 信息 --- */}
+        {/* ── 右侧侧边栏：目录 (TOC) ── */}
         <aside className={`
           fixed inset-y-0 right-0 z-50 w-72 bg-zinc-900 lg:bg-transparent border-l border-white/5 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:z-0 lg:border-none
           ${isRightOpen ? 'translate-x-0' : 'translate-x-full'}
         `}>
           <div className="h-full flex flex-col p-6 overflow-y-auto lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]">
             <div className="flex items-center justify-between mb-8 lg:hidden">
-              <span className="font-bold text-white">{isPdf ? 'PDF 文档' : '目录'}</span>
-              <button onClick={() => setIsRightOpen(false)} title="关闭目录" aria-label="关闭目录"><X size={20} /></button>
+              <span className="font-bold text-white">目录</span>
+              <button type="button" onClick={() => setIsRightOpen(false)} title="关闭目录" aria-label="关闭目录"><X size={20} /></button>
             </div>
-            {isPdf ? (
-              <div className="flex flex-col gap-4">
-                <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-2 flex items-center gap-2">
-                  <svg className="w-4 h-4 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                  </svg>
-                  PDF 复习总结
-                </h3>
-                <p className="text-sm text-gray-400 leading-relaxed">
-                  本文为 PDF 格式的考点复习总结，可直接在页面内阅读或下载到本地。
-                </p>
-                <a
-                  href={pdfUrl}
-                  download
-                  className="flex items-center justify-center gap-2 px-4 py-3 text-sm text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 rounded-xl hover:bg-cyan-500/20 transition-colors"
+            <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-6 flex items-center gap-2">
+              <Hash size={16} className="text-cyan-500" />
+              目录索引
+            </h3>
+            <nav className="flex flex-col gap-1 border-l border-white/5 pl-3">
+              {toc.length > 0 ? toc.map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => scrollToAnchor(item.id)}
+                  className={`text-left transition-all duration-200 py-1.5 px-3 rounded-md text-sm group ${
+                    activeId === item.id
+                    ? 'text-cyan-400 bg-cyan-400/5 translate-x-1 font-bold'
+                    : 'text-gray-500 hover:text-gray-300 hover:bg-white/5 hover:translate-x-0.5'
+                  } ${
+                    item.level === 3 ? 'ml-3' : ''
+                  }`}
                 >
-                  <FileDown size={16} />
-                  下载 PDF
-                </a>
-              </div>
-            ) : (
-              <>
-                <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-6 flex items-center gap-2">
-                  <Hash size={16} className="text-cyan-500" />
-                  目录索引
-                </h3>
-                <nav className="flex flex-col gap-1">
-                  {toc.length > 0 ? toc.map((item) => (
-                    <button
-                      key={item.id}
-                      onClick={() => scrollToAnchor(item.id)}
-                      className={`text-left transition-all duration-200 py-1.5 px-3 rounded-md text-sm group ${
-                        activeId === item.id
-                        ? 'text-cyan-400 bg-cyan-400/5 translate-x-1 font-bold'
-                        : 'text-gray-500 hover:text-gray-300 hover:bg-white/5'
-                      } ${
-                        item.level === 3 ? 'ml-3' : ''
-                      }`}
-                    >
-                      <span className={`inline-block w-1.5 h-1.5 rounded-full mr-2 transition-transform ${activeId === item.id ? 'bg-cyan-400 scale-125' : 'bg-gray-700 opacity-0 group-hover:opacity-100'}`}></span>
-                      {item.text}
-                    </button>
-                  )) : (
-                    <span className="text-xs text-gray-600 italic">暂无目录内容</span>
-                  )}
-                </nav>
-              </>
-            )}
+                  <span className={`inline-block w-1.5 h-1.5 rounded-full mr-2 transition-transform ${activeId === item.id ? 'bg-cyan-400 scale-125' : 'bg-gray-700 opacity-0 group-hover:opacity-100'}`}></span>
+                  {item.text}
+                </button>
+              )) : (
+                <span className="text-xs text-gray-600 italic">暂无目录内容</span>
+              )}
+            </nav>
           </div>
         </aside>
       </div>

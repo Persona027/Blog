@@ -2,8 +2,47 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-html {
-  scroll-behavior: smooth;
+@layer base {
+  :root {
+    /* Noir Editorial palette */
+    --color-bg-base: #0a0a0f;
+    --color-bg-surface: rgba(255, 255, 255, 0.03);
+    --color-bg-card: rgba(255, 255, 255, 0.04);
+    --color-bg-elevated: rgba(255, 255, 255, 0.06);
+    --color-border-subtle: rgba(255, 255, 255, 0.06);
+    --color-border-default: rgba(255, 255, 255, 0.10);
+    --color-border-accent: rgba(34, 211, 238, 0.25);
+    --color-accent: #22d3ee;
+    --color-accent-soft: rgba(34, 211, 238, 0.15);
+    --color-accent-glow: rgba(34, 211, 238, 0.35);
+    --color-text-primary: #f1f5f9;
+    --color-text-secondary: #94a3b8;
+    --color-text-muted: #64748b;
+
+    /* Typography scale */
+    --font-heading: 'Noto Serif SC', 'Source Han Serif SC', Georgia, serif;
+    --font-body: system-ui, -apple-system, 'Segoe UI', 'Noto Sans SC', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+    /* Animation durations */
+    --transition-fast: 150ms;
+    --transition-base: 300ms;
+    --transition-slow: 500ms;
+    --transition-very-slow: 800ms;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-bg-base);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+  }
 }
 
 .site-background {
@@ -13,6 +52,17 @@ html {
   background-attachment: fixed;
 }
 
+.site-background::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(34, 211, 238, 0.03), transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(180, 130, 80, 0.04), transparent 50%);
+  pointer-events: none;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -28,13 +78,95 @@ html {
   background: rgba(255, 255, 255, 0.2);
 }
 
+/* Glow utilities */
 .glow-dot-cyan {
   box-shadow: 0 0 8px rgba(34, 211, 238, 0.5);
 }
 
-/* Prose overrides for dark theme + CJK readability */
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+/* ── Keyframe animations ── */
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px var(--color-accent-glow); }
+  50%      { box-shadow: 0 0 20px var(--color-accent-glow), 0 0 40px rgba(34, 211, 238, 0.15); }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(8px); }
+}
+
+/* ── Animation utility classes ── */
+
+.animate-fade-in-up {
+  animation: fade-in-up var(--transition-slow) ease-out forwards;
+  opacity: 0;
+}
+
+.animate-fade-in {
+  animation: fade-in var(--transition-base) ease-out forwards;
+  opacity: 0;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left var(--transition-base) ease-out forwards;
+  opacity: 0;
+}
+
+.animate-scale-in {
+  animation: scale-in var(--transition-base) ease-out forwards;
+  opacity: 0;
+}
+
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* Scroll-triggered reveal */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity var(--transition-slow) ease-out, transform var(--transition-slow) ease-out;
+}
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Prose overrides for dark theme + CJK readability ── */
+
 .prose {
-  --tw-prose-body: #e5e7eb;
+  --tw-prose-body: #e2e8f0;
   --tw-prose-headings: #ffffff;
   --tw-prose-links: #22d3ee;
   --tw-prose-bold: #ffffff;
@@ -50,16 +182,21 @@ html {
   --tw-prose-th-borders: rgba(255, 255, 255, 0.1);
   --tw-prose-td-borders: rgba(255, 255, 255, 0.05);
   line-height: 2;
+  letter-spacing: 0.01em;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  font-family: var(--font-heading);
 }
 
 .prose pre {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 0.75rem;
 }
 
 .prose code {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
 }
 
 .prose code:not(pre code) {

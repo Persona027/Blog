@@ -21,6 +21,15 @@ const CATEGORY_ICONS: Record<CategoryId, React.ReactNode> = {
   others: <MoreHorizontal size={32} />,
 };
 
+const borderColorMap: Record<string, string> = {
+  purple: 'border-purple-400', yellow: 'border-yellow-400', red: 'border-red-400',
+  pink: 'border-pink-400', green: 'border-green-400', gray: 'border-gray-400',
+};
+const textColorMap: Record<string, string> = {
+  purple: 'text-purple-400', yellow: 'text-yellow-400', red: 'text-red-400',
+  pink: 'text-pink-400', green: 'text-green-400', gray: 'text-gray-400',
+};
+
 const Collections = () => {
   const { category } = useParams<{ category: string }>();
   const { copiedId, copy } = useCopyToClipboard();
@@ -28,15 +37,15 @@ const Collections = () => {
   if (!category) {
     return (
       <div className="max-w-5xl mx-auto pt-10 px-6">
-        <h2 className="text-3xl font-bold text-white mb-8 border-l-4 border-cyan-400 pl-4 flex items-center gap-3">
+        <h2 className="text-3xl font-bold text-white mb-8 border-l-4 border-cyan-400 pl-4 flex items-center gap-3 font-heading">
           <Link2 size={32} />我的数字花园
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[
             { id: 1, title: 'React 官方文档', desc: '最好的 React 学习资料', link: 'https://react.dev' },
             { id: 2, title: 'Tailwind CSS', desc: '原子化 CSS 框架手册', link: 'https://tailwindcss.com' },
-          ].map((item) => (
-            <a key={item.id} href={item.link} target="_blank" rel="noreferrer" className="group bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1">
+          ].map((item, index) => (
+            <a key={item.id} href={item.link} target="_blank" rel="noreferrer" className="group bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 animate-fade-in-up" style={{ animationDelay: `${index * 100}ms` }}>
               <h3 className="text-xl font-bold text-cyan-300 mb-2 group-hover:text-cyan-200">{item.title} ↗</h3>
               <p className="text-gray-400 text-sm">{item.desc}</p>
             </a>
@@ -65,14 +74,14 @@ const Collections = () => {
     }
   };
 
-  const borderColor = `border-${currentCategory.color === 'purple' ? 'purple' : currentCategory.color === 'yellow' ? 'yellow' : currentCategory.color === 'red' ? 'red' : currentCategory.color === 'pink' ? 'pink' : currentCategory.color === 'green' ? 'green' : 'gray'}-400`;
-  const textColor = `text-${currentCategory.color}-400`;
+  const borderClass = borderColorMap[currentCategory.color] || 'border-gray-400';
+  const textClass = textColorMap[currentCategory.color] || 'text-gray-400';
 
   return (
     <div className="max-w-5xl mx-auto pt-10 px-6 pb-20 relative">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-        <h2 className={`text-3xl font-bold text-white border-l-4 pl-4 flex items-center gap-3 ${borderColor}`}>
-          <span className={textColor}>{CATEGORY_ICONS[category as CategoryId]}</span>
+        <h2 className={`text-3xl font-bold text-white border-l-4 pl-4 flex items-center gap-3 font-heading ${borderClass}`}>
+          <span className={textClass}>{CATEGORY_ICONS[category as CategoryId]}</span>
           {currentCategory.title}
         </h2>
       </div>

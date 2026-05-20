@@ -21,7 +21,7 @@ export const CollectionCard = ({
   sidebar,
   mobileFooter,
 }: CollectionCardProps) => (
-  <div className={`bg-white/5 border border-white/10 rounded-xl overflow-hidden ${hoverBorderColor} transition-colors duration-300 group`}>
+  <div className={`bg-white/5 border border-white/10 rounded-xl overflow-hidden ${hoverBorderColor} transition-all duration-300 group hover:shadow-lg hover:-translate-y-0.5`}>
     <div className="flex flex-col md:flex-row h-full">
       <CoverImage
         src={cover}
@@ -36,7 +36,7 @@ export const CollectionCard = ({
           </div>
         )}
       </div>
-      <div className="hidden md:flex flex-col items-center justify-center p-6 w-32 border-l border-white/10 bg-black/20">
+      <div className="hidden md:flex flex-col items-center justify-center p-6 w-32 border-l border-white/10 bg-gradient-to-l from-white/[0.02] to-transparent">
         {sidebar}
       </div>
     </div>

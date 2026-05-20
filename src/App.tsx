@@ -14,7 +14,7 @@ function App() {
       <div className="min-h-screen font-sans text-gray-100 relative selection:bg-cyan-500 selection:text-white">
 
         <div className="fixed inset-0 w-full h-full z-[-1] site-background">
-            <div className="absolute inset-0 bg-black/60"></div>
+            <div className="absolute inset-0 bg-black/65"></div>
         </div>
 
         <Navbar />
