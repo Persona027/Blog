@@ -1,15 +1,22 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
 import fetch from 'node-fetch';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.join(__dirname, '../.env.local') });
 
 // Bangumi API 配置
 const BANGUMI_API_BASE = 'https://api.bgm.tv/v0';
-const USERNAME = '1219779';
-const ACCESS_TOKEN = 'VAtAtX29uD98TkxDsmklUVIqPPGcZxabBZZwBEjO';
+const BANGUMI_USERNAME = process.env.BANGUMI_USERNAME;
+const BANGUMI_ACCESS_TOKEN = process.env.BANGUMI_ACCESS_TOKEN;
+
+if (!BANGUMI_USERNAME || !BANGUMI_ACCESS_TOKEN) {
+    console.error('❌ BANGUMI_USERNAME 或 BANGUMI_ACCESS_TOKEN 未找到。请检查 .env.local 设定。');
+    process.exit(1);
+}
 
 // 确保目标目录存在
 const animeDirectory = path.join(__dirname, '../public/anime');
@@ -47,10 +54,10 @@ async function downloadCover(imageUrl: string, filename: string): Promise<void> 
 
 // 获取用户收藏列表
 async function fetchUserCollections(offset: number = 0): Promise<any> {
-    const url = `${BANGUMI_API_BASE}/users/${USERNAME}/collections?subject_type=2&type=2&limit=20&offset=${offset}`;
+    const url = `${BANGUMI_API_BASE}/users/${BANGUMI_USERNAME}/collections?subject_type=2&type=2&limit=20&offset=${offset}`;
     const response = await fetch(url, {
         headers: {
-            'Authorization': `Bearer ${ACCESS_TOKEN}`,
+            'Authorization': `Bearer ${BANGUMI_ACCESS_TOKEN}`,
             'User-Agent': 'personal-site-sync/1.0'
         }
     });
