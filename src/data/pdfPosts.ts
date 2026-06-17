@@ -530,16 +530,6 @@ export const pdfPosts: PdfPostMeta[] = [
     pdfUrl: '/pdfs/db-ch2-relational-algebra.pdf',
   },
   {
-  {
-  {
-  {
-  {
-  {
-  {
-  {
-  {
-  {
-  {
     slug: 'dig-circuit-ch01-intro',
     title: '数字电路设计 第1章 — 课程导论',
     date: '2026-06-16',
