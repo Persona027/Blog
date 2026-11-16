@@ -50,9 +50,7 @@ export function flattenChildren(children: unknown): string {
     typeof (children as Record<string, unknown>).props === 'object' &&
     (children as Record<string, { children?: unknown }>).props.children
   ) {
-    return flattenChildren(
-      (children as Record<string, { children: unknown }>).props.children
-    );
+    return flattenChildren((children as Record<string, { children: unknown }>).props.children);
   }
   return '';
 }

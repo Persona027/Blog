@@ -58,7 +58,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }: PaginationProps) 
           >
             {page}
           </button>
-        )
+        ),
       )}
 
       <button

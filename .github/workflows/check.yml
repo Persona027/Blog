@@ -1,0 +1,30 @@
+name: Site checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium --only-shell
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: .cache/playwright
+      - run: npm test
+        env:
+          PLAYWRIGHT_BROWSERS_PATH: .cache/playwright
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-test-artifacts
+          path: artifacts/

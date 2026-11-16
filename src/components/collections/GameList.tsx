@@ -9,7 +9,10 @@ const ITEMS_PER_PAGE = 10;
 export const GameList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(games.length / ITEMS_PER_PAGE);
-  const paginatedGames = games.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+  const paginatedGames = games.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  );
 
   return (
     <>
@@ -24,7 +27,12 @@ export const GameList = () => {
             sidebar={
               <>
                 <span className="text-2xl font-bold text-purple-400 mb-2">{game.rating}</span>
-                <a href={game.link} target="_blank" rel="noreferrer" className="text-xs text-gray-500 hover:text-white flex flex-col items-center gap-1 transition-colors">
+                <a
+                  href={game.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-xs text-gray-500 hover:text-white flex flex-col items-center gap-1 transition-colors"
+                >
                   <ExternalLink size={16} />
                   <span>访问详情</span>
                 </a>
@@ -32,7 +40,12 @@ export const GameList = () => {
             }
             mobileFooter={
               <div className="flex items-center justify-between">
-                <a href={game.link} target="_blank" rel="noreferrer" className="text-xs text-gray-500 flex items-center gap-1 hover:text-purple-400">
+                <a
+                  href={game.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-xs text-gray-500 flex items-center gap-1 hover:text-purple-400"
+                >
                   <ExternalLink size={12} /> 官方链接
                 </a>
                 <span className="text-xl font-bold text-purple-400">{game.rating}</span>
@@ -42,13 +55,21 @@ export const GameList = () => {
             <div>
               <div className="flex flex-wrap items-center gap-3 mb-2">
                 <h3 className="text-xl font-bold text-white">
-                  <a href={game.link} target="_blank" rel="noreferrer" className="hover:text-purple-400 flex items-center gap-2">
+                  <a
+                    href={game.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-purple-400 flex items-center gap-2"
+                  >
                     {game.title}
                   </a>
                 </h3>
                 <div className="flex gap-2">
                   {game.tags.map((tag) => (
-                    <span key={tag} className="px-2 py-0.5 rounded text-xs bg-purple-500/20 text-purple-300 border border-purple-500/20">
+                    <span
+                      key={tag}
+                      className="px-2 py-0.5 rounded text-xs bg-purple-500/20 text-purple-300 border border-purple-500/20"
+                    >
                       {tag}
                     </span>
                   ))}

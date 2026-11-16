@@ -1,150 +1,155 @@
-import { useState, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { CoverImage } from '@/components/CoverImage';
-import { Archive, FileText, ChevronRight, ChevronDown } from 'lucide-react';
+import { Search, ArrowUpRight } from 'lucide-react';
 import { useAllPosts } from '@/data/postsIndex';
+import ArticleRow from '@/components/ArticleRow';
 import Pagination from '@/components/Pagination';
 
-const ITEMS_PER_PAGE = 9;
-
-const ArticleList = () => {
-  const [searchParams] = useSearchParams();
-  const [expandedCats, setExpandedCats] = useState<string[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const view = searchParams.get('view') || 'grid';
-
-  const posts = useAllPosts().posts;
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [view]);
-
-  const totalPages = Math.ceil(posts.length / ITEMS_PER_PAGE);
-  const paginatedPosts = posts.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
-
-  const renderGridView = () => (
-    <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {paginatedPosts.map((post, index) => (
-          <Link to={`/article/${post.slug}`} key={post.slug} className="group block animate-fade-in-up" style={{ animationDelay: `${(index % 9) * 80}ms` }}>
-            <div className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-xl overflow-hidden hover:border-cyan-400/50 hover:-translate-y-2 transition-all duration-500 hover:shadow-[0_8px_32px_rgba(34,211,238,0.12)]">
-              {post.cover ? (
-                <CoverImage src={post.cover} alt={post.title} className="w-full aspect-[3/2]" />
-              ) : (
-                <div className="aspect-[3/2] w-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900">
-                  <FileText size={48} className="text-gray-600" />
-                </div>
-              )}
-              <div className="p-6">
-                <div className="flex items-center text-cyan-400 text-sm mb-3">
-                  <span>{post.date}</span>
-                  <span className="mx-2">•</span>
-                  <span>{post.category}</span>
-                </div>
-                <h2 className="text-2xl font-bold text-white mb-3 group-hover:text-cyan-300 transition font-heading tracking-tight line-clamp-2">{post.title}</h2>
-                <p className="text-gray-300 leading-relaxed line-clamp-2">{post.summary}</p>
-              </div>
-            </div>
-          </Link>
-        ))}
-      </div>
-      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
-    </>
+export default function ArticleList() {
+  const { posts } = useAllPosts();
+  const [params, setParams] = useSearchParams();
+  const query = params.get('q') || '',
+    category = params.get('category') || '',
+    format = params.get('format') || '',
+    view = params.get('view') || 'list';
+  const categories = [...new Set(posts.map((p) => p.category))];
+  const filtered = posts.filter(
+    (p) =>
+      (!category || p.category === category) &&
+      (!format || (format === 'pdf' ? !!p.pdfUrl : p.hasMarkdown)) &&
+      `${p.title} ${p.summary} ${p.category}`.toLowerCase().includes(query.toLowerCase()),
   );
-
-  const renderArchiveView = () => {
-    const years = Array.from(new Set(posts.map((p) => p.date.split('-')[0]))).sort((a, b) => b.localeCompare(a));
-    return (
-      <div className="max-w-3xl mx-auto">
-        <div className="mb-12 text-center">
-          <h2 className="text-4xl font-bold text-white mb-4 font-heading">归档</h2>
-          <p className="text-gray-400">目前共计 {posts.length} 篇文章</p>
-        </div>
-        {years.map((year) => (
-          <div key={year} className="mb-10">
-            <h3 className="text-2xl font-bold text-cyan-400 mb-6 flex items-center gap-3 font-heading">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 glow-dot-cyan" />
-              <Archive size={24} /> {year}
-            </h3>
-            <div className="space-y-4 border-l-2 border-white/10 ml-3 pl-6">
-              {posts.filter((p) => p.date.startsWith(year)).map((post) => (
-                <Link to={`/article/${post.slug}`} key={post.slug} className="flex items-center group hover:translate-x-1 transition-transform">
-                  <span className="text-gray-400 text-sm mr-6 font-mono">{post.date.substring(5)}</span>
-                  <span className="text-gray-200 group-hover:text-cyan-300 transition-colors">{post.title}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    );
+  const pages = Math.max(1, Math.ceil(filtered.length / 10));
+  const page = Math.min(pages, Math.max(1, Number(params.get('page')) || 1));
+  const update = (key: string, value: string) => {
+    const next = new URLSearchParams(params);
+    if (value) next.set(key, value);
+    else next.delete(key);
+    if (key !== 'page') next.delete('page');
+    setParams(next, { replace: key === 'q' });
   };
-
-  const renderCategoryView = () => {
-    const categories = Array.from(new Set(posts.map((p) => p.category))).sort();
-
-    const toggleCategory = (cat: string) => {
-      setExpandedCats((prev) =>
-        prev.includes(cat) ? prev.filter((c) => c !== cat) : [...prev, cat]
-      );
-    };
-
-    return (
-      <div className="max-w-3xl mx-auto space-y-4">
-        {categories.map((cat) => {
-          const catPosts = posts.filter((p) => p.category === cat);
-          const isExpanded = expandedCats.includes(cat);
-
-          return (
-            <div key={cat} className="relative z-10">
-              <button
-                onClick={() => toggleCategory(cat)}
-                type="button"
-                className="w-full flex items-center justify-between py-4 px-2 hover:bg-white/5 active:bg-white/10 transition-all group cursor-pointer select-none"
-              >
-                <div className="flex items-center gap-3">
-                  {isExpanded ? (
-                    <ChevronDown size={20} className="text-cyan-400" />
-                  ) : (
-                    <ChevronRight size={20} className="text-gray-500 group-hover:text-cyan-400" />
-                  )}
-                  <span className={`text-xl font-bold transition-colors ${isExpanded ? 'text-white' : 'text-gray-300 group-hover:text-white'}`}>
-                    {cat}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-500 font-mono text-sm">
-                  <FileText size={16} />
-                  <span>{catPosts.length}</span>
-                </div>
-              </button>
-
-              {isExpanded && (
-                <div className="mt-1 ml-9 space-y-1 animate-in fade-in slide-in-from-top-2 duration-300">
-                  {catPosts.length > 0 ? catPosts.map((post) => (
-                    <Link
-                      to={`/article/${post.slug}`}
-                      key={post.slug}
-                      className="block py-3 px-4 text-gray-400 hover:text-cyan-300 hover:bg-white/[0.04] rounded-lg transition-all"
-                    >
-                      {post.title}
-                    </Link>
-                  )) : (
-                    <div className="py-3 px-4 text-gray-600 italic text-sm">暂无文章</div>
-                  )}
-                </div>
-              )}
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
-
   return (
-    <div className="max-w-6xl mx-auto pt-10 pb-20 px-6">
-      {view === 'archive' ? renderArchiveView() : view === 'category' ? renderCategoryView() : renderGridView()}
+    <div className="site-container page-space">
+      <header className="page-heading">
+        <p className="section-kicker">学习与思考</p>
+        <h1>{category || '文章与笔记'}</h1>
+        <p>
+          {category
+            ? '按章节继续阅读，建立属于自己的知识脉络。'
+            : '将零散的理解串起来，让每一次学习都有迹可循。'}
+        </p>
+      </header>
+      <div className="article-toolbar">
+        <label className="search-field">
+          <Search size={19} />
+          <input
+            aria-label="搜索文章"
+            placeholder="搜索标题、摘要或课程…"
+            value={query}
+            onChange={(e) => update('q', e.target.value)}
+          />
+        </label>
+        <select
+          aria-label="课程分类"
+          value={category}
+          onChange={(e) => update('category', e.target.value)}
+        >
+          <option value="">全部分类</option>
+          {categories.map((c) => (
+            <option key={c}>{c}</option>
+          ))}
+        </select>
+        <select
+          aria-label="阅读格式"
+          value={format}
+          onChange={(e) => update('format', e.target.value)}
+        >
+          <option value="">全部格式</option>
+          <option value="markdown">在线文章</option>
+          <option value="pdf">PDF 笔记</option>
+        </select>
+      </div>
+      <div className="view-bar">
+        <span>{filtered.length} 篇内容</span>
+        <div>
+          {[
+            ['list', '列表'],
+            ['category', '课程'],
+            ['archive', '归档'],
+          ].map(([id, label]) => (
+            <button key={id} aria-pressed={view === id} onClick={() => update('view', id)}>
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+      {view === 'category' ? (
+        <div className="course-grid">
+          {categories
+            .filter((c) => !category || c === category)
+            .map((c) => {
+              const entries = filtered.filter((p) => p.category === c);
+              return (
+                entries.length > 0 && (
+                  <section className="course-panel" key={c}>
+                    <div>
+                      <h2>{c}</h2>
+                      <span>{entries.length} 篇</span>
+                    </div>
+                    <ol>
+                      {entries.map((p) => (
+                        <li key={p.slug}>
+                          <Link to={`/article/${p.slug}`}>
+                            {p.title}
+                            <ArrowUpRight size={15} />
+                          </Link>
+                        </li>
+                      ))}
+                    </ol>
+                  </section>
+                )
+              );
+            })}
+        </div>
+      ) : view === 'archive' ? (
+        <div className="archive-list">
+          {[...new Set(filtered.map((p) => p.date.slice(0, 4)))].map((year) => (
+            <section key={year}>
+              <h2>{year}</h2>
+              {filtered
+                .filter((p) => p.date.startsWith(year))
+                .map((p) => (
+                  <Link key={p.slug} to={`/article/${p.slug}`}>
+                    <time>{p.date.slice(5)}</time>
+                    <span>{p.title}</span>
+                    <ArrowUpRight size={16} />
+                  </Link>
+                ))}
+            </section>
+          ))}
+        </div>
+      ) : (
+        <>
+          <div className="article-rows">
+            {filtered.slice((page - 1) * 10, page * 10).map((p) => (
+              <ArticleRow key={p.slug} post={p} />
+            ))}
+          </div>
+          <Pagination
+            currentPage={page}
+            totalPages={pages}
+            onPageChange={(n) => update('page', String(n))}
+          />
+        </>
+      )}
+      {!filtered.length && (
+        <div className="empty-state">
+          <h2>没有找到匹配的内容</h2>
+          <p>换一个关键词，或清除筛选后再看看。</p>
+          <button className="button-primary" onClick={() => setParams({})}>
+            清除筛选
+          </button>
+        </div>
+      )}
     </div>
   );
-};
-
-export default ArticleList;
+}

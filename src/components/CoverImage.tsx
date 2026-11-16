@@ -1,28 +1,25 @@
 import { useState } from 'react';
 import type { CoverImageProps } from '@/types';
-
 export type { CoverImageProps };
-
-export const CoverImage = ({ src, alt, className = "", hoverEffect = true }: CoverImageProps) => {
-    const [hasError, setHasError] = useState(false);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const fallbackSrc = 'https://placehold.co/600x600?text=No+Cover';
-    const displaySrc = hasError || !src ? fallbackSrc : src;
-
-    return (
-        <div className={`bg-gray-800 relative overflow-hidden shrink-0 ${className} ${!isLoaded ? 'animate-shimmer' : ''}`}
-             style={!isLoaded ? { backgroundImage: 'linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%)', backgroundSize: '200% 100%' } : undefined}>
-            <img
-                src={displaySrc}
-                alt={alt}
-                loading="lazy"
-                className={`w-full h-full object-cover transition-all duration-500
-                    ${!isLoaded ? 'opacity-0' : 'opacity-100'}
-                    ${hoverEffect ? 'group-hover:opacity-100 group-hover:scale-105' : ''}
-                `}
-                onLoad={() => setIsLoaded(true)}
-                onError={() => { setHasError(true); setIsLoaded(true); }}
-            />
+export const CoverImage = ({ src, alt, className = '', hoverEffect = true }: CoverImageProps) => {
+  const [failed, setFailed] = useState<string>();
+  const valid = src && failed !== src && !/^[a-z]:/i.test(src);
+  return (
+    <div className={`cover-image ${className}`}>
+      {valid ? (
+        <img
+          src={src}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          className={`w-full h-full object-cover ${hoverEffect ? 'transition-transform duration-300 group-hover:scale-[1.03]' : ''}`}
+          onError={() => setFailed(src)}
+        />
+      ) : (
+        <div className="cover-placeholder" role="img" aria-label={`${alt}：暂无封面`}>
+          <span>{alt.slice(0, 1)}</span>
         </div>
-    );
+      )}
+    </div>
+  );
 };

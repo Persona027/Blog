@@ -1,7 +1,18 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { FileDown, ZoomIn, ZoomOut, ChevronLeft, ChevronRight, Maximize2, Minimize2 } from 'lucide-react';
-pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+import 'react-pdf/dist/Page/TextLayer.css';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import {
+  FileDown,
+  ZoomIn,
+  ZoomOut,
+  ChevronLeft,
+  ChevronRight,
+  Maximize2,
+  Minimize2,
+} from 'lucide-react';
+pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 
 interface PdfViewerProps {
   pdfUrl: string;
@@ -15,6 +26,7 @@ const PdfViewer = ({ pdfUrl, title }: PdfViewerProps) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerWidth, setContainerWidth] = useState(0);
 
@@ -28,7 +40,7 @@ const PdfViewer = ({ pdfUrl, title }: PdfViewerProps) => {
     });
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [isFullscreen]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -40,9 +52,17 @@ const PdfViewer = ({ pdfUrl, title }: PdfViewerProps) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isFullscreen]);
 
+  useEffect(() => {
+    if (!isFullscreen) return;
+    const dialog = dialogRef.current;
+    dialog?.showModal();
+    return () => dialog?.close();
+  }, [isFullscreen]);
+
   const onDocumentLoadSuccess = useCallback(({ numPages: np }: { numPages: number }) => {
     setNumPages(np);
-    setPageNumber(1);
+    const requested = Number(new URLSearchParams(window.location.hash.slice(1)).get('page'));
+    setPageNumber(Math.min(np, Math.max(1, Number.isFinite(requested) ? requested : 1)));
     setLoading(false);
     setError(false);
   }, []);
@@ -52,6 +72,11 @@ const PdfViewer = ({ pdfUrl, title }: PdfViewerProps) => {
     setError(true);
   }, []);
 
+  const goToPage = (page: number) => {
+    const next = Math.min(numPages || 1, Math.max(1, page));
+    setPageNumber(next);
+    window.history.replaceState(null, '', '#page=' + next);
+  };
   const zoomIn = () => setScale((s) => Math.min(s + 0.2, 2.5));
   const zoomOut = () => setScale((s) => Math.max(s - 0.2, 0.5));
   const zoomPercent = Math.round(scale * 100);
@@ -60,11 +85,19 @@ const PdfViewer = ({ pdfUrl, title }: PdfViewerProps) => {
   const pageWidth = containerWidth > 0 ? Math.min(containerWidth, maxPageWidth) : undefined;
 
   const viewerContent = (
-    <div className={`bg-black/40 rounded-3xl border border-white/5 backdrop-blur-md shadow-2xl overflow-hidden flex flex-col ${isFullscreen ? 'h-full rounded-none border-0' : ''}`}>
+    <div
+      className={`bg-[#17232e] rounded-lg border border-[#2c3b47] overflow-hidden flex flex-col ${isFullscreen ? 'h-full rounded-none border-0' : ''}`}
+    >
       {/* Toolbar */}
       <div className="flex items-center justify-between gap-4 px-4 sm:px-6 py-3 border-b border-white/5 bg-white/[0.03] shrink-0">
         <div className="flex items-center gap-3 min-w-0 flex-1">
-          <svg className="w-5 h-5 text-red-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            className="w-5 h-5 text-red-400 shrink-0"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
             <polyline points="14 2 14 8 20 8" />
           </svg>
@@ -74,11 +107,27 @@ const PdfViewer = ({ pdfUrl, title }: PdfViewerProps) => {
         <div className="hidden sm:block w-px h-5 bg-white/10" />
 
         <div className="flex items-center gap-1">
-          <button type="button" onClick={zoomOut} disabled={loading || error} className="p-2 text-gray-400 hover:text-cyan-400 disabled:opacity-30 transition-colors rounded-lg hover:bg-white/5" title="缩小" aria-label="缩小">
+          <button
+            type="button"
+            onClick={zoomOut}
+            disabled={loading || error}
+            className="p-2 text-gray-400 hover:text-cyan-400 disabled:opacity-30 transition-colors rounded-lg hover:bg-white/5"
+            title="缩小"
+            aria-label="缩小"
+          >
             <ZoomOut size={16} />
           </button>
-          <span className="text-xs text-gray-500 w-10 text-center tabular-nums select-none">{zoomPercent}%</span>
-          <button type="button" onClick={zoomIn} disabled={loading || error} className="p-2 text-gray-400 hover:text-cyan-400 disabled:opacity-30 transition-colors rounded-lg hover:bg-white/5" title="放大" aria-label="放大">
+          <span className="text-xs text-gray-500 w-10 text-center tabular-nums select-none">
+            {zoomPercent}%
+          </span>
+          <button
+            type="button"
+            onClick={zoomIn}
+            disabled={loading || error}
+            className="p-2 text-gray-400 hover:text-cyan-400 disabled:opacity-30 transition-colors rounded-lg hover:bg-white/5"
+            title="放大"
+            aria-label="放大"
+          >
             <ZoomIn size={16} />
           </button>
         </div>
@@ -108,11 +157,17 @@ const PdfViewer = ({ pdfUrl, title }: PdfViewerProps) => {
       </div>
 
       {/* Content area */}
-      <div ref={containerRef} className={`flex justify-center bg-white/[0.02] ${isFullscreen ? 'flex-1 overflow-auto' : ''}`}>
+      <div
+        ref={containerRef}
+        className={`flex justify-center overflow-auto bg-white/[0.02] ${isFullscreen ? 'flex-1 overflow-auto' : ''}`}
+      >
         {loading && (
           <div className="flex flex-col items-center justify-center gap-4 py-32">
             <div className="w-48 h-2 rounded-full bg-white/5 overflow-hidden">
-              <div className="h-full w-1/2 rounded-full bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent animate-shimmer" style={{ backgroundSize: '200% 100%' }} />
+              <div
+                className="h-full w-1/2 rounded-full bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent animate-shimmer"
+                style={{ backgroundSize: '200% 100%' }}
+              />
             </div>
             <span className="text-sm text-gray-500">正在加载 PDF...</span>
           </div>
@@ -143,8 +198,8 @@ const PdfViewer = ({ pdfUrl, title }: PdfViewerProps) => {
               pageNumber={pageNumber}
               width={pageWidth}
               scale={scale}
-              renderTextLayer={false}
-              renderAnnotationLayer={false}
+              renderTextLayer={true}
+              renderAnnotationLayer={true}
             />
           </Document>
         </div>
@@ -155,7 +210,7 @@ const PdfViewer = ({ pdfUrl, title }: PdfViewerProps) => {
         <div className="flex items-center justify-center gap-4 sm:gap-6 px-4 sm:px-6 py-3 border-t border-white/5 bg-white/[0.03] shrink-0">
           <button
             type="button"
-            onClick={() => setPageNumber((p) => Math.max(p - 1, 1))}
+            onClick={() => goToPage(pageNumber - 1)}
             disabled={pageNumber <= 1}
             className="p-2 text-gray-400 hover:text-cyan-400 disabled:opacity-30 transition-colors rounded-lg hover:bg-white/5"
             title="上一页"
@@ -164,11 +219,22 @@ const PdfViewer = ({ pdfUrl, title }: PdfViewerProps) => {
             <ChevronLeft size={20} />
           </button>
           <span className="text-sm text-gray-400 tabular-nums min-w-[80px] text-center select-none">
-            {pageNumber} / {numPages}
+            <input
+              aria-label="跳转到页码"
+              type="number"
+              min={1}
+              max={numPages}
+              value={pageNumber}
+              onChange={(e) => {
+                if (e.target.value) goToPage(Number(e.target.value));
+              }}
+              className="w-12 bg-transparent text-center"
+            />{' '}
+            / {numPages}
           </span>
           <button
             type="button"
-            onClick={() => setPageNumber((p) => Math.min(p + 1, numPages))}
+            onClick={() => goToPage(pageNumber + 1)}
             disabled={pageNumber >= numPages}
             className="p-2 text-gray-400 hover:text-cyan-400 disabled:opacity-30 transition-colors rounded-lg hover:bg-white/5"
             title="下一页"
@@ -183,9 +249,17 @@ const PdfViewer = ({ pdfUrl, title }: PdfViewerProps) => {
 
   if (isFullscreen) {
     return (
-      <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex flex-col animate-fade-in">
+      <dialog
+        ref={dialogRef}
+        aria-label="全屏 PDF 阅读器"
+        onCancel={(e) => {
+          e.preventDefault();
+          setIsFullscreen(false);
+        }}
+        className="fixed inset-0 z-50 m-0 w-screen h-screen max-w-none max-h-none bg-[#101821] text-white flex flex-col"
+      >
         {viewerContent}
-      </div>
+      </dialog>
     );
   }
 

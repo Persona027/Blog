@@ -1,0 +1,1200 @@
+[
+  {
+    "slug": "math-modeling-01linear-regression",
+    "title": "线性回归与神经网络基础：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "线性回归与神经网络基础的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-01linear-regression.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-02whydeep",
+    "title": "为什么需要深度学习：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "为什么需要深度学习的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-02whydeep.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-03overfit",
+    "title": "过拟合与模型泛化：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "过拟合与模型泛化的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-03overfit.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-05optimizer",
+    "title": "优化器与自适应学习率：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "优化器与自适应学习率的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-05optimizer.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-06classification",
+    "title": "分类与交叉熵：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "分类与交叉熵的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-06classification.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-07cnn",
+    "title": "卷积神经网络：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "卷积神经网络的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-07cnn.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-08self",
+    "title": "自注意力机制：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "自注意力机制的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-08self.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-09seq2seq",
+    "title": "序列到序列模型：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "序列到序列模型的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-09seq2seq.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-10bert",
+    "title": "自监督学习与 BERT：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "自监督学习与 BERT的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-10bert.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-11auto",
+    "title": "自编码器：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "自编码器的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-11auto.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-12gan",
+    "title": "生成对抗网络：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "生成对抗网络的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-12gan.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-13attack",
+    "title": "对抗攻击：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "对抗攻击的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-13attack.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-14-gai",
+    "title": "生成式人工智能：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "生成式人工智能的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-14-gai.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-15-universal",
+    "title": "生成式人工智能的通用能力：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "生成式人工智能的通用能力的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-15-universal.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-15drl",
+    "title": "强化学习：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "强化学习的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-15drl.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-16-prompt-part1",
+    "title": "提示工程（上）：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "提示工程（上）的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-16-prompt-part1.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "math-modeling-16-prompt-part2",
+    "title": "提示工程（下）：详细学习笔记",
+    "date": "2026-11-15",
+    "category": "科学计算与数学建模",
+    "summary": "提示工程（下）的核心概念、课件公式、典型例题与易错点，附原始幻灯片页码。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/math-modeling-16-prompt-part2.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "os-ch01-overview",
+    "title": "CH01 开源操作系统概述 — 详细学习笔记",
+    "date": "2026-06-23",
+    "category": "开源操作系统",
+    "summary": "操作系统发展史（Multics→UNIX→BSD→Linux）、FOSS与开源许可（GPL/MIT/Apache/BSD）、Linux发行版生态（Debian/RedHat/Arch）、Android vs HarmonyOS、虚拟化与云计算基础",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/os-ch01-overview.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "os-ch02-file-operations",
+    "title": "CH02 文件与目录操作 — 详细学习笔记",
+    "date": "2026-06-23",
+    "category": "开源操作系统",
+    "summary": "终端与命令行、Shell基础、Linux文件系统（FHS规范、文件类型、inode）、基本命令（ls/cd/cp/mv/rm）、管道与重定向（cut/sort/wc/grep），附录含which/whereis/locate/find文件查找实战",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/os-ch02-file-operations.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "os-ch03-filesystem-permission",
+    "title": "CH03 文件系统原理和权限模型 — 详细学习笔记",
+    "date": "2026-06-23",
+    "category": "开源操作系统",
+    "summary": "文件系统（ext4/XFS/Btrfs）、inode原理与文件删除机制、硬链接vs软链接、UGO权限模型（rwx对文件/目录的不同含义）、umask默认权限、SUID/SGID/Sticky特殊权限、ACL访问控制列表",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/os-ch03-filesystem-permission.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "os-ch04-user-process",
+    "title": "CH04 用户管理与进程管理 — 详细学习笔记",
+    "date": "2026-06-23",
+    "category": "开源操作系统",
+    "summary": "用户管理（UID/GID、/etc/passwd、/etc/shadow、su/sudo、sudoers配置）、进程管理（生命周期、状态码R/S/D/T/Z、fork/exec/system）、附录含用户管理和进程管理命令速查",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/os-ch04-user-process.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "os-ch05-network-firewall",
+    "title": "CH05 网络管理与安全防火墙 — 详细学习笔记",
+    "date": "2026-06-23",
+    "category": "开源操作系统",
+    "summary": "网络基础/IP/DNS/端口、SSH加密原理、iptables四表五链、firewalld、SELinux、systemd启动管理",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/os-ch05-network-firewall.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "os-ch07-nginx",
+    "title": "CH07 Web服务器与Nginx — 详细学习笔记",
+    "date": "2026-06-23",
+    "category": "开源操作系统",
+    "summary": "Apache vs Nginx、Nginx配置层次、虚拟主机、正向/反向代理、负载均衡策略、Master-Worker架构、平滑重载、epoll事件驱动",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/os-ch07-nginx.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "os-ch08-database-cache",
+    "title": "CH08 数据库和缓存 — 详细学习笔记",
+    "date": "2026-06-23",
+    "category": "开源操作系统",
+    "summary": "生产环境数据库（连接池HikariCP/慢查询）、多层缓存架构、Redis五种数据结构、RDB/AOF持久化、缓存穿透/击穿/雪崩/一致性、电商缓存设计综合案例",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/os-ch08-database-cache.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "os-ch09-observability",
+    "title": "CH09 可观测性和日志分析 — 详细学习笔记",
+    "date": "2026-06-23",
+    "category": "开源操作系统",
+    "summary": "systemd服务管理、日志系统与journalctl、日志分析综合案例（网站变慢四步排查法）、计划任务at/cron，4大考点全覆盖",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/os-ch09-observability.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "os-ch10-multi-instance",
+    "title": "CH10 多实例架构 — 详细学习笔记",
+    "date": "2026-06-23",
+    "category": "开源操作系统",
+    "summary": "单实例瓶颈、垂直vs水平扩展、QPS/TPS/并发连接数/可用性/SLA、负载均衡、健康检查、无状态应用（Redis Session）、高可用三大思想（冗余/故障隔离/故障转移）、RTO/RPO",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/os-ch10-multi-instance.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "os-ch11-container",
+    "title": "CH11 容器化与云原生基础 — 详细学习笔记",
+    "date": "2026-06-23",
+    "category": "开源操作系统",
+    "summary": "容器vs虚拟机、Docker架构、Dockerfile指令、数据卷、Docker Compose、Kubernetes声明式期望状态",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/os-ch11-container.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "os-ch12-cloud-native",
+    "title": "CH12 现代运维体系与云原生技术图谱 — 详细学习笔记",
+    "date": "2026-06-23",
+    "category": "开源操作系统",
+    "summary": "CI/CD自动化交付（发布策略：滚动/蓝绿/金丝雀/灰度）、可观测性三大支柱（日志/指标/链路追踪）、云原生架构（不可变基础设施/声明式配置/弹性伸缩）、开发者与SRE学习路线、考试题型",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/os-ch12-cloud-native.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "db-ch10-database-index",
+    "title": "数据库系统 Ch10 — 数据库索引 详细学习笔记",
+    "date": "2026-06-21",
+    "category": "数据库系统",
+    "summary": "数据库系统第十章数据库索引详细学习笔记：B+树索引结构与操作、散列索引、位图索引、聚簇vs非聚簇索引、复合索引、索引选择与查询性能优化。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/db-ch10-database-index.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "db-ch11-database-recovery",
+    "title": "数据库系统 Ch11 — 数据库恢复 详细学习笔记",
+    "date": "2026-06-21",
+    "category": "数据库系统",
+    "summary": "数据库系统第十一章：故障分类、日志恢复、检查点、ARIES算法、影子页、备份策略、RAID",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/db-ch11-database-recovery.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "db-ch12-database-architecture",
+    "title": "数据库系统 Ch12 — 数据库架构 详细学习笔记",
+    "date": "2026-06-21",
+    "category": "数据库系统",
+    "summary": "数据库系统第十二章数据库架构详细学习笔记：集中式与C/S架构、并行数据库、分布式数据库、分片与复制、CAP定理、NoSQL与NewSQL、云数据库。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/db-ch12-database-architecture.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "db-ch7-entity-relation",
+    "title": "数据库系统 Ch7 — ER实体关系模型 详细学习笔记",
+    "date": "2026-06-21",
+    "category": "数据库系统",
+    "summary": "数据库系统第七章ER实体关系模型详细学习笔记：设计流程、实体/联系/属性概念、映射基数与码、ER图符号体系、弱实体集、特殊化/概化与ISA约束、ER设计方法论（局部→全局→优化）、UML类图、ER到关系模式转换六原则。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/db-ch7-entity-relation.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "db-ch8-normalization",
+    "title": "数据库系统 Ch8 — 规范化 详细学习笔记",
+    "date": "2026-06-21",
+    "category": "数据库系统",
+    "summary": "数据库系统第八章规范化详细学习笔记：函数依赖、范式(1NF/2NF/3NF/BCNF)、多值依赖与4NF、连接依赖与5NF、规范化步骤与算法、模式分解、无损连接与保持依赖。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/db-ch8-normalization.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "db-ch9-database-design",
+    "title": "数据库系统 Ch9 — 数据库设计 详细学习笔记",
+    "date": "2026-06-21",
+    "category": "数据库系统",
+    "summary": "数据库系统第九章数据库设计详细学习笔记：物理设计（存取方法选择/索引/聚簇/HASH/存储结构与系统配置/MySQL InnoDB/评价）、数据库实施（DDL/数据入库/试运行）、JDBC编程。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/db-ch9-database-design.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "dig-circuit-ch01-intro",
+    "title": "数字电路设计 第1章 — 课程导论",
+    "date": "2026-06-16",
+    "category": "数字电路设计",
+    "summary": "第1章课程导论：中国芯片产业背景、FPGA技术介绍、数字设计概述、课程目标与考核方式。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/dig-circuit-ch01-intro.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "dig-circuit-ch02-computer-org",
+    "title": "数字电路设计 第2章 — 计算机组成概述",
+    "date": "2026-06-16",
+    "category": "数字电路设计",
+    "summary": "第2章计算机组成概述：计算发展历程、冯诺依曼与哈佛结构、ARM体系、性能指标(CPI/MIPS/执行时间)、Amdahl定律与加速比计算。【考试重点：性能分析】",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/dig-circuit-ch02-computer-org.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "dig-circuit-ch03-digital-basics",
+    "title": "数字电路设计 第3章 — 数字设计基础 (DDCA Ch1)",
+    "date": "2026-06-16",
+    "category": "数字电路设计",
+    "summary": "第3章数字设计基础：数字抽象、数制系统与转换、二进制补码运算、逻辑门真值表、CMOS晶体管原理、功耗分析(动态/静态功率公式)。【注意：异步时序不考】",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/dig-circuit-ch03-digital-basics.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "dig-circuit-ch04-combinational-logic",
+    "title": "数字电路设计 第4章 — 组合逻辑设计 (DDCA Ch2)",
+    "date": "2026-06-16",
+    "category": "数字电路设计",
+    "summary": "第4章组合逻辑设计：布尔代数定理(T1-T12)、SOP/POS标准形式、卡诺图化简(3/4变量)、QM算法、MUX/译码器/编码器、时序分析与竞争冒险。【注意：自动化简不考】",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/dig-circuit-ch04-combinational-logic.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "dig-circuit-ch05-hdl",
+    "title": "数字电路设计 第5章 — 硬件描述语言HDL (DDCA Ch4)",
+    "date": "2026-06-16",
+    "category": "数字电路设计",
+    "summary": "第5章HDL硬件描述语言：SystemVerilog/Verilog基础、组合逻辑与时序逻辑HDL描述、结构建模、FSM三模块实现、阻塞vs非阻塞赋值、参数化模块、testbench编写。【与实验3单周期CPU相关】",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/dig-circuit-ch05-hdl.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "dig-circuit-ch06-digital-blocks",
+    "title": "数字电路设计 第6章 — 数字构建模块 (DDCA Ch5)",
+    "date": "2026-06-16",
+    "category": "数字电路设计",
+    "summary": "第6章数字构建模块【考试重点★★★】：ALU标志位(N/Z/C/V)详解、移位器三种类型(逻辑/算术/循环)、IEEE 754浮点数格式与转换、加法器(行波/先行/前缀)延迟对比、定点与浮点数、DRAM/SRAM/ROM存储器阵列、PLA/FPGA逻辑阵列。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/dig-circuit-ch06-digital-blocks.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "dig-circuit-ch07-arm-arch",
+    "title": "数字电路设计 第7章 — ARM体系结构与汇编 (DDCA Ch6)",
+    "date": "2026-06-16",
+    "category": "数字电路设计",
+    "summary": "第7章ARM体系结构【考试重点】：ARM寄存器集与CPSR、汇编指令(ADD/SUB/MOV/LDR/STR)、15种条件码与NZCV标志、四种寻址方式(寄存器/立即数/基址偏移/PC相对)、三种指令格式编码(数据处理/内存/分支)、大小端、栈与函数调用。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/dig-circuit-ch07-arm-arch.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "dig-circuit-ch08-microarch",
+    "title": "数字电路设计 第8章 — 微体系结构 (DDCA Ch7)【必考】",
+    "date": "2026-06-16",
+    "category": "数字电路设计",
+    "summary": "第8章微体系结构【必考★★★★★】：单周期CPU数据通路与控制通路设计、lw/sw/beq指令执行过程、多周期FSM实现、5级流水线(IF/ID/EX/MEM/WB)、数据冒险(前推+停顿)与控制冒险(分支预测)、流水线吞吐率、高级微体系结构(超标量/乱序/ SIMD)。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/dig-circuit-ch08-microarch.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "dig-circuit-ch09-memory",
+    "title": "数字电路设计 第9章 — 存储系统 (DDCA Ch8)",
+    "date": "2026-06-16",
+    "category": "数字电路设计",
+    "summary": "第9章存储系统【考试重点★★★】：存储层次结构、时间局部性vs空间局部性判断、Cache三种组织方式(直接映射/组相联/全相联)、三种缺失类型(强制性/容量/冲突)与失效率计算、AMAT公式、虚拟内存与TLB。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/dig-circuit-ch09-memory.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "dig-circuit-ch10-io",
+    "title": "数字电路设计 第10章 — I/O系统（自学）",
+    "date": "2026-06-16",
+    "category": "数字电路设计",
+    "summary": "第10章I/O系统【自学，不考】：I/O接口分类、存储器映射I/O vs 端口I/O、程序查询/中断/DMA三种方式对比、总线分类与仲裁、AMBA片内总线。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/dig-circuit-ch10-io.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "db-ch1-intro",
+    "title": "数据库系统 Ch1 — 数据库系统概论 详细学习笔记",
+    "date": "2026-06-15",
+    "category": "数据库系统",
+    "summary": "数据库系统第一章概论详细学习笔记：DB/DBMS/DBS核心概念、数据管理三阶段对比、三层结构与三级模式两层映像、数据独立性(逻辑+物理)、数据模型三要素、数据库发展四阶段与国产数据库(OceanBase/TDSQL/TiDB/达梦)。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/db-ch1-intro.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "db-ch2-relational-algebra",
+    "title": "数据库系统 Ch2 — 关系代数 详细学习笔记",
+    "date": "2026-06-15",
+    "category": "数据库系统",
+    "summary": "数据库系统第二章关系代数详细笔记：五种基本运算(σ/π/∪/−/×)、附加运算(⋈/÷/∩)、扩展关系代数、查询表达式书写与等价转换。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/db-ch2-relational-algebra.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "db-ch2-relational-calculus",
+    "title": "数据库系统 Ch2 — 关系演算与域演算 详细学习笔记",
+    "date": "2026-06-15",
+    "category": "数据库系统",
+    "summary": "数据库系统第二章关系演算详细笔记：元组关系演算TRC、域关系演算DRC、存在/全称量词、QBE、安全性概念、与关系代数的等价性。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/db-ch2-relational-calculus.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "db-ch3-4-sql",
+    "title": "数据库系统 Ch3-4 — SQL 详细学习笔记",
+    "date": "2026-06-15",
+    "category": "数据库系统",
+    "summary": "数据库系统第三-四章SQL详细笔记：DDL表定义与约束、DML查询(SELECT/JOIN/子查询/集合运算/聚合)、INSERT/UPDATE/DELETE、视图与索引。含大量SQL语句示例。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/db-ch3-4-sql.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "cn-ch1-intro",
+    "title": "计算机网络 Ch1 — 网络概述 考点复习",
+    "date": "2026-06-08",
+    "category": "计算机网络",
+    "summary": "计算机网络第一章考点复习(16页详细版)：网络协议三要素（语法/语义/时序）、协议分层结构、OSI七层与TCP/IP四层模型对比、PDU封装解封装、六大服务原语、面向连接vs无连接、网络分类PAN/LAN/MAN/WAN、ISP层级、接入网技术(FTTH/DSL/HFC/无线)、路由vs转发、网络安全威胁、标准化组织、互联网发展四阶段",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/cn-ch1-intro.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "cn-ch2-physical",
+    "title": "计算机网络 Ch2 — 物理层 考点复习",
+    "date": "2026-06-08",
+    "category": "计算机网络",
+    "summary": "物理层考点复习(10页详细版)：四大接口特性(机械/电气/功能/规程)、DTE/DCE、奈奎斯特定理与香农定理(公式+计算)、曼彻斯特编码与差分曼彻斯特编码(必考波形与规则)、NRZ/NRZ-I/4B5B四种编码对比、ASK/FSK/PSK/QAM调制、PCM脉冲编码调制三步、传输介质(双绞线/同轴/光纤/无线)、七种多路复用技术(FDM/TDM/STDM/WDM/CDMA/OFDM/SDM)、电路交换vs报文交换vs分组交换",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/cn-ch2-physical.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "cn-ch3-datalink",
+    "title": "计算机网络 Ch3 — 数据链路层 考点复习",
+    "date": "2026-06-08",
+    "category": "计算机网络",
+    "summary": "数据链路层考点复习(6页)：四种成帧方法(字节计数/字节填充/比特填充/编码违例)、CRC循环冗余校验(模2除法步骤+标准多项式+检测能力)、海明码(冗余位公式+构造步骤+纠错定位过程)、奇偶校验(VRC/LRC/水平垂直)、校验和、停等协议(有错/无错信道+利用率公式)、滑动窗口协议(回退N vs 选择重传对比表)",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/cn-ch3-datalink.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "cn-ch3-mac",
+    "title": "计算机网络 Ch3 — MAC层 考点复习",
+    "date": "2026-06-08",
+    "category": "计算机网络",
+    "summary": "MAC子层考点复习(7页)：ALOHA协议(纯ALOHA 18.4% vs 分隙ALOHA 36.8%)、CSMA三种类型(1-坚持/非坚持/p-坚持)、CSMA/CD四步工作原理与冲突检测条件(最小帧长公式)、二进制指数退避算法、以太网帧结构、交换机自学习与MAC地址表(洪泛/转发/老化)、VLAN、CSMA/CA与RTS/CTS(隐藏终端/暴露终端)",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/cn-ch3-mac.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "cn-ch4-network-2024",
+    "title": "计算机网络 Ch4 — 网络层 考点复习 (2024版)",
+    "date": "2026-06-08",
+    "category": "计算机网络",
+    "summary": "网络层2024版考点复习(7页)：虚电路vs数据报对比、IP地址分类与CIDR子网划分计算(路由聚合+最长前缀匹配)、IPv4头部字段详解(分片重组)、ARP地址解析、DHCP四步(DORA)、ICMP全部类型(Ping/Traceroute原理)、NAT类型(静态/动态/PAT)、IP无连接服务特性(Best Effort/长抖动)",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/cn-ch4-network-2024.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "cn-ch4-network-2026",
+    "title": "计算机网络 Ch4 — 网络层 考点复习 (2026版) 路由算法专题",
+    "date": "2026-06-08",
+    "category": "计算机网络",
+    "summary": "网络层2026版路由算法专题(7页)：距离矢量路由DV(Bellman-Ford方程+两种计算方法)、无穷计数问题与4种解决方案(最大距离/水平分割/毒性逆转/触发更新)、RIP协议、链路状态路由LS(Dijkstra五步骤+算法过程+复杂度)、LSP洪泛机制、OSPF协议(分层Area/路由器类型/LSA类型/DR选举)、DV vs LS全方位对比表、BGP路径属性",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/cn-ch4-network-2026.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "cn-ch6-application",
+    "title": "计算机网络 Ch6 — 应用层 考点复习",
+    "date": "2026-06-08",
+    "category": "计算机网络",
+    "summary": "应用层考点复习(8页)：DNS(记录类型A/AAAA/CNAME/MX/NS/PTR/SOA/TXT+递归vs迭代查询)、WWW访问完整9步流程(DNS→TCP→TLS→HTTP请求→服务器→响应→浏览器渲染→并行加载→连接释放)、HTTP(方法/状态码/缓存机制/Cookie与Session/HTTP1.1vs2)、SMTP邮件发送完整步骤(MUA→SMTP握手EHLO→信封MAILFROM/RCPTTO→DATA→中继MX→MDA→POP3/IMAP收取)、MIME、FTP双连接(PORT主动vs PASV被动)",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/cn-ch6-application.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "cn-ch6-transport",
+    "title": "计算机网络 Ch6 — 传输层 考点复习",
+    "date": "2026-06-08",
+    "category": "计算机网络",
+    "summary": "传输层考点复习(7页)：UDP vs TCP协议连连看对比表(连接性/可靠性/拥塞控制/头部开销/应用)、TCP头部字段、三次握手(为什么三次？SYN Flood攻击与Cookie防御)、四次挥手(TIME_WAIT 2MSL)、流量控制(滑动窗口/糊涂窗口)、RTT估算(Jacobson算法SRTT+RTTVAR+RTO+Karn算法)、拥塞控制四算法(慢启动/拥塞避免/快重传/快恢复)、Tahoe vs Reno、AIMD加性增乘性减原则",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/cn-ch6-transport.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "se-ch1-overview",
+    "title": "软件工程基础 第1章 — 软件工程概述 学习笔记",
+    "date": "2026-06-01",
+    "category": "软件工程基础",
+    "summary": "软件工程概述：软件危机、软件生命周期、软件开发方法与模型、软件工具与AI辅助开发",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/se-ch1-overview.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "se-ch2-process",
+    "title": "软件工程基础 第2章 — 软件过程 学习笔记",
+    "date": "2026-06-01",
+    "category": "软件工程基础",
+    "summary": "软件过程模型（瀑布/原型/RAD/增量/螺旋/RUP）、敏捷开发与XP/Scrum、精益与FDD",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/se-ch2-process.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "se-ch3-management",
+    "title": "软件工程基础 第3章 — 软件项目管理 学习笔记",
+    "date": "2026-06-01",
+    "category": "软件工程基础",
+    "summary": "可行性研究、系统流程图/DFD、故障树分析FTA、COCOMO/功能点成本估计、效益分析",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/se-ch3-management.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "se-ch4-planning",
+    "title": "软件工程基础 第4章 — 软件项目计划 学习笔记",
+    "date": "2026-06-01",
+    "category": "软件工程基础",
+    "summary": "风险分析、PERT关键路径/Gantt图、Brooks定律、五种项目组织形式",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/se-ch4-planning.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "se-ch5-requirements",
+    "title": "软件工程基础 第5章 — 软件需求分析 学习笔记",
+    "date": "2026-06-01",
+    "category": "软件工程基础",
+    "summary": "需求获取与分析：DFD分层数据流图、IDEF0/IDEF1X、UML十种图与4+1视图、用例建模、Coad/Yourdon OOA",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/se-ch5-requirements.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "se-ch6-highlevel-design",
+    "title": "软件工程基础 第6章 — 概要设计 学习笔记",
+    "date": "2026-06-01",
+    "category": "软件工程基础",
+    "summary": "设计原理、内聚与耦合分类、SC图/HIPO图、SOLID原则、GoF 23种设计模式、体系结构风格与C4视图",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/se-ch6-highlevel-design.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "se-ch7-detailed-design",
+    "title": "软件工程基础 第7章 — 详细设计 学习笔记",
+    "date": "2026-06-01",
+    "category": "软件工程基础",
+    "summary": "详细设计图形工具（程序流程图/盒图/PAD图/协作图）、Jackson和Warnier结构化设计方法、面向对象详细设计三大特性与四大原则",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/se-ch7-detailed-design.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "se-ch8-testing",
+    "title": "软件工程基础 第8章 — 软件测试 学习笔记",
+    "date": "2026-06-01",
+    "category": "软件工程基础",
+    "summary": "测试V模型 白盒测试 逻辑覆盖 McCabe 循环覆盖 黑盒测试 等价类 边界值 因果图 单元 集成 确认 系统测试 调试方法",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/se-ch8-testing.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "se-preface",
+    "title": "软件工程基础 — 前言与课程导论 学习笔记",
+    "date": "2026-06-01",
+    "category": "软件工程基础",
+    "summary": "软件工程基础课程导论：软件工程战略意义、课程目标与内容、学习方法与考核方式",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/se-preface.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l01-csharp-advanced-1",
+    "title": "SC102 L01: C# 进阶(上) — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "内存与地址、堆与栈、值类型与引用类型、字符串机制、ref关键字、装箱与拆箱、GC垃圾回收、C#/Mono/.NET工作原理详解。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l01-csharp-advanced-1.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l02-csharp-advanced-2",
+    "title": "SC102 L02: C# 进阶(下) — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "泛型、委托与事件、Action与Func、字段与属性、接口、部分类、Lambda表达式、隐式类型详解。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l02-csharp-advanced-2.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l03-design-patterns",
+    "title": "SC102 L03: 设计模式 — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "单例模式、指令模式、工厂模式与抽象工厂、观察者模式、策略模式、对象池、ECS模式详解。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l03-design-patterns.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l04-data-structures",
+    "title": "SC102 L04: 数据结构 — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "IEnumerator/IEnumerable、yield与迭代器、协程底层原理、多维数组与交错数组、树/栈/队列、DFS与BFS算法。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l04-data-structures.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l05-physics-system",
+    "title": "SC102 L05: Unity物理系统详解 — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "PhysX与Box2D引擎、DCD离散碰撞检测、Sweep-based CCD与Speculative CCD、连接关节、2D作用器、BoxCast/SphereCast射线检测。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l05-physics-system.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l06-procedural-physics",
+    "title": "SC102 L06: 程序化物理碰撞盒生成 — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "碰撞检测算法(分离轴定理/线段三角形相交)、BVH加速结构(Octree/K-D Tree)、LineRenderer与PolygonCollider程序化生成碰撞盒。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l06-procedural-physics.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l07-procedural-generation",
+    "title": "SC102 L07: 程序化生成 — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "模型组成(顶点/三角形/UV/法线)、Mesh类、程序化网格生成、柏林噪声地形生成、草的生成。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l07-procedural-generation.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l08-soft-body-physics",
+    "title": "SC102 L08: 软体物理模拟 — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "2D链条效果、质点弹簧系统、胡克定律、欧拉方法数值积分、绳索模拟(1D)、布料模拟(2D)。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l08-soft-body-physics.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l09-procedural-animation",
+    "title": "SC102 L09: 程序化动画与Tweening — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "线性与非线性动画、AnimationCurve类、Animation Event、常见动画曲线表达式、Tweening系统(StartProcedure)。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l09-procedural-animation.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l10-rigging-ik",
+    "title": "SC102 L10: 骨骼动画与IK — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "骨骼动画基础、正向动力学FK、2D骨骼绑定(Skinning Editor)、逆向动力学IK、Limb/CCD/FABRIK Solver算法对比。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l10-rigging-ik.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l11-ui-advanced",
+    "title": "SC102 L11: UI系统进阶 — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "Scroll View与Scroll Rect、Auto Layout系统、UI自适应、游戏暂停与层级管理、UI性能优化。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l11-ui-advanced.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l12-ui-components",
+    "title": "SC102 L12: UI事件与程序化组件 — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "C# Event vs Unity Event、UI事件接口(IPointerHandler)、PointerEventData、自定义Button/Slider/Toggle、UI拖动系统。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l12-ui-components.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l13-text-animator",
+    "title": "SC102 L13: 文字动画系统 — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "文字渲染原理与SDF技术、TextMeshPro(TMP)、访问TMP字符信息与Mesh修改、打字机效果、Inline标记动画。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l13-text-animator.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l14-dialogue-system",
+    "title": "SC102 L14: 对话系统 — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "ScriptableObject详解、对话系统架构(DialogueManager/UI/Trigger)、各类对话节点设计、UI打字机效果与动画。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l14-dialogue-system.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l15-inventory-system",
+    "title": "SC102 L15: 背包与物品系统 — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "物品数据结构(ScriptableObject)、背包管理器(增删改查与堆叠逻辑)、Grid UI布局与拖拽交互。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l15-inventory-system.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l16-combat-system",
+    "title": "SC102 L16: 战斗系统 — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "回合制战斗(状态机驱动)与实时战斗(冷却系统)架构设计、战斗UI组件、伤害计算与AI决策。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l16-combat-system.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "sc102-l17-review-prospect",
+    "title": "SC102 L17: 复习与展望 — 详细学习笔记",
+    "date": "2026-05-25",
+    "category": "Unity",
+    "summary": "SC102全课程知识总结(C#/设计模式/数据结构/物理/动画/UI/系统)、Shader渲染与引擎工具开发等后续方向展望。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sc102-l17-review-prospect.pdf",
+    "hasMarkdown": false
+  },
+  {
+    "slug": "compiler-ch1-intro",
+    "title": "编译原理 Ch1 — 概论 考点总结",
+    "date": "2026-05-12",
+    "category": "编译原理",
+    "summary": "编译原理第一章概论考点总结",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/compiler-ch1-intro.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "compiler-ch2-lexical",
+    "title": "编译原理 Ch2 — 词法分析 考点总结",
+    "date": "2026-05-12",
+    "category": "编译原理",
+    "summary": "编译原理第二章词法分析考点总结",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/compiler-ch2-lexical.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "compiler-ch3-syntax",
+    "title": "编译原理 Ch3 — 语法分析 考点总结",
+    "date": "2026-05-12",
+    "category": "编译原理",
+    "summary": "编译原理第三章语法分析考点总结",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/compiler-ch3-syntax.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "compiler-ch4-semantic",
+    "title": "编译原理 Ch4 — 语义分析 考点总结",
+    "date": "2026-05-12",
+    "category": "编译原理",
+    "summary": "编译原理第四章语义分析考点总结",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/compiler-ch4-semantic.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "compiler-ch7-sdt",
+    "title": "编译原理 Ch7 — 语法制导与中间代码生成 考点总结",
+    "date": "2026-05-12",
+    "category": "编译原理",
+    "summary": "编译原理第七章语法制导与中间代码生成考点总结",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/compiler-ch7-sdt.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "compiler-ch8-optimization",
+    "title": "编译原理 Ch8 — 代码优化 考点总结",
+    "date": "2026-05-12",
+    "category": "编译原理",
+    "summary": "编译原理第八章代码优化考点总结",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/compiler-ch8-optimization.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-summary-01-overview",
+    "title": "软件开发架构复习：开发架构与框架技术概述",
+    "date": "2026-05-07",
+    "category": "软件开发架构总结",
+    "summary": "第一章复习要点：软件开发架构概念、框架技术概述、企业级开发架构设计原则。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sw-arch-summary-01-overview.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-summary-02-spring-ioc",
+    "title": "软件开发架构复习：Spring IoC原理和实现",
+    "date": "2026-05-07",
+    "category": "软件开发架构总结",
+    "summary": "第二章复习要点：IoC容器原理、依赖注入方式、Bean生命周期、Spring IoC实现机制。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sw-arch-summary-02-spring-ioc.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-summary-03-spring-aop",
+    "title": "软件开发架构复习：Spring AOP原理和实现",
+    "date": "2026-05-07",
+    "category": "软件开发架构总结",
+    "summary": "第三章复习要点：AOP概念、切面/通知/切入点定义、Spring AOP实现原理与代理机制。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sw-arch-summary-03-spring-aop.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-summary-04-spring-mvc",
+    "title": "软件开发架构复习：Spring MVC",
+    "date": "2026-05-07",
+    "category": "软件开发架构总结",
+    "summary": "第四章复习要点：MVC设计模式、DispatcherServlet、控制器/视图解析器、REST集成。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sw-arch-summary-04-spring-mvc.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-summary-05-spring-boot",
+    "title": "软件开发架构复习：Spring Boot",
+    "date": "2026-05-07",
+    "category": "软件开发架构总结",
+    "summary": "第五章复习要点：自动配置原理、起步依赖、内嵌服务器、Actuator监控、Spring Boot最佳实践。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sw-arch-summary-05-spring-boot.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-summary-06-mybatis",
+    "title": "软件开发架构复习：ORM框架和MyBatis详解",
+    "date": "2026-05-07",
+    "category": "软件开发架构总结",
+    "summary": "第六章复习要点：ORM概念、MyBatis配置、Mapper映射、动态SQL、与Spring集成。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sw-arch-summary-06-mybatis.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-summary-07-restful-api",
+    "title": "软件开发架构复习：Restful API设计与实现",
+    "date": "2026-05-07",
+    "category": "软件开发架构总结",
+    "summary": "第七章复习要点：REST架构风格、HTTP方法/状态码、API版本管理、安全认证、文档规范。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sw-arch-summary-07-restful-api.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-summary-08-frontend-modules",
+    "title": "软件开发架构复习：前端模块化开发",
+    "date": "2026-05-07",
+    "category": "软件开发架构总结",
+    "summary": "第八章复习要点：模块化概念、CommonJS/AMD/ES6 Module、打包工具、依赖管理。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sw-arch-summary-08-frontend-modules.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-summary-09-component-dev",
+    "title": "软件开发架构复习：模块化与组件化开发",
+    "date": "2026-05-07",
+    "category": "软件开发架构总结",
+    "summary": "第九章复习要点：组件化设计原则、组件通信、状态管理、组件复用与测试。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sw-arch-summary-09-component-dev.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-summary-10-engineering",
+    "title": "软件开发架构复习：工程化思维和框架必要性",
+    "date": "2026-05-07",
+    "category": "软件开发架构总结",
+    "summary": "第十章复习要点：软件工程化思维、框架选型原则、开发效率与维护性平衡。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sw-arch-summary-10-engineering.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-summary-11-react",
+    "title": "软件开发架构复习：React框架核心",
+    "date": "2026-05-07",
+    "category": "软件开发架构总结",
+    "summary": "第十一章复习要点：JSX语法、组件/Hooks、虚拟DOM、状态提升、React Router。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sw-arch-summary-11-react.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-summary-12-vue",
+    "title": "软件开发架构复习：Vue框架核心",
+    "date": "2026-05-07",
+    "category": "软件开发架构总结",
+    "summary": "第十二章复习要点：模板语法、响应式原理、Composition API、Vue Router/Pinia。",
+    "cover": "/logo.png",
+    "pdfUrl": "/pdfs/sw-arch-summary-12-vue.pdf",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-01-overview",
+    "title": "开发架构与框架技术概述",
+    "date": "2026-05-01",
+    "category": "软件开发架构",
+    "summary": "概述软件开发架构平台的基础概念，涵盖框架技术的由来、三类框架（表示层、持久层、容器）的职责与主流技术栈，以及 Struts 1/2 与 Spring MVC 的演进对比，并介绍 Maven 项目管理与自动化构建的核心机制。",
+    "cover": "/assets/covers/softwareDesign.jpg",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-02-spring-ioc",
+    "title": "Spring IoC原理和实现",
+    "date": "2026-05-01",
+    "category": "软件开发架构",
+    "summary": "Spring IoC控制反转的核心原理、容器机制、Bean配置方式、依赖注入策略及作用域，从硬编码到IoC容器的架构演进全过程。",
+    "cover": "/assets/covers/softwareDesign.jpg",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-03-spring-aop",
+    "title": "Spring AOP原理和实现",
+    "date": "2026-05-01",
+    "category": "软件开发架构",
+    "summary": "本章介绍AOP（面向切面编程）的核心思想与概念体系，对比编译期、类加载器、运行时三种实现方式，重点讲解Spring AOP的代理模式、切点表达式、通知类型及常用组件的实战用法。",
+    "cover": "/assets/covers/softwareDesign.jpg",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-04-spring-mvc",
+    "title": "Spring MVC",
+    "date": "2026-05-01",
+    "category": "软件开发架构",
+    "summary": "Spring MVC 复习要点，涵盖架构原理与请求处理流程、控制器与 URL 映射、数据绑定、响应处理与视图方案、拦截器、参数校验及全局异常处理等核心考点。",
+    "cover": "/assets/covers/softwareDesign.jpg",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-05-spring-boot",
+    "title": "Spring Boot",
+    "date": "2026-05-01",
+    "category": "软件开发架构",
+    "summary": "Spring Boot 核心复习要点，涵盖自动配置原理、Starter 机制、内嵌容器、日志与事务管理，以及与传统 Spring MVC 的对比。",
+    "cover": "/assets/covers/softwareDesign.jpg",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-06-mybatis",
+    "title": "ORM框架和MyBatis详解",
+    "date": "2026-05-01",
+    "category": "软件开发架构",
+    "summary": "详解ORM框架核心概念，深入MyBatis的Mapper映射、动态SQL、缓存机制与插件生态，对比Hibernate与Spring Data JPA，构建完整的持久层技术体系知识图谱。",
+    "cover": "/assets/covers/softwareDesign.jpg",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-07-restful-api",
+    "title": "Restful API",
+    "date": "2026-05-01",
+    "category": "软件开发架构",
+    "summary": "软件开发架构平台课程第七章复习笔记，涵盖前后端分离、RESTful API 设计最佳实践、Spring Boot 注解、CORS 跨域、JWT 认证与 OAuth 鉴权。",
+    "cover": "/assets/covers/softwareDesign.jpg",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-08-frontend-modules",
+    "title": "前端模块化",
+    "date": "2026-05-01",
+    "category": "软件开发架构",
+    "summary": "前端模块化从原始引入到 ES Module 的演进史，涵盖 Node.js、NPM、CommonJS、Webpack 和 Vite 等工程化核心工具与概念。",
+    "cover": "/assets/covers/softwareDesign.jpg",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-09-component-dev",
+    "title": "模块化与组件化开发",
+    "date": "2026-05-01",
+    "category": "软件开发架构",
+    "summary": "前端模块化与组件化开发核心知识复习，涵盖 Promise 异步编程、async/await 语法糖、Fetch API 与 Axios 库对比，以及前端项目工程化演进路径。",
+    "cover": "/assets/covers/softwareDesign.jpg",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-10-engineering",
+    "title": "工程化思维和框架必要性",
+    "date": "2026-05-01",
+    "category": "软件开发架构",
+    "summary": "分析前端项目中的四大工程化问题（DOM 耦合、代码重复、错误处理、组件化不足）及其解决方案，对比 MVC、MVP、MVVM 三种架构模式的演进与核心差异。",
+    "cover": "/assets/covers/softwareDesign.jpg",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-11-react",
+    "title": "React",
+    "date": "2026-05-01",
+    "category": "软件开发架构",
+    "summary": "React 核心复习笔记：JSX 语法、组件化开发、useState/useEffect Hooks、虚拟 DOM 与 Diff 算法、以及 MPA vs SPA 架构对比。",
+    "cover": "/assets/covers/softwareDesign.jpg",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "sw-arch-12-vue",
+    "title": "Vue",
+    "date": "2026-05-01",
+    "category": "软件开发架构",
+    "summary": "Vue 渐进式 JavaScript 框架核心知识点总结，涵盖模板语法、组件数据传递、响应式系统、生命周期钩子及前端性能优化。",
+    "cover": "/assets/covers/softwareDesign.jpg",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "unity-audio-particles",
+    "title": "Unity 中的声音与粒子系统",
+    "date": "2026-03-02",
+    "category": "Unity",
+    "summary": "深入探讨 Unity 中的音频播放机制（AudioSource/AudioListener）、资源异步加载、声音播放器架构设计，以及初探粒子系统与 Render Texture 倒影技术。",
+    "cover": "/assets/covers/logo.png",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "course-notes-html",
+    "title": "Web 编程学习笔记：HTML 基础语法",
+    "date": "2026-02-12",
+    "category": "课程笔记",
+    "summary": "这是关于 Web 开发初学者的第一篇课程笔记，涵盖了 HTML 的基本标签与文档结构。",
+    "cover": "/assets/covers/logo.png",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "daily-essay-01",
+    "title": "午后随笔：关于独立开发的思考",
+    "date": "2026-02-12",
+    "category": "随笔记录",
+    "summary": "在快节奏的开发周期中，停下来思考代码以外的逻辑同样重要。",
+    "cover": "/assets/covers/logo.png",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "unity-render-basics",
+    "title": "Unity 渲染基础：材质、着色器与光照",
+    "date": "2026-02-12",
+    "category": "Unity",
+    "summary": "深入探讨 Unity 渲染的核心三剑客（Material, Shader, Texture）以及 Mesh 和 Lighting 的基础运作机制。",
+    "cover": "/assets/covers/logo.png",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "unity-loop-events",
+    "title": "Unity 进阶：协程与事件系统",
+    "date": "2026-02-09",
+    "category": "Unity",
+    "summary": "深入解析 Unity 中的协程 (Coroutine) 实现原理，以及如何利用 C# 的 Action 和 Func 构建模块化的事件系统。",
+    "cover": "/assets/covers/logo.png",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "unity-mathf-prefab-ui",
+    "title": "Unity 常用 API、预制件与进阶 UI 系统",
+    "date": "2026-01-28",
+    "category": "Unity",
+    "summary": "详解 Unity 中常用的 Mathf 数学库、预制件 (Prefab) 的核心概念，以及 Slider、Mask、RectTransform 等进阶 UI 组件的使用技巧。",
+    "cover": "/assets/covers/logo.png",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "unity-ui-camera",
+    "title": "Unity 相机与 UI 系统详解",
+    "date": "2026-01-26",
+    "category": "Unity",
+    "summary": "深入解析 Unity 中的 Camera 组件（透视与正交）、UI 系统架构（Canvas, Image, Text, Button）以及如何实现相机跟随和 UI 交互。",
+    "cover": "/assets/covers/logo.png",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "unity-animation",
+    "title": "Unity 进阶笔记：2D 渲染与动画系统",
+    "date": "2026-01-25",
+    "category": "Unity",
+    "summary": "详解 Unity 字段修饰符、SpriteRenderer 核心概念、Sprite Mask 遮罩技术以及动画系统（Animation/Animator）的完整工作流。",
+    "cover": "/assets/covers/logo.png",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "unity-physics",
+    "title": "Unity 进阶笔记：物理系统与射线检测",
+    "date": "2026-01-24",
+    "category": "Unity",
+    "summary": "详细讲解 Unity 中的 Tag、Layer 概念，以及 2D 物理系统核心组件（Collider2D, Rigidbody2D）和射线检测的使用方法。",
+    "cover": "/assets/covers/logo.png",
+    "hasMarkdown": true
+  },
+  {
+    "slug": "unity-core",
+    "title": "Unity 核心概念与基础 API 拓展笔记",
+    "date": "2026-01-23",
+    "category": "Unity",
+    "summary": "面向 Unity 初学者的核心概念系统性扩展，涵盖 GameObject、Component 生命周期及常用 API 详解。",
+    "cover": "/assets/covers/logo.png",
+    "hasMarkdown": true
+  }
+]

@@ -1,63 +1,103 @@
-import { useRef } from 'react';
-import { ChevronDown } from 'lucide-react';
-import ArticleList from './ArticleList';
-import { useScrollFade } from '@/hooks/useScrollFade';
+import { Link } from 'react-router-dom';
+import { ArrowUpRight, BookOpen, Gamepad2, Headphones } from 'lucide-react';
+import { useAllPosts } from '@/data/postsIndex';
+import ArticleRow from '@/components/ArticleRow';
 
-const Home = () => {
-    const heroRef = useRef<HTMLDivElement>(null);
-    const buttonRef = useRef<HTMLButtonElement>(null);
-
-    useScrollFade([heroRef, buttonRef], 600);
-
-    const scrollToContent = () => {
-        window.scrollTo({
-            top: window.innerHeight,
-            behavior: 'smooth'
-        });
-    };
-
-    return (
-        <div className="relative">
-            {/* Hero Section */}
-            <div className="h-screen flex flex-col items-center justify-center relative overflow-hidden">
-                {/* 装饰光圈 — 外层 */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] md:w-[700px] md:h-[700px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(34,211,238,0.08),transparent_70%)] pointer-events-none" />
-                {/* 装饰光圈 — 内层 */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[400px] md:h-[400px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(34,211,238,0.12),transparent_65%)] pointer-events-none" />
-
-                <div
-                    ref={heroRef}
-                    className="text-center transition-opacity duration-75 ease-out relative z-10"
-                >
-                    <h1 className="text-5xl md:text-7xl font-black text-white tracking-tighter drop-shadow-lg font-heading animate-fade-in-up">
-                        Persona's Blog
-                    </h1>
-                    <p className="mt-6 text-base md:text-lg text-gray-400 max-w-md mx-auto leading-relaxed animate-fade-in-up delay-200">
-                        记录<span className="text-cyan-400 font-semibold">学习</span>轨迹，
-                        整理<span className="text-cyan-400 font-semibold">技术</span>思考
-                    </p>
-                    <div className="mt-8 h-px w-16 bg-gradient-to-r from-cyan-400 to-transparent mx-auto animate-scale-in delay-400"></div>
-                </div>
-
-                {/* Scroll Indicator */}
-                <button
-                    ref={buttonRef}
-                    onClick={scrollToContent}
-                    type="button"
-                    aria-label="Scroll down to content"
-                    className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/40 hover:text-white transition-all"
-                    style={{ animation: 'bounce-subtle 2s ease-in-out infinite' }}
-                >
-                    <ChevronDown size={40} />
-                </button>
-            </div>
-
-            {/* Content Section */}
-            <div className="max-w-6xl mx-auto px-4 py-12">
-                <ArticleList />
-            </div>
+export default function Home() {
+  const { posts } = useAllPosts();
+  const categories = [...new Set(posts.map((p) => p.category))];
+  return (
+    <div className="site-container">
+      <section className="home-hero">
+        <div>
+          <p className="intro-line">
+            <span className="status-dot" />
+            Persona 的个人空间
+          </p>
+          <h1>
+            把好奇心，
+            <br />
+            写成自己的知识。
+          </h1>
+          <p className="hero-description">
+            在代码与课堂之间探索，也在游戏、书籍和音乐里寻找灵感。这里收录我的学习笔记、技术思考与生活收藏。
+          </p>
+          <div className="hero-actions">
+            <Link className="button-primary" to="/articles">
+              浏览学习笔记 <ArrowUpRight size={17} />
+            </Link>
+            <Link className="text-link" to="/about">
+              认识 Persona
+            </Link>
+          </div>
         </div>
-    );
-};
-
-export default Home;
+        <aside className="hero-notebook">
+          <div className="notebook-top">
+            <BookOpen size={22} />
+            <span>正在整理的知识</span>
+          </div>
+          <Link to="/articles?category=科学计算与数学建模">
+            <h2>
+              从一个公式，
+              <br />
+              理解一个模型。
+            </h2>
+            <p>科学计算与数学建模</p>
+            <span>
+              17 篇详细笔记 <ArrowUpRight size={17} />
+            </span>
+          </Link>
+          <div className="notebook-footer">学习是一段持续构建的过程。</div>
+        </aside>
+      </section>
+      <section className="home-content">
+        <div>
+          <div className="section-heading">
+            <div>
+              <p className="section-kicker">持续记录</p>
+              <h2>最近的笔记</h2>
+            </div>
+            <Link className="text-link" to="/articles">
+              全部文章 <ArrowUpRight size={16} />
+            </Link>
+          </div>
+          <div className="article-rows">
+            {posts.slice(0, 5).map((post) => (
+              <ArticleRow key={post.slug} post={post} />
+            ))}
+          </div>
+        </div>
+        <aside className="home-sidebar">
+          <section>
+            <h2>沿着兴趣学习</h2>
+            <p>按课程和主题，找到下一篇。</p>
+            <div className="topic-links">
+              {categories.map((cat) => (
+                <Link key={cat} to={`/articles?category=${encodeURIComponent(cat)}`}>
+                  <span>{cat}</span>
+                  <span>{posts.filter((p) => p.category === cat).length}</span>
+                </Link>
+              ))}
+            </div>
+          </section>
+          <section className="sidebar-personal">
+            <h2>课本以外</h2>
+            <p>那些让我愿意花时间的事。</p>
+            <Link to="/collections/games">
+              <Gamepad2 size={18} />
+              游戏与世界
+            </Link>
+            <Link to="/collections/books">
+              <BookOpen size={18} />
+              书页之间
+            </Link>
+            <Link to="/collections/music">
+              <Headphones size={18} />
+              反复播放
+            </Link>
+          </section>
+        </aside>
+      </section>
+    </div>
+  );
+}

@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, type RefObject } from 'react';
 export function useScrollSpy(
   contentRef: RefObject<HTMLElement | null>,
   headingSelector = 'h2, h3',
-  offset = 160
+  offset = 160,
 ): string {
   const [activeId, setActiveId] = useState('');
   const activeIdRef = useRef('');

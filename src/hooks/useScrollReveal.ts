@@ -1,7 +1,7 @@
 import { useEffect, useRef, type RefObject } from 'react';
 
 export function useScrollReveal<T extends HTMLElement>(
-  options?: IntersectionObserverInit
+  options?: IntersectionObserverInit,
 ): RefObject<T | null> {
   const ref = useRef<T>(null);
 
@@ -16,7 +16,7 @@ export function useScrollReveal<T extends HTMLElement>(
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px', ...options }
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px', ...options },
     );
 
     observer.observe(el);

@@ -8,7 +8,10 @@ const ITEMS_PER_PAGE = 10;
 export const MusicList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(albums.length / ITEMS_PER_PAGE);
-  const paginatedAlbums = albums.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+  const paginatedAlbums = albums.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
+  );
 
   return (
     <>
@@ -20,12 +23,8 @@ export const MusicList = () => {
             coverAlt={album.title}
             coverClassName="w-full h-48 md:w-48 md:h-auto md:aspect-square"
             hoverBorderColor="hover:border-green-500/50"
-            sidebar={
-              <span className="text-2xl font-bold text-green-400">{album.rating}</span>
-            }
-            mobileFooter={
-              <span className="text-xl font-bold text-green-400">{album.rating}</span>
-            }
+            sidebar={<span className="text-2xl font-bold text-green-400">{album.rating}</span>}
+            mobileFooter={<span className="text-xl font-bold text-green-400">{album.rating}</span>}
           >
             <div>
               <div className="flex flex-wrap items-center gap-3 mb-2">
@@ -37,7 +36,10 @@ export const MusicList = () => {
                 </div>
                 <div className="flex gap-2">
                   {album.tags.map((tag) => (
-                    <span key={tag} className="px-2 py-0.5 rounded text-xs bg-green-500/20 text-green-300 border border-green-500/20">
+                    <span
+                      key={tag}
+                      className="px-2 py-0.5 rounded text-xs bg-green-500/20 text-green-300 border border-green-500/20"
+                    >
                       {tag}
                     </span>
                   ))}
@@ -47,7 +49,9 @@ export const MusicList = () => {
                 <span>发行于: {album.year}</span>
                 <span>流派: {album.genre}</span>
               </div>
-              <p className="text-gray-300 leading-relaxed text-sm md:text-base italic">&ldquo;{album.review}&rdquo;</p>
+              <p className="text-gray-300 leading-relaxed text-sm md:text-base italic">
+                &ldquo;{album.review}&rdquo;
+              </p>
             </div>
           </CollectionCard>
         ))}

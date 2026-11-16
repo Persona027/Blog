@@ -59,7 +59,8 @@ const entries: CopyEntry[] = [
     target: 'compiler-ch4-semantic.pdf',
   },
   {
-    source: 'd:/myWebsite/Summary - 7-语法制导与中间代码生成/Summary - 7-语法制导与中间代码生成.pdf',
+    source:
+      'd:/myWebsite/Summary - 7-语法制导与中间代码生成/Summary - 7-语法制导与中间代码生成.pdf',
     target: 'compiler-ch7-sdt.pdf',
   },
   {
@@ -73,7 +74,8 @@ const entries: CopyEntry[] = [
     target: 'dig-circuit-01-intro.pdf',
   },
   {
-    source: 'd:/myWebsite/pdf/Summary - 2 Computer Organization(1)/Summary - 2 Computer Organization(1).pdf',
+    source:
+      'd:/myWebsite/pdf/Summary - 2 Computer Organization(1)/Summary - 2 Computer Organization(1).pdf',
     target: 'dig-circuit-02-computer-org.pdf',
   },
   {
@@ -95,15 +97,18 @@ const entries: CopyEntry[] = [
 
   // ========== 软件开发架构总结 (12) ==========
   {
-    source: 'd:/myWebsite/pdf/Summary - CH01 开发架构与框架技术概述/Summary - CH01 开发架构与框架技术概述.pdf',
+    source:
+      'd:/myWebsite/pdf/Summary - CH01 开发架构与框架技术概述/Summary - CH01 开发架构与框架技术概述.pdf',
     target: 'sw-arch-summary-01-overview.pdf',
   },
   {
-    source: 'd:/myWebsite/pdf/Summary - CH02 Spring IoC原理和实现/Summary - CH02 Spring IoC原理和实现.pdf',
+    source:
+      'd:/myWebsite/pdf/Summary - CH02 Spring IoC原理和实现/Summary - CH02 Spring IoC原理和实现.pdf',
     target: 'sw-arch-summary-02-spring-ioc.pdf',
   },
   {
-    source: 'd:/myWebsite/pdf/Summary - CH03 Spring AOP原理和实现/Summary - CH03 Spring AOP原理和实现.pdf',
+    source:
+      'd:/myWebsite/pdf/Summary - CH03 Spring AOP原理和实现/Summary - CH03 Spring AOP原理和实现.pdf',
     target: 'sw-arch-summary-03-spring-aop.pdf',
   },
   {
@@ -115,7 +120,8 @@ const entries: CopyEntry[] = [
     target: 'sw-arch-summary-05-spring-boot.pdf',
   },
   {
-    source: 'd:/myWebsite/pdf/Summary - CH06 ORM框架和MyBatis详解/Summary - CH06 ORM框架和MyBatis详解.pdf',
+    source:
+      'd:/myWebsite/pdf/Summary - CH06 ORM框架和MyBatis详解/Summary - CH06 ORM框架和MyBatis详解.pdf',
     target: 'sw-arch-summary-06-mybatis.pdf',
   },
   {
@@ -127,11 +133,13 @@ const entries: CopyEntry[] = [
     target: 'sw-arch-summary-08-frontend-modules.pdf',
   },
   {
-    source: 'd:/myWebsite/pdf/Summary - CH09 模块化与组件化开发/Summary - CH09 模块化与组件化开发.pdf',
+    source:
+      'd:/myWebsite/pdf/Summary - CH09 模块化与组件化开发/Summary - CH09 模块化与组件化开发.pdf',
     target: 'sw-arch-summary-09-component-dev.pdf',
   },
   {
-    source: 'd:/myWebsite/pdf/Summary - CH10 工程化思维和框架必要性/Summary - CH10 工程化思维和框架必要性.pdf',
+    source:
+      'd:/myWebsite/pdf/Summary - CH10 工程化思维和框架必要性/Summary - CH10 工程化思维和框架必要性.pdf',
     target: 'sw-arch-summary-10-engineering.pdf',
   },
   {

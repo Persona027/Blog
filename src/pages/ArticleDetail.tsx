@@ -1,267 +1,112 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import ReactMarkdown from 'react-markdown';
-import remarkMath from 'remark-math';
-import rehypeKatex from 'rehype-katex';
-import { List, Menu, X, ChevronRight, Hash } from 'lucide-react';
-import type { ComponentPropsWithoutRef } from 'react';
-import type { TocItem, Frontmatter } from '@/types';
-import { parseMarkdownFrontmatter, slugify, flattenChildren } from '@/utils/markdown';
-import { useScrollSpy } from '@/hooks/useScrollSpy';
-import { getPdfPost } from '@/data/pdfPosts';
-import { useAllPosts, getRawMd } from '@/data/postsIndex';
-import PdfViewer from '@/components/PdfViewer';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
+import { ArrowLeft, Download, BookOpen } from 'lucide-react';
+import { getPost, getRawMd, useAllPosts } from '@/data/postsIndex';
+const PdfViewer = lazy(() => import('@/components/PdfViewer'));
+const MarkdownReader = lazy(() => import('@/features/reader/MarkdownReader'));
 
-const heading = (Tag: 'h2' | 'h3') =>
-  ({ children, ...props }: ComponentPropsWithoutRef<'h2' | 'h3'>) => {
-    const id = slugify(flattenChildren(children));
-    return <Tag id={id} {...props} className="scroll-mt-24" />;
-  };
-
-const MarkdownComponents = {
-  h2: heading('h2'),
-  h3: heading('h3'),
-};
-
-const ArticleDetail = () => {
-  const { slug } = useParams();
-  const [isLeftOpen, setIsLeftOpen] = useState(false);
-  const [isRightOpen, setIsRightOpen] = useState(false);
-
-  const contentRef = useRef<HTMLDivElement>(null);
-  const activeId = useScrollSpy(contentRef, 'h2, h3', 160);
-
-  const { articles } = useAllPosts();
-
-  const { content, metadata, toc, relatedArticles, isPdf, pdfUrl } = useMemo(() => {
-    const pdfPost = getPdfPost(slug || '');
-    if (pdfPost) {
-      return {
-        content: '',
-        metadata: pdfPost as unknown as Frontmatter,
-        toc: [] as TocItem[],
-        relatedArticles: articles.filter((a) => a.category === pdfPost.category),
-        isPdf: true,
-        pdfUrl: pdfPost.pdfUrl,
-      };
-    }
-
-    const rawMd = getRawMd(slug || '');
-    if (rawMd) {
-      const { frontmatter, content: mdContent } = parseMarkdownFrontmatter(rawMd);
-
-      const tocItems: TocItem[] = [];
-      const lines = mdContent.split('\n');
-      lines.forEach((line: string) => {
-        const match = line.match(/^(##|###)\s+(.*)/);
-        if (match) {
-          const level = match[1].length;
-          const text = match[2].trim();
-          const id = slugify(text);
-          tocItems.push({ id, text, level });
-        }
-      });
-
-      return {
-        content: mdContent,
-        metadata: frontmatter,
-        toc: tocItems,
-        relatedArticles: articles.filter((a) => a.category === frontmatter.category),
-        isPdf: false,
-        pdfUrl: undefined,
-      };
-    }
-
-    return {
-      content: '# 404 文章未找到\n或许它已经迷失在宇宙中了。',
-      metadata: {} as Frontmatter,
-      toc: [] as TocItem[],
-      relatedArticles: [] as typeof articles,
-      isPdf: false,
-      pdfUrl: undefined,
-    };
-  }, [slug, articles]);
-
-  /* eslint-disable react-hooks/set-state-in-effect */
+export default function ArticleDetail() {
+  const { slug = '' } = useParams();
+  const [params] = useSearchParams();
+  const post = getPost(slug);
+  const [loaded, setLoaded] = useState<{ slug: string; raw?: string; failed?: boolean }>({
+    slug: '',
+  });
+  const isPdf = !!post?.pdfUrl && (!post.hasMarkdown || params.get('format') === 'pdf');
   useEffect(() => {
-    window.scrollTo(0, 0);
-    setIsLeftOpen(false);
-    setIsRightOpen(false);
-  }, [slug]);
-  /* eslint-enable react-hooks/set-state-in-effect */
-
-  const scrollToAnchor = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      const yOffset = -100;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-      setIsRightOpen(false);
-    }
-  };
-
-  /* ── PDF 模式 ── */
-  if (isPdf) {
+    let active = true;
+    if (post?.hasMarkdown && !isPdf)
+      getRawMd(slug)
+        .then((raw) => {
+          if (active) setLoaded({ slug, raw });
+        })
+        .catch(() => {
+          if (active) setLoaded({ slug, failed: true });
+        });
+    if (post) document.title = `${post.title} · Persona`;
+    return () => {
+      active = false;
+    };
+  }, [slug, post, isPdf]);
+  const related = useAllPosts().posts.filter((p) => p.category === post?.category);
+  if (!post)
     return (
-      <div className="min-h-screen bg-transparent text-gray-200">
-        <div className="max-w-[1920px] mx-auto px-0 lg:px-2 py-4">
-          <div className="flex items-center gap-2 text-sm text-gray-500 mb-4 px-4 lg:px-4">
-            <span className="text-cyan-500 font-bold">{metadata.category}</span>
-            <ChevronRight size={14} />
-            <span>{metadata.date}</span>
-          </div>
-          <PdfViewer pdfUrl={pdfUrl!} title={metadata.title || slug || ''} />
-          <div className="mt-12 flex items-center justify-between border-t border-white/5 pt-8 px-4">
-            <Link to="/" className="text-gray-500 hover:text-cyan-400 transition-colors flex items-center gap-2">
-              ← 回到首页
-            </Link>
-            <span className="text-gray-600 text-sm italic">End of Article</span>
-          </div>
-        </div>
+      <div className="site-container empty-state">
+        <h1>文章未找到</h1>
+        <Link to="/articles">返回文章中心</Link>
       </div>
     );
-  }
-
-  /* ── Markdown 模式 ── */
   return (
-    <div className="min-h-screen bg-transparent text-gray-200">
-      {/* Mobile header */}
-      <div className="max-w-[1600px] mx-auto px-6 py-4 flex items-center justify-between sticky top-0 z-30 bg-black/20 backdrop-blur-md border-b border-white/5 lg:hidden">
-        <button type="button" onClick={() => setIsLeftOpen(true)} className="p-2 text-gray-400 hover:text-cyan-400" title="打开侧边栏" aria-label="打开侧边栏"><List size={24} /></button>
-        <Link to="/" className="font-bold text-cyan-400">文章详情</Link>
-        <button type="button" onClick={() => setIsRightOpen(true)} className="p-2 text-gray-400 hover:text-cyan-400" title="打开目录" aria-label="打开目录"><Menu size={24} /></button>
-      </div>
-
-      <div className="max-w-[1920px] mx-auto flex flex-col lg:flex-row gap-0 lg:gap-4 px-0 lg:px-2">
-
-        {/* ── 左侧侧边栏：同分类文章 ── */}
-        <aside className={`
-          fixed inset-y-0 left-0 z-50 w-72 bg-zinc-900 lg:bg-transparent border-r border-white/5 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:z-0 lg:border-none
-          ${isLeftOpen ? 'translate-x-0' : '-translate-x-full'}
-        `}>
-          <div className="h-full flex flex-col p-6 overflow-y-auto lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]">
-            <div className="flex items-center justify-between mb-8 lg:hidden">
-              <span className="font-bold text-white">分类文章</span>
-              <button type="button" onClick={() => setIsLeftOpen(false)} title="关闭侧边栏" aria-label="关闭侧边栏"><X size={20} /></button>
-            </div>
-            <h3 className="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-              <span className="w-1.5 h-4 bg-cyan-400 rounded-full glow-dot-cyan"></span>
-              <span className="font-heading text-base normal-case tracking-normal text-white">{metadata.category}</span>
-              <span className="text-gray-500">({relatedArticles.length})</span>
-            </h3>
-            <nav className="space-y-1">
-              {relatedArticles.map((art) => (
-                <Link
-                  key={art.slug}
-                  to={`/article/${art.slug}`}
-                  className={`group flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-                    slug === art.slug
-                    ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
-                    : 'text-gray-400 hover:bg-white/[0.08] hover:text-gray-200 border border-transparent'
-                  }`}
-                >
-                  <span className={`w-1.5 h-1.5 rounded-full transition-transform group-hover:scale-150 ${slug === art.slug ? 'bg-cyan-400' : 'bg-gray-600'}`}></span>
-                  <span className="text-sm font-medium line-clamp-2 leading-snug">{art.title}</span>
-                </Link>
-              ))}
-            </nav>
+    <div className={`site-container reader-page ${isPdf ? 'reader-pdf' : ''}`}>
+      <Link className="back-link" to={`/articles?category=${encodeURIComponent(post.category)}`}>
+        <ArrowLeft size={16} />
+        {post.category}
+      </Link>
+      <header className="reader-heading">
+        <div className="article-row-meta">
+          <time dateTime={post.date}>{post.date}</time>
+          <span>{isPdf ? 'PDF 学习笔记' : '在线文章'}</span>
+        </div>
+        <h1>{post.title}</h1>
+        <p>{post.summary}</p>
+        <div className="reader-actions">
+          {post.hasMarkdown && post.pdfUrl && (
+            <Link className="button-secondary" to={`/article/${slug}${isPdf ? '' : '?format=pdf'}`}>
+              <BookOpen size={16} />
+              {isPdf ? '阅读在线正文' : '阅读 PDF'}
+            </Link>
+          )}
+          {post.pdfUrl && (
+            <a className="text-link" href={post.pdfUrl} download>
+              <Download size={16} />
+              下载 PDF
+            </a>
+          )}
+        </div>
+      </header>
+      <Suspense
+        fallback={
+          <p className="loading-state" role="status">
+            正在载入阅读器…
+          </p>
+        }
+      >
+        {isPdf ? (
+          <PdfViewer key={slug} pdfUrl={post.pdfUrl!} title={post.title} />
+        ) : loaded.slug !== slug ? (
+          <p className="loading-state" role="status">
+            正在载入正文…
+          </p>
+        ) : loaded.failed || !loaded.raw ? (
+          <div className="empty-state">
+            <h2>正文暂时无法加载</h2>
+            <p>请刷新重试，或返回文章中心。</p>
           </div>
-        </aside>
-
-        {/* ── 中间：正文内容 ── */}
-        <main className="flex-1 min-w-0 py-8 lg:py-12 px-6 lg:px-4">
-          <div className="mb-12 animate-fade-in">
-            <div className="flex items-center gap-2 text-cyan-500 text-sm font-bold mb-4 uppercase tracking-wider">
-              <span>{metadata.category}</span>
-              <ChevronRight size={14} />
-              <span className="text-gray-400">{metadata.date}</span>
-            </div>
-            <h1 className="text-4xl lg:text-5xl font-extrabold text-white mb-8 leading-tight tracking-tight font-heading">
-              {metadata.title || 'Loading...'}
-            </h1>
-            <div className="h-1 w-24 rounded-full bg-gradient-to-r from-cyan-400 to-transparent"></div>
-          </div>
-
-          <article ref={contentRef} className="bg-black/40 rounded-2xl p-8 lg:p-12 border border-white/5 backdrop-blur-md shadow-2xl shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]">
-            <div className="prose prose-invert prose-xl max-w-none
-              prose-headings:font-bold prose-headings:tracking-tight
-              prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-4 prose-h2:mt-14 prose-h3:mt-10
-              prose-p:my-5
-              prose-a:text-cyan-400 hover:prose-a:text-cyan-300 transition-colors
-              prose-img:rounded-2xl prose-img:border prose-img:border-white/10
-              prose-code:text-cyan-200 prose-code:bg-cyan-500/20 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
-              prose-blockquote:border-cyan-500/50 prose-blockquote:bg-cyan-500/5 prose-blockquote:py-1 prose-blockquote:rounded-r-lg
-            ">
-              <ReactMarkdown
-                remarkPlugins={[remarkMath]}
-                rehypePlugins={[rehypeKatex]}
-                components={MarkdownComponents}
-              >{content}</ReactMarkdown>
-            </div>
-          </article>
-
-          <div className="mt-16 flex flex-col items-center gap-6 border-t border-white/5 pt-8">
-            <div className="flex items-center justify-center gap-3">
-              <span className="block w-1 h-1 rounded-full bg-cyan-500/40"></span>
-              <span className="block w-1.5 h-1.5 rounded-full bg-cyan-500/60"></span>
-              <span className="block w-1 h-1 rounded-full bg-cyan-500/40"></span>
-            </div>
-            <div className="flex items-center justify-between w-full">
-              <Link to="/" className="text-gray-500 hover:text-cyan-400 transition-colors flex items-center gap-2">
-                ← 回到首页
+        ) : (
+          <MarkdownReader key={slug} raw={loaded.raw} />
+        )}
+      </Suspense>
+      <section className="reader-related">
+        <div className="section-heading">
+          <h2>继续学习</h2>
+          <Link
+            className="text-link"
+            to={`/articles?category=${encodeURIComponent(post.category)}`}
+          >
+            查看整个专题
+          </Link>
+        </div>
+        <div>
+          {related
+            .filter((p) => p.slug !== slug)
+            .slice(0, 6)
+            .map((p) => (
+              <Link key={p.slug} to={`/article/${p.slug}`}>
+                {p.title}
               </Link>
-              <span className="text-gray-600 text-sm italic">End of Article</span>
-            </div>
-          </div>
-        </main>
-
-        {/* ── 右侧侧边栏：目录 (TOC) ── */}
-        <aside className={`
-          fixed inset-y-0 right-0 z-50 w-72 bg-zinc-900 lg:bg-transparent border-l border-white/5 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:z-0 lg:border-none
-          ${isRightOpen ? 'translate-x-0' : 'translate-x-full'}
-        `}>
-          <div className="h-full flex flex-col p-6 overflow-y-auto lg:sticky lg:top-24 lg:h-[calc(100vh-120px)]">
-            <div className="flex items-center justify-between mb-8 lg:hidden">
-              <span className="font-bold text-white">目录</span>
-              <button type="button" onClick={() => setIsRightOpen(false)} title="关闭目录" aria-label="关闭目录"><X size={20} /></button>
-            </div>
-            <h3 className="text-sm font-bold text-gray-500 uppercase tracking-widest mb-6 flex items-center gap-2">
-              <Hash size={16} className="text-cyan-500" />
-              目录索引
-            </h3>
-            <nav className="flex flex-col gap-1 border-l border-white/5 pl-3">
-              {toc.length > 0 ? toc.map((item) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => scrollToAnchor(item.id)}
-                  className={`text-left transition-all duration-200 py-1.5 px-3 rounded-md text-sm group ${
-                    activeId === item.id
-                    ? 'text-cyan-400 bg-cyan-400/5 translate-x-1 font-bold'
-                    : 'text-gray-500 hover:text-gray-300 hover:bg-white/5 hover:translate-x-0.5'
-                  } ${
-                    item.level === 3 ? 'ml-3' : ''
-                  }`}
-                >
-                  <span className={`inline-block w-1.5 h-1.5 rounded-full mr-2 transition-transform ${activeId === item.id ? 'bg-cyan-400 scale-125' : 'bg-gray-700 opacity-0 group-hover:opacity-100'}`}></span>
-                  {item.text}
-                </button>
-              )) : (
-                <span className="text-xs text-gray-600 italic">暂无目录内容</span>
-              )}
-            </nav>
-          </div>
-        </aside>
-      </div>
-
-      {(isLeftOpen || isRightOpen) && (
-        <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden animate-in fade-in duration-300"
-          onClick={() => { setIsLeftOpen(false); setIsRightOpen(false); }}
-        ></div>
-      )}
+            ))}
+        </div>
+      </section>
     </div>
   );
-};
-
-export default ArticleDetail;
+}

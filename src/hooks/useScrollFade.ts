@@ -1,9 +1,6 @@
 import { useEffect, type RefObject } from 'react';
 
-export function useScrollFade(
-  refs: RefObject<HTMLElement | null>[],
-  distance = 600
-): void {
+export function useScrollFade(refs: RefObject<HTMLElement | null>[], distance = 600): void {
   useEffect(() => {
     const handleScroll = () => {
       const opacity = Math.max(0, 1 - window.scrollY / distance).toString();
