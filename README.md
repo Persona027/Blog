@@ -59,6 +59,8 @@ npx playwright install chromium --only-shell
 
 `edgeone.json` 配置 SPA 回退和响应头。部署后直接访问并刷新 `/article/math-modeling-08self`，确认页面可打开、PDF 返回 PDF 文件而不是 HTML。Worker、数学字体、缺图回退均不依赖第三方 CDN。带哈希的 `/assets/` 长缓存；同名 PDF 使用重新验证，避免替换后仍展示旧版本。
 
+当前 EdgeOne 项目可使用 Node 22.21.1；只使用控制台列出的可用版本，不能假设任意补丁版本均可切换。平台对 `.mjs` 静态文件可能返回 `application/octet-stream`，因此 Vite 将 PDF 模块 Worker 输出为 `.js`。上线验收需检查 Worker 的 JavaScript MIME 类型，并实际打开 PDF，不能仅检查部署状态。
+
 推送成功只代表代码到达远端。应继续检查 EdgeOne 生产部署状态与对应 commit，再访问生产域名验证首页、文章刷新、PDF 和收藏。GitHub 中若另有 Vercel 检查，它不代表 EdgeOne 的部署状态。
 
 封面同步脚本是维护工具，只在人工需要时运行，不加入构建过程；密钥仅存 `.env.local`，不会发送到前端。历史封面不会在获取新数据前批量删除。
