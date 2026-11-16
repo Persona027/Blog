@@ -4,7 +4,7 @@
 
 ## 本地运行
 
-Node.js 使用 `.nvmrc` 中的版本（22.14.0）；所有项目依赖采用本地安装。
+Node.js 使用 `.nvmrc` 中的版本（22.21.1）；所有项目依赖采用本地安装。
 
 Windows 下先将临时目录和浏览器缓存指向项目内，避免写入用户目录：
 
@@ -52,7 +52,7 @@ npx playwright install chromium --only-shell
 | 设置     | 值                     |
 | -------- | ---------------------- |
 | 根目录   | `./`                   |
-| Node     | 22.14.0，使用 `.nvmrc` |
+| Node     | 22.21.1，使用 `.nvmrc` |
 | 安装命令 | `npm ci`               |
 | 构建命令 | `npm run build`        |
 | 输出目录 | `dist`                 |
