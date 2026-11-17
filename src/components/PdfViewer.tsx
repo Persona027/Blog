@@ -14,10 +14,10 @@ import {
 } from 'lucide-react';
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 const documentOptions = {
-  cMapUrl: '/pdfjs/cmaps/',
+  cMapUrl: '/pdfjs/v1/cmaps/',
   cMapPacked: true,
-  standardFontDataUrl: '/pdfjs/standard_fonts/',
-  wasmUrl: '/pdfjs/wasm/',
+  standardFontDataUrl: '/pdfjs/v1/standard_fonts/',
+  wasmUrl: '/pdfjs/v1/wasm/',
 };
 
 interface PdfViewerProps {

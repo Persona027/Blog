@@ -64,7 +64,7 @@ test('book PDF loads Chinese CMaps and paints Chinese glyphs', async ({ page }) 
       fontErrors.push(message.text());
   });
   const cmap = page.waitForResponse(
-    (response) => response.url().includes('/pdfjs/cmaps/') && response.ok(),
+    (response) => response.url().includes('/pdfjs/v1/cmaps/') && response.ok(),
   );
   await page.goto('/article/math-modeling-01linear-regression#page=2');
   await cmap;

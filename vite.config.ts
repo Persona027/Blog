@@ -14,7 +14,7 @@ export default defineConfig({
       name: 'local-pdf-resources',
       closeBundle() {
         for (const directory of pdfResources) {
-          const destination = resolve(import.meta.dirname, 'dist/pdfjs', directory);
+          const destination = resolve(import.meta.dirname, 'dist/pdfjs/v1', directory);
           mkdirSync(destination, { recursive: true });
           cpSync(resolve(import.meta.dirname, 'node_modules/pdfjs-dist', directory), destination, {
             recursive: true,
@@ -22,7 +22,7 @@ export default defineConfig({
         }
       },
       configureServer(server) {
-        server.middlewares.use('/pdfjs', (req, _res, next) => {
+        server.middlewares.use('/pdfjs/v1', (req, _res, next) => {
           if (!pdfResources.some((directory) => req.url?.startsWith('/' + directory + '/')))
             return next();
           req.url = '/node_modules/pdfjs-dist' + req.url;
