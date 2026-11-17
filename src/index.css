@@ -100,6 +100,21 @@
   width: min(1180px, calc(100% - 64px));
   margin-inline: auto;
 }
+.site-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(rgb(12 12 20 / 65%), rgb(12 12 20 / 65%)), url('/background.png') center / cover no-repeat;
+}
+#root {
+  isolation: isolate;
+}
+.reading-body {
+  background: rgb(25 24 33 / 88%);
+  padding: clamp(18px, 3vw, 32px);
+  border-radius: 4px;
+}
 .site-header {
   height: 72px;
   position: sticky;

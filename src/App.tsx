@@ -30,6 +30,7 @@ function Missing() {
 export default function App() {
   return (
     <BrowserRouter>
+      <div className="site-background" aria-hidden="true" />
       <RouteEffects />
       <Navbar />
       <main id="main-content">
