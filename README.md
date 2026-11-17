@@ -1,70 +1,53 @@
 # Persona
 
-个人学习笔记、技术文章与生活收藏。React、TypeScript、Vite 构建的静态站点，部署到腾讯 EdgeOne，保留既有 `/article/:slug` 链接。
+个人学习笔记、技术文章和生活收藏。使用 React 19、TypeScript、Vite；GitHub main 分支关联腾讯 EdgeOne Pages，生产域名为 https://depersona.top。
+
+## 文档导航
+
+- [开发与架构](docs/ARCHITECTURE.md)：目录、路由、数据流和本地环境。
+- [设计规范](docs/DESIGN.md)：现有结构、原背景、日系细节和视觉验收。
+- [内容维护](docs/CONTENT.md)：Markdown、PDF、课程讲义、素材与来源。
+- [PDF 阅读器](docs/PDF.md)：中文字体映射、Worker、缓存和故障排查。
+- [测试与发布](docs/OPERATIONS.md)：检查命令、EdgeOne 设置、线上验收和回退。
+- [维护记录](docs/CHANGELOG.md)：关键改动和经验。
+- [项目协作约束](AGENTS.md)：自动化工具与后续维护应遵守的规则。
 
 ## 本地运行
 
-Node.js 使用 `.nvmrc` 中的版本（22.21.1）；所有项目依赖采用本地安装。
-
-Windows 下先将临时目录和浏览器缓存指向项目内，避免写入用户目录：
+在仓库根目录使用 PowerShell 7。Node 版本以 `.nvmrc` 为准，目前为22.21.1。
 
 ```powershell
-$env:TEMP = "$PWD/.tmp"
+$projectRoot = (Get-Location).Path
+$env:TEMP = Join-Path $projectRoot '.tmp'
 $env:TMP = $env:TEMP
-$env:PLAYWRIGHT_BROWSERS_PATH = "$PWD/.cache/playwright"
-New-Item -ItemType Directory -Force .tmp,.cache/playwright | Out-Null
+$env:npm_config_cache = Join-Path $projectRoot '.cache/npm'
+$env:npm_config_userconfig = Join-Path $projectRoot '.npmrc'
+$env:PLAYWRIGHT_BROWSERS_PATH = Join-Path $projectRoot '.cache/playwright'
+New-Item -ItemType Directory -Force $env:TEMP,$env:npm_config_cache,$env:PLAYWRIGHT_BROWSERS_PATH | Out-Null
 npm ci --userconfig .npmrc
 ./.tools/run.ps1 dev
 ```
 
-`.npmrc` 将 npm 缓存设在 `.cache/npm`。禁止全局安装；不要将 `.env.local`、缓存、浏览器或构建产物提交到仓库。
+仓库必须位于授权的项目目录内。Windows 本地维护禁止向 C 盘安装或写入依赖、缓存和临时文件；优先复用项目工具。`.tools/run.ps1` 会为开发、构建和测试设置项目内缓存环境，不会自行安装运行时。
 
-## 代码与内容
-
-- `src/App.tsx`：按页面加载的路由、站点壳层与错误边界。
-- `src/pages`：首页、文章、关于和收藏页面。
-- `src/features/reader`：按需加载的 Markdown 阅读器。
-- `src/components`：导航、文章行、PDF 阅读器、收藏组件。
-- `src/posts/*.md`：Markdown 原文及 YAML frontmatter。
-- `src/data/pdfPosts.ts`：PDF 元信息；同 slug 允许同时包含正文与 PDF。
-- `src/data/content.generated.json`：由构建生成的轻量索引，不能手工编辑。
-- `scripts/content.ts`：校验日期、必需字段、重复 PDF slug、PDF/封面存在性及本机盘符路径。
-
-文章有正文时默认显示正文，可切换到 PDF；只有 PDF 时直接打开阅读器。目录和正文使用兼容的 GitHub slug 算法，重复标题有独立锚点。列表的搜索、课程、格式、视图和分页保存在 URL。
-
-## 检查
+## 提交前检查
 
 ```powershell
 ./.tools/run.ps1 lint
 ./.tools/run.ps1 build
-# 首次运行测试前：下载到 D 盘的项目缓存目录
-$env:PLAYWRIGHT_BROWSERS_PATH = "$PWD/.cache/playwright"
-npx playwright install chromium --only-shell
 ./.tools/run.ps1 test
 ```
 
-测试基于生产构建，覆盖桌面和移动端：导航、搜索/筛选恢复、双格式阅读、PDF 翻页和刷新、收藏入口、404 及横向溢出。截图和报告存入 `artifacts/`。
+测试使用生产构建。首次需安装浏览器时，先设置上述环境，再执行 `npx --no-install playwright install chromium --only-shell`。测试启动4173端口，先关闭占用该端口的本项目预览服务。
 
-## EdgeOne 部署
+当前10项桌面/手机检查包含导航、筛选恢复、双格式阅读、PDF翻页、中文字体资源、收藏和404。测试数量会随覆盖范围变化，不以固定数量作为通过标准。
 
-仓库根目录为本目录，不是本机的 `D:/myWebsite`。项目须绑定 `Persona027/Blog` 的 `main` 分支。
+## 当前视觉与内容
 
-| 设置     | 值                     |
-| -------- | ---------------------- |
-| 根目录   | `./`                   |
-| Node     | 22.21.1，使用 `.nvmrc` |
-| 安装命令 | `npm ci`               |
-| 构建命令 | `npm run build`        |
-| 输出目录 | `dist`                 |
+保留首页、文章、课程分类、收藏、关于的既有结构。全站固定背景使用原有 `public/background.png`，加65%深色遮罩；墨紫与藤灰用于文字和界面层级。Markdown 阅读区有独立遮罩，PDF保留白纸阅读体验。
 
-`edgeone.json` 配置 SPA 回退和响应头。部署后直接访问并刷新 `/article/math-modeling-08self`，确认页面可打开、PDF 返回 PDF 文件而不是 HTML。Worker、数学字体、缺图回退均不依赖第三方 CDN。带哈希的 `/assets/` 长缓存；同名 PDF 使用重新验证，避免替换后仍展示旧版本。
+数学建模课程17讲已替换为原书版详细讲义，旧文章slug和PDF URL保持不变。课堂课件限定范围，《李宏毅深度学习教程》1.2.4作为主要内容依据，原书未覆盖的课堂内容明确标注。
 
-当前 EdgeOne 项目可使用 Node 22.21.1；只使用控制台列出的可用版本，不能假设任意补丁版本均可切换。平台对 `.mjs` 静态文件可能返回 `application/octet-stream`，因此 Vite 将 PDF 模块 Worker 输出为 `.js`。上线验收需检查 Worker 的 JavaScript MIME 类型，并实际打开 PDF，不能仅检查部署状态。
+## 仓库边界
 
-推送成功只代表代码到达远端。应继续检查 EdgeOne 生产部署状态与对应 commit，再访问生产域名验证首页、文章刷新、PDF 和收藏。GitHub 中若另有 Vercel 检查，它不代表 EdgeOne 的部署状态。
-
-封面同步脚本是维护工具，只在人工需要时运行，不加入构建过程；密钥仅存 `.env.local`，不会发送到前端。历史封面不会在获取新数据前批量删除。
-
-## 设计
-
-墨紫 `#191821`、表面 `#22212c`、正文 `#eeebf2`、辅助文本 `#b0aab9`、藤灰交互色 `#c0b2dc`。保留原有页面与双栏结构，以中文衬线标题、克制的描边、头像和已有收藏封面表达个人站气质。无全屏背景下载与装饰性自动动画；尊重减少动画偏好。项目设计技能固定在 `.agents/skills/frontend-design/`，保留来源与许可。
+提交源代码、文章、公开素材、PDF和维护文档。`dist/`、`artifacts/`、`.cache/`、`.tmp/`、下载字体及浏览器缓存不提交。`.env.local`只保存在本地，不进入前端或日志。第三方设计skill位于 `.agents/skills/frontend-design/`，保留其来源与许可证。
