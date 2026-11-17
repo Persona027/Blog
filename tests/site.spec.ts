@@ -52,3 +52,26 @@ test('collections, about and missing routes work', async ({ page }) => {
   await page.goto('/missing-route');
   await expect(page.getByRole('heading', { name: '这里还没有内容' })).toBeVisible();
 });
+
+test('book PDF loads Chinese CMaps and paints Chinese glyphs', async ({ page }) => {
+  const fontErrors: string[] = [];
+  page.on('console', (message) => {
+    if (
+      /translateFont failed|Error during font loading|Unable to load.*[Cc][Mm]ap/.test(
+        message.text(),
+      )
+    )
+      fontErrors.push(message.text());
+  });
+  const cmap = page.waitForResponse(
+    (response) => response.url().includes('/pdfjs/cmaps/') && response.ok(),
+  );
+  await page.goto('/article/math-modeling-01linear-regression#page=2');
+  await cmap;
+  await expect(page.locator('.react-pdf__Page__canvas')).toBeVisible();
+  await expect(page.locator('.react-pdf__Page__textContent')).toContainText('机器学习');
+  await page
+    .locator('.react-pdf__Page__canvas')
+    .screenshot({ path: 'artifacts/chinese-fixed.png' });
+  expect(fontErrors).toEqual([]);
+});

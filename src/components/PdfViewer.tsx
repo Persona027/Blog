@@ -13,6 +13,12 @@ import {
   Minimize2,
 } from 'lucide-react';
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
+const documentOptions = {
+  cMapUrl: '/pdfjs/cmaps/',
+  cMapPacked: true,
+  standardFontDataUrl: '/pdfjs/standard_fonts/',
+  wasmUrl: '/pdfjs/wasm/',
+};
 
 interface PdfViewerProps {
   pdfUrl: string;
@@ -190,6 +196,7 @@ const PdfViewer = ({ pdfUrl, title }: PdfViewerProps) => {
         <div className={loading || error ? 'hidden' : ''}>
           <Document
             file={pdfUrl}
+            options={documentOptions}
             onLoadSuccess={onDocumentLoadSuccess}
             onLoadError={onDocumentLoadError}
             loading={null}
