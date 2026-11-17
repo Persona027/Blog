@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 pdfjs.GlobalWorkerOptions.workerSrc = workerUrl;
 const documentOptions = {
+  disableFontFace: true,
   cMapUrl: '/pdfjs/v1/cmaps/',
   cMapPacked: true,
   standardFontDataUrl: '/pdfjs/v1/standard_fonts/',
