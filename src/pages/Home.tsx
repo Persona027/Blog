@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight, BookOpen, Gamepad2, Headphones } from 'lucide-react';
 import { useAllPosts } from '@/data/postsIndex';
 import ArticleRow from '@/components/ArticleRow';
+import avatar from '@/assets/avatar.png';
 
 export default function Home() {
   const { posts } = useAllPosts();
@@ -11,16 +12,18 @@ export default function Home() {
       <section className="home-hero">
         <div>
           <p className="intro-line">
-            <span className="status-dot" />
-            Persona 的个人空间
+            <img className="home-avatar" src={avatar} alt="Persona 的头像" />
+            Persona / 个人主页
           </p>
           <h1>
-            把好奇心，
+            Persona’s
             <br />
-            写成自己的知识。
+            little corner.
           </h1>
           <p className="hero-description">
-            在代码与课堂之间探索，也在游戏、书籍和音乐里寻找灵感。这里收录我的学习笔记、技术思考与生活收藏。
+            这里放着我的课程笔记、代码记录，
+            <br />
+            还有玩过的游戏、读过的书。
           </p>
           <div className="hero-actions">
             <Link className="button-primary" to="/articles">
@@ -38,23 +41,22 @@ export default function Home() {
           </div>
           <Link to="/articles?category=科学计算与数学建模">
             <h2>
-              从一个公式，
+              科学计算与
               <br />
-              理解一个模型。
+              数学建模
             </h2>
-            <p>科学计算与数学建模</p>
+            <p>李宏毅深度学习教程 · 原书版</p>
             <span>
-              17 篇详细笔记 <ArrowUpRight size={17} />
+              17 讲 / 推导、例题与自测 <ArrowUpRight size={17} />
             </span>
           </Link>
-          <div className="notebook-footer">学习是一段持续构建的过程。</div>
+          <div className="notebook-footer">按课堂范围整理，附原书页码。</div>
         </aside>
       </section>
       <section className="home-content">
         <div>
           <div className="section-heading">
             <div>
-              <p className="section-kicker">持续记录</p>
               <h2>最近的笔记</h2>
             </div>
             <Link className="text-link" to="/articles">
@@ -69,8 +71,8 @@ export default function Home() {
         </div>
         <aside className="home-sidebar">
           <section>
-            <h2>沿着兴趣学习</h2>
-            <p>按课程和主题，找到下一篇。</p>
+            <h2>课程目录</h2>
+            <p>按课查找笔记。</p>
             <div className="topic-links">
               {categories.map((cat) => (
                 <Link key={cat} to={`/articles?category=${encodeURIComponent(cat)}`}>
@@ -81,8 +83,17 @@ export default function Home() {
             </div>
           </section>
           <section className="sidebar-personal">
+            <Link className="shelf-preview" to="/collections/games" aria-label="查看游戏收藏">
+              <img
+                src="/games/216896-Ori and the Will of the Wisps.jpg"
+                alt="Ori and the Will of the Wisps 封面"
+                loading="lazy"
+              />
+              <img src="/games/283730-Outer Wilds.jpg" alt="Outer Wilds 封面" loading="lazy" />
+              <img src="/games/236561-Celeste.jpg" alt="Celeste 封面" loading="lazy" />
+            </Link>
             <h2>课本以外</h2>
-            <p>那些让我愿意花时间的事。</p>
+            <p>游戏、阅读和音乐的收藏。</p>
             <Link to="/collections/games">
               <Gamepad2 size={18} />
               游戏与世界

@@ -30,12 +30,12 @@ export default function ArticleList() {
   return (
     <div className="site-container page-space">
       <header className="page-heading">
-        <p className="section-kicker">学习与思考</p>
+        <p className="section-kicker">文章索引</p>
         <h1>{category || '文章与笔记'}</h1>
         <p>
           {category
-            ? '按章节继续阅读，建立属于自己的知识脉络。'
-            : '将零散的理解串起来，让每一次学习都有迹可循。'}
+            ? '课程笔记按章节收录，可在线阅读或下载 PDF。'
+            : '课程笔记、代码实践和一些自己的记录。'}
         </p>
       </header>
       <div className="article-toolbar">

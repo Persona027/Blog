@@ -3,7 +3,7 @@ test('home, navigation and no horizontal overflow', async ({ page }, info) => {
   const failures: string[] = [];
   page.on('pageerror', (e) => failures.push(e.message));
   await page.goto('/');
-  await expect(page.getByRole('heading', { name: /把好奇心，\s*写成自己的知识。/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: /Persona’s\s*little corner\./ })).toBeVisible();
   await expect(page.getByRole('link', { name: '浏览学习笔记' })).toBeVisible();
   expect(
     await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth),

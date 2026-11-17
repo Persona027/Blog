@@ -7,13 +7,13 @@ export default function About() {
       <header className="about-intro">
         <img src={avatar} alt="Persona 的头像" width="112" height="112" />
         <div>
-          <p className="section-kicker">很高兴在这里遇见你</p>
+          <p className="section-kicker">关于本站</p>
           <h1>我是 Persona。</h1>
           <p>一个喜欢写代码、玩游戏，也喜欢把问题想清楚的人。</p>
         </div>
       </header>
       <section className="about-statement">
-        <h2>热爱生活，精益求精。</h2>
+        <h2>这个小站。</h2>
         <p>
           这个网站是我的学习记录，也是我的数字书架。在这里，我把课堂里的知识整理成可以回看的笔记，把技术探索写成文章，也收藏那些值得反复体验的作品。
         </p>
